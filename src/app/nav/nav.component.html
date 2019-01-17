@@ -1,13 +1,20 @@
 <header class="header">
+  <div class="wrapper">
   <div class="container">
       <a href="/" class="logo">{{appTitle}}</a>	
-    <nav class="headerlist">
+    <nav class="leftlist">
         <ul>
           <li><a routerLink="/">Home</a></li>
           <li><a routerLink="/strategies">Strategies</a></li>
           <li><a routerLink="/friends">Friends</a></li>
-          <li><a routerLink="/logout">LogOut</a></li>
         </ul>
         </nav>
-  </div>  
+        <nav class="rightlist">
+        <ul>
+            <li><a href="/#">Notifications</a></li>          
+            <li><a routerLink="/logout">Log out</a></li>
+        </ul>
+        </nav>
+      </div>
+      </div>  
 </header>

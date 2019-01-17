@@ -1,23 +1,26 @@
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-/* Margin bottom by footer height */
-margin-bottom: 60px;
+.wrapper {
+  margin: 0 auto;
+	height: inherit;
+  width: 1440px;
+  background-color: rgba(0, 167, 121, 0.81);
 }
 
 .footer {
-position: absolute;
+/*position: absolute;*/
 bottom: 0;
-width: 1440px;
 /* Set the fixed height of the footer here */
 height: 94px;
-line-height: 60px;
-background: rgba(0, 167, 121, 0.81);
 }
 
+a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+a:hover {
+  color: #f3f3f3;
+}
 
 .footcontainer {
 	color: #ffffff;
@@ -37,8 +40,12 @@ background: rgba(0, 167, 121, 0.81);
 
 .footerlist {
 	font-size: 20px;
-    font-weight: 600;
-    font-style: normal;
+  font-style: normal;
+  font-size: 20px;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
 	padding: 0px 0px 0px 775px;
   }
 

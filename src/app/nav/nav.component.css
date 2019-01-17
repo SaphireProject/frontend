@@ -1,10 +1,29 @@
+.wrapper {
+	margin: 0 auto;
+	height: inherit;
+	width: 1440px;
+	background-color: rgba(111, 160, 218, 0.57);
+}
+
 .header {
 	height: 66px;
-	width: 1440px;
-	background: rgba(111, 160, 218, 0.57);
 	font-weight: 500;
 	font-style: normal;
-	color: #484848;
+}
+
+a {
+	text-decoration: none;
+	font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #484848;
+}
+
+a:hover {
+	color: #FAFAFA;
 }
 
 .container {
@@ -16,10 +35,10 @@
     font-weight: bold;
     font-style: normal;
 	float: left;
-	padding: 0px 0px 0px 174px;
+	margin: 0px 0px 0px 174px;
   }
 
-  .headerlist {
+  .leftlist {
 	font-size: 20px;
 	font-weight: 500;
 	font-style: normal;  
@@ -27,7 +46,17 @@
 	padding: 0px 0px 0px 26px;
   }
 
-  .headerlist li {
+  .leftlist li {
 	display: inline-block;
 	margin: 0px 0px 0px 24px;
-  }
+	}
+	
+.rightlist{
+	float: right;	
+	padding: 0px 193px 0px 0px;
+}
+
+.rightlist li {
+	display: inline-block;
+	margin: 0px 0px 0px 24px;
+	}
