@@ -2,9 +2,24 @@ sudo: required
 services:
   - docker
 
+language: node_js
+node_js:
+  - "10"
+
+before_install:
+  - npm i -g npm@6.4.1 
+
+before_script:
+  - npm install -g @angular/cli@7.1.4
+  - npm install
+  - ng build --prod
+
 script:
   - docker build --tag saphireproject .
-  - docker run saphireproject
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - export REPO=ttsmyd/test-saphire-repository
+  - docker push saphireproject
 
-after_script:
+
+after_success:
   - docker images
