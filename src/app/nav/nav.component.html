@@ -1,7 +1,7 @@
 <header class="header">
   <div class="wrapper">
   <div class="container">
-      <a href="/" class="logo">{{appTitle}}</a>	
+      <a href="/" class="logo">{{appTitle}}</a>
     <nav class="leftlist">
         <ul>
           <li><a routerLink="/">Home</a></li>
@@ -11,10 +11,10 @@
         </nav>
         <nav class="rightlist">
         <ul>
-            <li><a href="/#">Notifications</a></li>          
-            <li><a routerLink="/logout">Log out</a></li>
+            <li><a href="/#">Notifications</a></li>
+            <li><a class="lgout" (click)="logout()">Log out</a></li>
         </ul>
         </nav>
       </div>
-      </div>  
+      </div>
 </header>

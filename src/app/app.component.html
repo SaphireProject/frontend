@@ -1,16 +1,9 @@
-<app-nav></app-nav>
+﻿<!-- nav -->
+<app-nav *ngIf="currentUser"></app-nav>
 
-<section>
+<!-- main app container -->
+
 <router-outlet></router-outlet>
-</section>
 
-
-
-
-
-
-
-
-
-
-<app-footer></app-footer>
+<!-- credits -->
+<app-footer *ngIf="currentUser"></app-footer>
