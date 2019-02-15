@@ -4,6 +4,7 @@
       <div class="form">
         <h1>Register</h1>
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <input type="text" placeholder="Email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                <input type="text" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                <button [disabled]="loading" class="btn btn-primary">Register</button>
@@ -19,7 +20,6 @@
                 <div *ngIf="f.password.errors.required">Password is required</div>
                 <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
               </div>
-              <alert></alert>
             </form>
       </div>
     </div>

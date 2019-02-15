@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-  appTitle: string = "ProjectName"
+  appTitle: string = "CrazyRobots"
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) { }
