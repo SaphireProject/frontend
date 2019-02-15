@@ -1,0 +1,12 @@
+div.alert-danger{
+  font-weight: bold;
+  color: red;
+}
+
+div.alert-success{
+  color: green;
+}
+
+div.alert{
+  color: red;
+}
