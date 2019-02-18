@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '../_services';
+import {MustMatch} from '../_helpers/';
 
 @Component({templateUrl: 'register.component.html',
             styleUrls: ['./register.component.css']})
@@ -11,6 +12,8 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
+    condition = false;
+    strength: number;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -27,11 +30,23 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            email: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email, Validators.email]],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required]],
+            confirmPassword: ['', Validators.required]
+        }, {
+          validator: MustMatch('password', 'confirmPassword')
         });
     }
+
+    toggle() {
+      this.condition = true;
+    }
+
+  onStrengthChanged(strength: number) {
+      this.strength = strength;
+    console.log('password strength = ', strength);
+  }
 
     // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
@@ -43,6 +58,10 @@ export class RegisterComponent implements OnInit {
         if (this.registerForm.invalid) {
             return;
         }
+
+        if ((this.strength) < 100) {
+            return;
+      }
 
         this.loading = true;
         this.userService.register(this.registerForm.value)

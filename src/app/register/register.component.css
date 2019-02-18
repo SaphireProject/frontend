@@ -17,11 +17,12 @@ h1 {
 }
 
 .login-page {
-  width: 381px;
+  width: 681px;
   padding-top: 198px;
   margin: 0px 529px 300px 530px;
 }
 .form {
+  width: 381px;
   position: relative;
   z-index: 1;
   background: #FFFFFF;
@@ -36,7 +37,6 @@ h1 {
   margin: 0 0 15px;
   padding: 15px;
   box-sizing: border-box;
-  font-size: 14px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: normal;
@@ -94,3 +94,4 @@ div.sign-in {
 .loading-ring {
   padding-top: 10px;
 }
+

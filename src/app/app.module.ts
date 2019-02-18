@@ -1,6 +1,6 @@
 ﻿import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
@@ -16,14 +16,24 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import {MatInputModule, MatIconModule} from '@angular/material';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 @NgModule({
     imports: [
         BrowserModule,
+        FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        routing
-    ],
+        MatPasswordStrengthModule.forRoot(),
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        routing],
     declarations: [
         AppComponent,
         AlertComponent,
