@@ -21,7 +21,6 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import {MatInputModule, MatIconModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
-
 @NgModule({
     imports: [
         BrowserModule,

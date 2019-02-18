@@ -6,7 +6,7 @@
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <input type="text" placeholder="Email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
           <input type="text" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-          <input type="password" matInput #passwordWithValidation placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" (input)="toggle()"/>
+          <input type="password" matInput #passwordWithValidation placeholder="Password" formControlName="password" class="form-control-password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" (input)="toggle()"/>
           <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
           <div *ngIf="condition" class="info-validation">
           <mat-password-strength #passwordComponentWithValidation

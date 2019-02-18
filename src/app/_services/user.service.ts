@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { sha256 } from 'js-sha256';
 
 import { environment } from '../../../../Authorization example/jwt/angular-7-registration-login-example-cli-master 2/src/environments/environment';
 import { User } from '../_models';
@@ -17,6 +18,7 @@ export class UserService {
     }
 
     register(user: User) {
+        user.password = sha256(user.password);
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
 
