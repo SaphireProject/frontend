@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { sha256 } from 'js-sha256';
 
-import { environment } from '../../../../Authorization example/jwt/angular-7-registration-login-example-cli-master 2/src/environments/environment';
+import { environment } from '../../environments/environment';
 import { User } from '../_models';
 
 @Injectable({ providedIn: 'root' })
