@@ -4,6 +4,7 @@ import { sha256 } from 'js-sha256';
 
 import { environment } from '../../environments/environment';
 import { User } from '../_models';
+import {UserRegisterRequest} from '../_models/user-register-request';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -17,9 +18,9 @@ export class UserService {
         return this.http.get(`${environment.apiUrl}/users/${id}`);
     }
 
-    register(user: User) {
+    register(user: UserRegisterRequest) {
         user.password = sha256(user.password);
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
+        return this.http.post(`${environment.apiUrl}auth/registration`, user);
     }
 
     update(user: User) {

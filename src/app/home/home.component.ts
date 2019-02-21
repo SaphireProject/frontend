@@ -9,7 +9,7 @@ import { UserService, AuthenticationService } from '../_services';
 export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
     currentUserSubscription: Subscription;
-    users: User[] = [];
+ //   users: User[] = [];
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadAllUsers();
+ //       this.loadAllUsers();
     }
 
     ngOnDestroy() {
@@ -29,15 +29,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.currentUserSubscription.unsubscribe();
     }
 
-    deleteUser(id: number) {
-        this.userService.delete(id).pipe(first()).subscribe(() => {
-            this.loadAllUsers();
-        });
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll().pipe(first()).subscribe(users => {
-            this.users = users;
-        });
-    }
+//    deleteUser(id: number) {
+//        this.userService.delete(id).pipe(first()).subscribe(() => {
+//            this.loadAllUsers();
+//        });
+//    }
+//
+//    private loadAllUsers() {
+//        this.userService.getAll().pipe(first()).subscribe(users => {
+//            this.users = users;
+//        });
+//    }
 }

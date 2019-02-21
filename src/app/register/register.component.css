@@ -19,7 +19,7 @@ h1 {
 .login-page {
   width: 681px;
   padding-top: 198px;
-  margin: 0px 529px 300px 530px;
+  margin: 0px 529px 100px 530px;
 }
 .form {
   width: 381px;
@@ -97,4 +97,8 @@ div.sign-in {
 
 .form-control-password {
   color: #4a4a4a;
+}
+
+.load-ring {
+  padding-top: 25px;
 }

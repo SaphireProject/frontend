@@ -20,6 +20,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import {MatInputModule, MatIconModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+// import { SocialComponent } from './social/social.component'
 
 @NgModule({
     imports: [
@@ -32,6 +34,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
+        MatProgressSpinnerModule,
         routing],
     declarations: [
         AppComponent,
@@ -41,13 +44,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         RegisterComponent,
         NavComponent,
         FooterComponent,
+//        SocialComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
         // provider used to create fake backend
-        fakeBackendProvider
+        // fakeBackendProvider
     ],
     bootstrap: [AppComponent]
 })

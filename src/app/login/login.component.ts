@@ -2,6 +2,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AlertService, AuthenticationService } from '../_services';
 
