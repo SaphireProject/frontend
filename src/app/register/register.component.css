@@ -1,3 +1,18 @@
+
+
+.ng-valid  {
+  border: 1px solid #00e521; /* green */
+}
+
+
+.ng-invalid:not(form), .ng-valid.touched, .is-invalid.ng-untouched:not(form)  {
+  border: 1px solid #ff463f;
+}
+
+.ng-untouched:not(form) {
+  border: 0px;
+}
+
 .wrapper {
   margin: 0 auto;
   height: inherit;
@@ -29,23 +44,7 @@ h1 {
   text-align: center;
 }
 
-.form input {
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #4a4a4a;
-}
+
 
 .form button {
   outline: 0;
@@ -102,3 +101,4 @@ div.sign-in {
 .load-ring {
   padding-top: 25px;
 }
+
