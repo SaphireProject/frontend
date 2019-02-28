@@ -1,18 +1,22 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
+
 
 import { AlertService, UserService, AuthenticationService } from '../_services';
 import {MustMatch} from '../_helpers/';
 
 @Component({templateUrl: 'register.component.html',
-            styleUrls: ['./register.component.css']})
+            styleUrls: ['./register.component.css']
+})
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
     condition = false;
+    signInReset = false;
     strength: number;
 
     constructor(
@@ -32,8 +36,8 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email, Validators.email]],
             username: ['', [Validators.required, Validators.maxLength(50)]],
-            password: ['', [Validators.required, Validators.maxLength(50)]],
-            confirmPassword: ['', [Validators.required, Validators.maxLength(50)]]
+            password: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')]],
+            confirmPassword: ['', [Validators.required]]
         }, {
             validators: MustMatch('password', 'confirmPassword')
         });
@@ -41,6 +45,12 @@ export class RegisterComponent implements OnInit {
 
     toggle() {
       this.condition = true;
+    }
+
+    signIn() {
+      console.log(this.signInReset);
+      this.signInReset = true;
+      console.log(this.signInReset);
     }
 
   onStrengthChanged(strength: number) {

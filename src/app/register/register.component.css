@@ -1,6 +1,6 @@
 
 
-.ng-valid  {
+.ng-valid:not(form)  {
   border: 1px solid #00e521; /* green */
 }
 
@@ -38,13 +38,29 @@ h1 {
 }
 .form {
   width: 381px;
-  position: relative;
-  z-index: 1;
+  /*position: relative;
+  z-index: 1;*/
   background: #FFFFFF;
   text-align: center;
 }
 
-
+.form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  /*border: 0;*/
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
 
 .form button {
   outline: 0;
@@ -102,3 +118,16 @@ div.sign-in {
   padding-top: 25px;
 }
 
+.valid-icon {
+  font-size: 48px;
+  color: rgba(0, 167, 121, 0.81);
+}
+
+.invalid-icon {
+  font-size: 48px;
+  color: red;
+}
+
+.keks {
+  float: right;
+}
