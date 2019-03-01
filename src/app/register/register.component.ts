@@ -1,6 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
 
@@ -47,11 +47,36 @@ export class RegisterComponent implements OnInit {
       this.condition = true;
     }
 
-    signIn() {
-      console.log(this.signInReset);
-      this.signInReset = true;
-      console.log(this.signInReset);
+    checkForCheckStatusIcon(control: FormControl) {
+      if (!control.errors && (control.touched || this.submitted)) {
+        return true;
+      }
     }
+    checkForErrorStatusIcon(control: FormControl) {
+      if (control.errors && (control.touched || this.submitted)) {
+        return true;
+      }
+    }
+    checkForValidField(control: FormControl) {
+      if (control.valid && control.touched) {
+        return true;
+      }
+    }
+  checkForInvalidField(control: FormControl) {
+    if (control.errors && (control.touched || this.submitted)) {
+      return true;
+    }
+  }
+  checkForFieldRequired(control: FormControl) {
+      if (!control.errors.required) {
+        return true;
+      }
+  }
+  checkForMaxLength(control: FormControl) {
+      if (!control.errors.maxlength) {
+        return true;
+      }
+  }
 
   onStrengthChanged(strength: number) {
       this.strength = strength;

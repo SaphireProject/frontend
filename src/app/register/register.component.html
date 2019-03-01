@@ -7,60 +7,60 @@
           <input type="text" placeholder="Email" formControlName="email" class="form-control" autofocus required [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
               <div class="icon-wrapper">
                 <div class="icon">
-                  <mat-icon *ngIf="!f.email.errors && (f.email.touched || submitted)" class="valid-icon">check_circle</mat-icon>
-                  <mat-icon *ngIf="f.email.errors && (f.email.touched || submitted)" class="invalid-icon">error</mat-icon>
+                  <mat-icon *ngIf="checkForCheckStatusIcon(f.email)" class="valid-icon">check_circle</mat-icon>
+                  <mat-icon *ngIf="checkForErrorStatusIcon(f.email)" class="invalid-icon">error</mat-icon>
                 </div>
               </div>
             <div class="alert-wrapper">
-             <div *ngIf="f.email.valid && f.email.touched" class="valid-info">Email is correct. Keep moving!</div>
-             <div *ngIf="f.email.errors && (f.email.touched || submitted)" class="alert-info">
+             <div *ngIf="checkForValidField(f.email)" class="valid-info">Email is correct. Keep moving!</div>
+             <div *ngIf="checkForInvalidField(f.email)" class="alert-info">
                <div [hidden]="!f.email.errors.email">Email is not correct</div>
-               <div [hidden]="!f.email.errors.required">Email is required</div>
+               <div [hidden]="checkForFieldRequired(f.email)">Email is required</div>
             </div>
           </div>
 
           <input type="text" placeholder="Username" formControlName="username" class="form-control" required [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
               <div class="icon-wrapper">
                 <div class="icon">
-                  <mat-icon *ngIf="!f.username.errors && (f.username.touched || submitted)" class="valid-icon">check_circle</mat-icon>
-                  <mat-icon *ngIf="f.username.errors && (f.username.touched || submitted)" class="invalid-icon">error</mat-icon>
+                  <mat-icon *ngIf="checkForCheckStatusIcon(f.username)" class="valid-icon">check_circle</mat-icon>
+                  <mat-icon *ngIf="checkForErrorStatusIcon(f.username)" class="invalid-icon">error</mat-icon>
                 </div>
               </div>
             <div class="alert-wrapper">
-              <div *ngIf="f.username.valid && f.username.touched" class="valid-info">Username is correct</div>
-              <div *ngIf="f.username.errors && (f.username.touched || submitted)" class="alert-info">
-              <div [hidden]="!f.username.errors.required">Username is required</div>
-              <div [hidden]="!f.username.errors.maxlength">Username must be less than 50 characters</div>
+              <div *ngIf="checkForValidField(f.username)" class="valid-info">Username is correct</div>
+              <div *ngIf="checkForInvalidField(f.username)" class="alert-info">
+              <div [hidden]="checkForFieldRequired(f.username)">Username is required</div>
+              <div [hidden]="checkForMaxLength(f.username)">Username must be less than 50 characters</div>
           </div>
             </div>
 
           <input type="password" matInput #password placeholder="Password" formControlName="password" required class="form-control-password" [ngClass]="{ 'is-invalid': ( submitted && f.password.errors )}" (input)="toggle()"/>
               <div class="icon-wrapper">
                 <div class="icon">
-                  <mat-icon *ngIf="!f.password.errors && (f.password.touched || submitted)" class="valid-icon">check_circle</mat-icon>
-                  <mat-icon *ngIf="f.password.errors && (f.password.touched || submitted)" class="invalid-icon">error</mat-icon>
+                  <mat-icon *ngIf="checkForCheckStatusIcon(f.password)" class="valid-icon">check_circle</mat-icon>
+                  <mat-icon *ngIf="checkForErrorStatusIcon(f.password)" class="invalid-icon">error</mat-icon>
                 </div>
               </div>
             <div class="alert-wrapper">
-              <div *ngIf="f.password.valid && f.password.touched" class="valid-info">Password is good, confirm it</div>
-              <div *ngIf="f.password.errors && (f.password.touched || submitted)" class="alert-info">
-              <div [hidden]="!f.password.errors.required">Password is required</div>
+              <div *ngIf="checkForValidField(f.password)" class="valid-info">Password is good, confirm it</div>
+              <div *ngIf="checkForInvalidField(f.password)" class="alert-info">
+              <div [hidden]="checkForFieldRequired(f.password)">Password is required</div>
               <div *ngIf="f.password.errors.pattern && !f.password.errors.maxlength">Password is not strong :(</div>
-              <div [hidden]="!f.password.errors.maxlength">Password must be less than 50 characters</div>
+              <div [hidden]="checkForMaxLength(f.password)">Password must be less than 50 characters</div>
               </div>
           </div>
 
           <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
              <div class="icon-wrapper">
                <div class="icon">
-                 <div *ngIf="!f.confirmPassword.errors && (f.confirmPassword.touched || submitted)"><mat-icon class="valid-icon">check_circle</mat-icon></div>
-                 <div *ngIf="f.confirmPassword.errors && (f.confirmPassword.touched || submitted)"><mat-icon class="invalid-icon">error</mat-icon></div>
+                 <div *ngIf="checkForCheckStatusIcon(f.confirmPassword)"><mat-icon class="valid-icon">check_circle</mat-icon></div>
+                 <div *ngIf="checkForErrorStatusIcon(f.confirmPassword)"><mat-icon class="invalid-icon">error</mat-icon></div>
                </div>
              </div>
            <div class="alert-wrapper">
              <div *ngIf="f.confirmPassword.valid" class="valid-info">Passwords match</div>
-             <div *ngIf="f.confirmPassword.errors && (f.confirmPassword.touched || submitted)" class="alert-info">
-               <div [hidden]="!f.confirmPassword.errors.required">Password needs to be confirmed</div>
+             <div *ngIf="checkForInvalidField(f.confirmPassword)" class="alert-info">
+               <div [hidden]="checkForFieldRequired(f.confirmPassword)">Password needs to be confirmed</div>
                <div [hidden]="!f.confirmPassword.errors.mustMatch">Passwords must match</div>
            </div>
           </div>
