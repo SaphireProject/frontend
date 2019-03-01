@@ -99,3 +99,22 @@ div.registerAcc {
 .load-ring {
   padding-top: 25px;
 }
+
+p {
+  font-size: 16px;
+  font-weight: bolder;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+
+a {
+  text-weight: bold;
+}
+
+a:hover {
+  color: #00e521;
+  text-weight: bold;
+}

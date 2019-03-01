@@ -53,8 +53,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, 
 }
 
 @font-face {
-  font-family: 'Roboto', sans-serif; /* Гарнитура шрифта */
-  src: url('https://fonts.googleapis.com/css?family=Roboto'); /* Путь к файлу со шрифтом */
+  font-family: 'Nunito', sans-serif; /* Гарнитура шрифта */
+  src: url('https://fonts.googleapis.com/css?family=Nunito'); /* Путь к файлу со шрифтом */
 }
 
 body {

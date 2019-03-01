@@ -49,7 +49,7 @@ h1 {
   background: #f2f2f2;
   width: 100%;
   /*border: 0;*/
-  margin: 0 0 15px;
+  margin: 0 0 28px;
   padding: 15px;
   box-sizing: border-box;
   border-radius: 8px;
@@ -119,15 +119,62 @@ div.sign-in {
 }
 
 .valid-icon {
-  font-size: 48px;
+  font-size: 37px;
   color: rgba(0, 167, 121, 0.81);
+  margin-left: 5px;
 }
 
 .invalid-icon {
-  font-size: 48px;
+  font-size: 37px;
+  color: red;
+  margin-left: 5px;
+}
+
+.alert-wrapper {
+  position: relative;
+}
+
+.alert-info {
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  font-size: 14px;
   color: red;
 }
 
-.keks {
-  float: right;
+.valid-info {
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 167, 121, 0.81);
+}
+
+.icon {
+  position: absolute;
+  bottom: 31.5px;
+  left: 380px;
+}
+
+.icon-wrapper {
+  position: relative;
+}
+
+p {
+  font-size: 16px;
+  font-weight: bolder;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+
+a {
+  text-weight: bold;
+}
+
+a:hover {
+  color: #00e521;
+  text-weight: bold;
 }
