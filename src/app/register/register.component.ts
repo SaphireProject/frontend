@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
     loading = false;
     submitted = false;
     condition = false;
-    signInReset = false;
     strength: number;
 
     constructor(
@@ -25,10 +24,10 @@ export class RegisterComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private userService: UserService,
         private alertService: AlertService
-    ) { 
-        // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
-            this.router.navigate(['/']);
+    ) {
+      // redirect to home if already logged in
+        if (this.authenticationService.currentUserValue) {
+          this.router.navigate(['/']);
         }
     }
 
@@ -42,6 +41,7 @@ export class RegisterComponent implements OnInit {
             validators: MustMatch('password', 'confirmPassword')
         });
     }
+
 
     toggle() {
       this.condition = true;
@@ -62,26 +62,25 @@ export class RegisterComponent implements OnInit {
         return true;
       }
     }
-  checkForInvalidField(control: FormControl) {
-    if (control.errors && (control.touched || this.submitted)) {
-      return true;
-    }
-  }
-  checkForFieldRequired(control: FormControl) {
-      if (!control.errors.required) {
-        return true;
-      }
-  }
-  checkForMaxLength(control: FormControl) {
-      if (!control.errors.maxlength) {
-        return true;
-      }
-  }
-
-  onStrengthChanged(strength: number) {
-      this.strength = strength;
-    console.log('password strength = ', strength);
-  }
+    checkForInvalidField(control: FormControl) {
+     if (control.errors && (control.touched || this.submitted)) {
+       return true;
+     }
+   }
+    checkForFieldRequired(control: FormControl) {
+       if (!control.errors.required) {
+         return true;
+       }
+   }
+    checkForMaxLength(control: FormControl) {
+       if (!control.errors.maxlength) {
+         return true;
+       }
+   }
+    onStrengthChanged(strength: number) {
+       this.strength = strength;
+     console.log('password strength = ', strength);
+   }
 
     // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
@@ -90,13 +89,11 @@ export class RegisterComponent implements OnInit {
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.registerForm.invalid) {
+        if ((this.registerForm.invalid) || ((this.strength) < 100)) {
+            this.alertService.error('Please, enter correct info about you');
             return;
         }
 
-        if ((this.strength) < 100) {
-            return;
-      }
 
         this.loading = true;
         this.userService.register(this.registerForm.value)

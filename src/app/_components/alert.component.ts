@@ -1,23 +1,25 @@
 ﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-
-import { AlertService } from '../_services';
+import { AlertService, ToastrService } from '../_services';
 
 @Component({
     selector: 'alert',
     templateUrl: 'alert.component.html',
-    styleUrls: ['./alert.component.css']
+    styleUrls: ['alert.component.css']
 })
 
 export class AlertComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     message: any;
 
-    constructor(private alertService: AlertService) { }
+    constructor(private alertService: AlertService,
+                private toastrService: ToastrService,
+                ) { }
 
     ngOnInit() {
-        this.subscription = this.alertService.getMessage().subscribe(message => { 
-            this.message = message; 
+        this.subscription = this.alertService.getMessage().subscribe(message => {
+            this.message = message;
+            this.toastrService.makeToastr(message);
         });
     }
 

@@ -8,7 +8,7 @@ import { fakeBackendProvider } from './_helpers';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-
+import { ToastrComponent } from './toastr/';
 import { AlertComponent } from './_components';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
@@ -21,6 +21,8 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import {MatInputModule, MatIconModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material';
+
 // import { SocialComponent } from './social/social.component'
 
 @NgModule({
@@ -35,6 +37,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatFormFieldModule,
         MatInputModule,
         MatProgressSpinnerModule,
+        MatSnackBarModule,
         routing],
     declarations: [
         AppComponent,
@@ -44,6 +47,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         RegisterComponent,
         NavComponent,
         FooterComponent,
+        ToastrComponent
 //        SocialComponent
     ],
     providers: [
