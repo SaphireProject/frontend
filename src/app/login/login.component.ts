@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-import { AlertService, AuthenticationService } from '../_services';
+import { AlertService, UserService} from '../_services';
 
 @Component({
   templateUrl: 'login.component.html',
@@ -19,12 +19,12 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService,
+        private userService: UserService,
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
-            this.router.navigate(['/']);
+        if (this.userService.currentUserValue) {
+          this.router.navigate(['/']);
         }
       console.log('cosntructor LoginComp');
     }
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.userService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
                 data => {

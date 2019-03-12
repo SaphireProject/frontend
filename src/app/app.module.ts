@@ -22,12 +22,15 @@ import {MatInputModule, MatIconModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProfileComponent } from './profile/profile.component';
 
 // import { SocialComponent } from './social/social.component'
 
 @NgModule({
     imports: [
         BrowserModule,
+        FlexLayoutModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -47,8 +50,8 @@ import {MatSnackBarModule} from '@angular/material';
         RegisterComponent,
         NavComponent,
         FooterComponent,
-        ToastrComponent
-//        SocialComponent
+        ToastrComponent,
+        ProfileComponent//        SocialComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
