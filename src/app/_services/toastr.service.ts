@@ -29,9 +29,11 @@ export class ToastrService {
     this.snackBar.openFromComponent(ToastrComponent, {
       data: {
         message: message.text,
-        icon: this.icon,
+        icon: this.icon
       },
       duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
       panelClass: [this.cssClass]
     });
   }
