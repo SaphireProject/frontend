@@ -89,7 +89,6 @@ export class RegisterComponent implements OnInit {
 
         // stop here if form is invalid
         if ((this.registerForm.invalid) || ((this.strength) < 100)) {
-            this.alertService.error('Please, enter correct info about you');
             return;
         }
 

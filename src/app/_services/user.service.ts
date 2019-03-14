@@ -21,6 +21,7 @@ export class UserService {
   }
 
   public get currentUserValue(): User {
+    console.log('return this.currentUserSubject.value;');
     return this.currentUserSubject.value;
   }
 
