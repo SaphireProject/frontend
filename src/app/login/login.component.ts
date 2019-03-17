@@ -51,12 +51,12 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
+
         this.userService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
                 data => {
-                    console.log('authenticationService.login.pipe.subscribe data');
-                    console.log(data);
+                    this.alertService.success('Hello, ' + this.f.username.value + '!');
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

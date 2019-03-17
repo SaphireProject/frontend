@@ -1,0 +1,52 @@
+
+.profile-settings {
+  padding: 20px;
+}
+
+form {
+  text-align: center;
+}
+
+mat-card.small-card {
+  width: 400px;
+  height: 430px;
+  margin: 100px auto;
+}
+
+mat-card.big-card {
+  width: 400px;
+  height: 650px;
+  margin: 100px auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+}
+
+.avatar {
+  margin: 10px auto;
+  width: 120px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
+  position: absolute;
+  bottom: 5px;
+}
+
+.edit-button {
+  margin-top: 20px;
+}
+
+.close-button {
+  display: inline;
+}

@@ -1,0 +1,71 @@
+<div class="profile-settings">
+  <mat-card [ngClass]="{'small-card': passwordEdit===false, 'big-card': passwordEdit===true}">
+    <mat-card-title><h3>My profile settings</h3></mat-card-title>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field class="form-group">
+        <input matInput placeholder="Email" formControlName="email" id="email" name="email" required>
+        <mat-error *ngIf="f.email.invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="form-group">
+        <input matInput placeholder="Username" formControlName="username" id="username" name="username" required>
+        <mat-error *ngIf="f.username.invalid">{{getUserErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <textarea matInput placeholder="Short Bio" formControlName="bio" maxlength="255" id="bio" name="bio" ></textarea>
+        <mat-hint align="end" >{{f.bio.value.length}} / 300</mat-hint>
+        <mat-error *ngIf="f.bio.invalid">Wow, too much rows! Maximum rows is 2</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button class="edit-button" type="button" (click)="editPassword()">Edit Password</button>
+      <div *ngIf="passwordEdit">
+        <mat-form-field class="form-group">
+          <input matInput type="password" placeholder="Old Password" formControlName="oldPassword" id="oldPassword" name="password">
+          <mat-error *ngIf="f.oldPassword.invalid">{{getOldPasswordMessage()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-group">
+          <input type="password" matInput #password placeholder="Password" formControlName="password" id="password" name="password" (input)="toggle()">
+          <mat-error *ngIf="f.password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="form-group">
+          <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required>
+          <mat-error *ngIf="f.confirmPassword.invalid">{{getConfirmPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+        <div *ngIf="showingPasswordValid" class="info-validation">
+          <mat-password-strength #passwordComponent
+                                 (onStrengthChanged)="onStrengthChanged($event)"
+                                 [password]="f.password.value"
+                                 [enableSpecialCharRule] = false>
+          </mat-password-strength>
+          <mat-password-strength-info
+            [passwordComponent]="passwordComponent"
+            lowerCaseCriteriaMsg="contains at least one lower character in English"
+            upperCaseCriteriaMsg="contains at least one upper character in English"
+          >
+          </mat-password-strength-info>
+        </div>
+      </div>
+
+      <div class="load-ring"><mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="32" style="margin:0 auto;"></mat-progress-spinner></div>
+
+      <div class="buttons">
+      <mat-card-actions>
+        <button mat-raised-button class="close-button" routerLink="/me/" type="button">Back</button>
+        <button mat-raised-button class="save-button" type="submit">Save</button>
+      </mat-card-actions>
+      </div>
+    </form>
+
+
+
+  </mat-card>
+</div>
+

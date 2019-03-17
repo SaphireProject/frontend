@@ -2,6 +2,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatButtonModule, MatCheckboxModule, MatMenuModule,
+  MatToolbarModule, MatDialogModule, MatSidenavModule, MatNativeDateModule,
+  MatCardModule, MatTabsModule, MatExpansionModule } from '@angular/material';
+import { GravatarModule } from  'ngx-gravatar';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -24,8 +28,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
+import { gravatarConfig } from './_configs/';
 
 // import { SocialComponent } from './social/social.component'
+
 
 @NgModule({
     imports: [
@@ -39,8 +46,12 @@ import { ProfileComponent } from './profile/profile.component';
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
+        MatCardModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
+        MatButtonModule,
+        MatExpansionModule,
+        GravatarModule.forRoot(gravatarConfig),
         routing],
     declarations: [
         AppComponent,
@@ -51,7 +62,8 @@ import { ProfileComponent } from './profile/profile.component';
         NavComponent,
         FooterComponent,
         ToastrComponent,
-        ProfileComponent//        SocialComponent
+        ProfileComponent,
+        ProfileSettingsComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

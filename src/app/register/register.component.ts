@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
 
 
-import { AlertService, UserService} from '../_services';
+import { AlertService, UserService } from '../_services';
 import {MustMatch} from '../_helpers/';
 
 @Component({templateUrl: 'register.component.html',
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private userService: UserService,
-        private alertService: AlertService
+        private alertService: AlertService,
     ) {
       // redirect to home if already logged in
         if (this.userService.currentUserValue) {
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
         return true;
       }
     }
-    checkForErrorStatusIcon(control: FormControl) {
+    checkForErrorStatusIcon(control: FormControl)  {
       if (control.errors && (control.touched || this.submitted)) {
         return true;
       }

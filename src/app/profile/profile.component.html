@@ -1,1 +1,25 @@
-<h4>{{ currentUser.username }}</h4>
+<div class="profile">
+  <mat-card>
+    <div [@imageAnimation]='state' (click)="animateImage()" class="avatar"><img ngxGravatar [email]= currentUser.email.valueOf() size=150></div>
+
+    <mat-card-header>
+      <mat-card-title><h3>Profile Page</h3></mat-card-title>
+      <mat-card-title><h4><mat-icon>account_circle</mat-icon>{{ currentUser?.username }}</h4>
+        <mat-card-subtitle><mat-icon class="mail-icon">mail_outline</mat-icon>{{ currentUser?.email}}</mat-card-subtitle>
+        <div class="buttons-top">
+          <button mat-raised-button class="top" routerLink="#"><mat-icon>people</mat-icon>Freinds</button>
+          <button mat-raised-button class="top" routerLink="#"><mat-icon>gamepad</mat-icon>Games</button>
+          <button mat-raised-button class="top" routerLink="#"><mat-icon>cake</mat-icon>Achievments</button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+
+    <mat-card-subtitle class="bio" >{{ currentUser.bio != null ? currentUser.bio : "\n" + currentUser.username +" hasn't yet told about himself"}}</mat-card-subtitle>
+
+    <mat-card-actions class="button">
+      <button mat-raised-button class="primary" routerLink="/me/edit">Edit profile</button>
+    </mat-card-actions>
+
+  </mat-card>
+</div>
