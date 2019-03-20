@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
 
@@ -7,8 +7,8 @@ import { AlertService, UserService } from '../_services';
 import {MustMatch} from '../_helpers/';
 import {maxLines} from '../_helpers/max-lines';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {first} from 'rxjs/operators';
-import {User} from '../_models';
+import {first, tap} from 'rxjs/operators';
+import {Profile, User} from '../_models';
 
 @Component({
   selector: 'app-profile-settings',
@@ -24,28 +24,34 @@ export class ProfileSettingsComponent implements OnInit {
   currentUser: User;
   showingPasswordValid = false;
   strength: number;
+  profile: Profile;
 
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.currentUser.subscribe(user => {
-      this.currentUser = user;
-    });
-    console.log(this.currentUser.username);
-    console.log();
+    this.route.data.pipe(tap(
+      ((data: { profile: Profile }) => {
+        this.profile = data.profile;
+      }
+      ))).subscribe();
+   // this.currentUserSubscription = this.userService.currentUser.subscribe(user => {
+   //   this.currentUser = user;
+   // });
+
     this.userForm = this.formBuilder.group({
-      email: [(this.currentUser.email != null) ? (this.currentUser.email) : '', [Validators.required, Validators.email, Validators.email]],
-      username: [(this.currentUser.username != null) ? (this.currentUser.username) : '', [Validators.required, Validators.maxLength(50)]],
+      email: [(this.profile.email != null) ? (this.profile.email) : '', [Validators.required, Validators.email, Validators.email]],
+      username: [(this.profile.username != null) ? (this.profile.username) : '', [Validators.required, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$')]],
       oldPassword: ['', Validators.required],
       confirmPassword: ['', [Validators.required]],
-      bio: [(this.currentUser.bio != null) ? (this.currentUser.bio) : '', maxLines(2)]
+      bio: [(this.profile.bio != null) ? (this.profile.bio) : '', maxLines(2)]
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });

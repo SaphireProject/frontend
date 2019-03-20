@@ -3,11 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { sha256 } from 'js-sha256';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
 import {User, UserRegisterRequest, UserEditRequest, Profile} from '../_models';
-import {stringify} from 'querystring';
 
 
 @Injectable({ providedIn: 'root' })
@@ -32,12 +30,7 @@ export class UserService {
     userRequest.password = sha256(userRequest.password);
     return this.http.post<any>(`${environment.apiUrl}auth/registration`, userRequest).pipe(map(user => {
       console.log('login successful if there\'s a jwt token in the response');
-      if (user && user.token) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-      }
+      this.saveCurrentUser(user);
       return user;
     }));
   }
@@ -48,13 +41,7 @@ export class UserService {
     return this.http.post<any>(`${environment.apiUrl}auth/authenticate/generate-token`, { username, password })
       .pipe(map(user => {
         console.log('login successful if there\'s a jwt token in the response');
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-
+        this.saveCurrentUser(user);
         return user;
       }));
   }
@@ -98,13 +85,7 @@ export class UserService {
           if ((newUser.username !== this.currentUserValue.username) ||
                 (newUser.email !== this.currentUserValue.email) ||
                   (newUser.token !== this.currentUserValue.token)) {
-          if (newUser && newUser.token) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
-            console.log('test');
-            localStorage.setItem('currentUser', JSON.stringify(newUser));
-            this.currentUserSubject.next(newUser);
-          }
+          this.saveCurrentUser(newUser);
           return user;
           }
         }));
@@ -125,24 +106,28 @@ export class UserService {
 //      ;
 //  }
 
-  updateData() {
+  updateGlobalProfileData() {
     return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
       if ((user.username !== this.currentUserValue.username) ||
         (user.email !== this.currentUserValue.email)) {
         if (user) {
           user.token = this.currentUserValue.token;
           user.bio = null;
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          this.saveCurrentUser(user);
         }
       }
     }))
       ;
   }
 
-
+  private saveCurrentUser(user: User) {
+    if (user && user.token) {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+    }
+  }
 
 
 

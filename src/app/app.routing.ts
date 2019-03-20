@@ -17,7 +17,7 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'toastr', component: ToastrComponent},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
-    { path: 'me/edit', component: ProfileSettingsComponent, canActivate: [AuthGuard]},
+    { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
 
 // otherwise redirect to home
 { path: '**', redirectTo: '' }

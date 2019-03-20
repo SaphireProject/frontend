@@ -50,3 +50,7 @@ a:hover {
 .close-button {
   display: inline;
 }
+
+.load-ring {
+  margin-top: 15px;
+}
