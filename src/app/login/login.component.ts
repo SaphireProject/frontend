@@ -64,8 +64,6 @@ export class LoginComponent implements OnInit {
                   console.log('authenticationService.login.pipe.subscribe data error');
                   console.log(error);
                     this.alertService.error(error);
-                    this.loginForm.controls['username'].setErrors({'incorrect': true});
-                    this.loginForm.controls['password'].setErrors({'incorrect': true});
                     this.loading = false;
                 });
     }

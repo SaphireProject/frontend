@@ -6,7 +6,7 @@ import { sha256 } from 'js-sha256';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
-import { User, UserRegisterRequest, UserEditRequest } from '../_models';
+import {User, UserRegisterRequest, UserEditRequest, Profile} from '../_models';
 import {stringify} from 'querystring';
 
 
@@ -117,6 +117,13 @@ export class UserService {
     }))
       ;
   }
+//   past after user management will be done
+//
+//  get(username: string): Observable<Profile> {
+//    return this.http.get<any>(`${environment.apiUrl}user/${username}`).pipe(map(
+//      (data: {profile: Profile}) => data.profile))
+//      ;
+//  }
 
   updateData() {
     return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {

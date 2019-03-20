@@ -30,6 +30,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { gravatarConfig } from './_configs/';
+import {ProfileResolver} from './profile/profile-resolver.service';
 
 // import { SocialComponent } from './social/social.component'
 
@@ -69,6 +70,7 @@ import { gravatarConfig } from './_configs/';
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        ProfileResolver
 
         // provider used to create fake backend
         // fakeBackendProvider
