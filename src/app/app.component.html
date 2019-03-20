@@ -1,5 +1,7 @@
 ﻿<!-- nav -->
 <app-nav *ngIf="currentUser"></app-nav>
+<mat-progress-bar *ngIf="loading" color="blue" mode="indeterminate">
+</mat-progress-bar>
 
 <!-- main app container -->
 <router-outlet></router-outlet>
