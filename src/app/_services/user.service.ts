@@ -27,6 +27,21 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
+  register(userRequest: UserRegisterRequest) {
+    this.passwordWithoutHash = userRequest.password;
+    userRequest.password = sha256(userRequest.password);
+    return this.http.post<any>(`${environment.apiUrl}auth/registration`, userRequest).pipe(map(user => {
+      console.log('login successful if there\'s a jwt token in the response');
+      if (user && user.token) {
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+      }
+      return user;
+    }));
+  }
+
   login(username: string, password: string) {
     password = sha256(password);
     // return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
@@ -68,13 +83,6 @@ export class UserService {
     }
     */
 
-  register(user: UserRegisterRequest) {
-    this.passwordWithoutHash = user.password;
-    user.password = sha256(user.password);
-    return this.http.post(`${environment.apiUrl}auth/registration`, user);
-    this.login(user.username, user.password);
-  }
-
   editProfile(user: UserEditRequest, passwordEdit: boolean) {
     if (passwordEdit === true) {
       user.oldPassword = sha256(user.oldPassword);
@@ -83,22 +91,46 @@ export class UserService {
     } else {
        user.oldPassword = null;
        user.password = null;
-       console.log('rbl')
-       return this.http.put(`${environment.apiUrl}user/edit`, user);
+       // return this.http.put(`${environment.apiUrl}user/edit`, user);
+      return this.http.put<any>(`${environment.apiUrl}user/edit`, user )
+        .pipe(map(newUser => {
+          console.log('login successful if there\'s a jwt token in the response');
+          if ((newUser.username !== this.currentUserValue.username) ||
+                (newUser.email !== this.currentUserValue.email) ||
+                  (newUser.token !== this.currentUserValue.token)) {
+          if (newUser && newUser.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
+            console.log('test');
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            this.currentUserSubject.next(newUser);
+          }
+          return user;
+          }
+        }));
     }
   }
 
   getUserProfile() {
     return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
-      if (user) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
-        console.log(user.result);
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-      }
-
       return user;
+    }))
+      ;
+  }
+
+  updateData() {
+    return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
+      if ((user.username !== this.currentUserValue.username) ||
+        (user.email !== this.currentUserValue.email)) {
+        if (user) {
+          user.token = this.currentUserValue.token;
+          user.bio = null;
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          console.log('store user details and jwt token in local storage to keep user logged in between page refreshes');
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+      }
     }))
       ;
   }

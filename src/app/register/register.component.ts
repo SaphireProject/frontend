@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
-    condition = false;
+    showPasswordValid = false;
     strength: number;
 
     constructor(
@@ -42,8 +42,8 @@ export class RegisterComponent implements OnInit {
     }
 
 
-    toggle() {
-      this.condition = true;
+    togglePasswordInput() {
+      this.showPasswordValid = true;
     }
 
     checkForCheckStatusIcon(control: FormControl) {
@@ -89,6 +89,7 @@ export class RegisterComponent implements OnInit {
 
         // stop here if form is invalid
         if ((this.registerForm.invalid) || ((this.strength) < 100)) {
+            this.alertService.error('Please, enter correct info about you');
             return;
         }
 
@@ -99,7 +100,7 @@ export class RegisterComponent implements OnInit {
             .subscribe(
                 data => {
                     this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['/']);
                 },
                 error => {
                     this.alertService.error(error);

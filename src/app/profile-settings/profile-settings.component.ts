@@ -37,13 +37,15 @@ export class ProfileSettingsComponent implements OnInit {
     this.currentUserSubscription = this.userService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
+    console.log(this.currentUser.username);
+    console.log();
     this.userForm = this.formBuilder.group({
       email: [(this.currentUser.email != null) ? (this.currentUser.email) : '', [Validators.required, Validators.email, Validators.email]],
       username: [(this.currentUser.username != null) ? (this.currentUser.username) : '', [Validators.required, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$')]],
       oldPassword: ['', Validators.required],
       confirmPassword: ['', [Validators.required]],
-      bio: [(this.currentUser.bio != null) ? (this.currentUser.username) : '', maxLines(2)]
+      bio: [(this.currentUser.bio != null) ? (this.currentUser.bio) : '', maxLines(2)]
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });
@@ -80,7 +82,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.passwordEdit = !this.passwordEdit;
   }
 
-  toggle() {
+  toggleOnPasswordInput() {
     this.showingPasswordValid = true;
   }
 
@@ -99,6 +101,7 @@ export class ProfileSettingsComponent implements OnInit {
     if ((((this.f.email.invalid) || (this.f.username.invalid)) && (this.passwordEdit === false)) ||
           ((this.userForm.invalid) && (this.passwordEdit === true)) ||
             (this.f.bio.invalid)) {
+      this.alertService.error('Please, enter correct info about you');
       console.log('first valid');
       return;
     }
@@ -122,6 +125,7 @@ export class ProfileSettingsComponent implements OnInit {
         data => {
           console.log('data');
           this.alertService.success('Profile was saved', true);
+          this.router.navigate(['/me']);
         },
         error => {
           console.log('error in editing');

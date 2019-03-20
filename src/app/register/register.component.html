@@ -34,7 +34,7 @@
           </div>
             </div>
 
-          <input type="password" matInput #password placeholder="Password" formControlName="password" required class="form-control-password" [ngClass]="{ 'is-invalid': ( submitted && f.password.errors )}" (input)="toggle()"/>
+          <input type="password" matInput #password placeholder="Password" formControlName="password" required class="form-control-password" [ngClass]="{ 'is-invalid': ( submitted && f.password.errors )}" (input)="togglePasswordInput()"/>
               <div class="icon-wrapper">
                 <div class="icon">
                   <mat-icon *ngIf="checkForCheckStatusIcon(f.password)" class="valid-icon">check_circle</mat-icon>
@@ -65,7 +65,7 @@
            </div>
           </div>
 
-          <div *ngIf="condition" class="info-validation">
+          <div *ngIf="showPasswordValid" class="info-validation">
           <mat-password-strength #passwordComponent
                                  (onStrengthChanged)="onStrengthChanged($event)"
                                  [password]="password.value"

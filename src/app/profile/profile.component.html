@@ -1,11 +1,11 @@
 <div class="profile">
   <mat-card>
-    <div [@imageAnimation]='state' (click)="animateImage()" class="avatar"><img ngxGravatar [email]= currentUser.email.valueOf() size=150></div>
+    <div class="avatar"><img ngxGravatar [email]=profile?.email size=150></div>
 
     <mat-card-header>
       <mat-card-title><h3>Profile Page</h3></mat-card-title>
-      <mat-card-title><h4><mat-icon>account_circle</mat-icon>{{ currentUser?.username }}</h4>
-        <mat-card-subtitle><mat-icon class="mail-icon">mail_outline</mat-icon>{{ currentUser?.email}}</mat-card-subtitle>
+      <mat-card-title><h4><mat-icon>account_circle</mat-icon>{{ profile?.username }}</h4>
+        <mat-card-subtitle><mat-icon class="mail-icon">mail_outline</mat-icon>{{ profile?.email}}</mat-card-subtitle>
         <div class="buttons-top">
           <button mat-raised-button class="top" routerLink="#"><mat-icon>people</mat-icon>Freinds</button>
           <button mat-raised-button class="top" routerLink="#"><mat-icon>gamepad</mat-icon>Games</button>
@@ -15,7 +15,7 @@
     </mat-card-header>
 
 
-    <mat-card-subtitle class="bio" >{{ currentUser.bio != null ? currentUser.bio : "\n" + currentUser.username +" hasn't yet told about himself"}}</mat-card-subtitle>
+    <mat-card-subtitle class="bio" >{{ profile?.bio != null ? profile?.bio : "\n" + profile?.username +" hasn't yet told about himself"}}</mat-card-subtitle>
 
     <mat-card-actions class="button">
       <button mat-raised-button class="primary" routerLink="/me/edit">Edit profile</button>

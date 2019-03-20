@@ -1,3 +1,11 @@
+.ng-invalid:not(form), .is-invalid.ng-untouched:not(form)  {
+  border: 1px solid #ff463f;
+}
+
+.ng-untouched:not(form), .ng-valid {
+  border: 0px;
+}
+
 .wrapper {
   margin: 0 auto;
   height: inherit;
@@ -33,12 +41,10 @@ h1 {
   outline: 0;
   background: #f2f2f2;
   width: 100%;
-  /*border: 0;*/
   margin: 0 0 28px;
   padding: 15px;
   box-sizing: border-box;
   border-radius: 81px;
-  border: 0px;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;

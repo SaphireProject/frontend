@@ -29,7 +29,7 @@
         </mat-form-field>
 
         <mat-form-field class="form-group">
-          <input type="password" matInput #password placeholder="Password" formControlName="password" id="password" name="password" (input)="toggle()">
+          <input type="password" matInput #password placeholder="Password" formControlName="password" id="password" name="password" (input)="toggleOnPasswordInput()">
           <mat-error *ngIf="f.password.invalid">{{getPasswordErrorMessage()}}</mat-error>
         </mat-form-field>
 
