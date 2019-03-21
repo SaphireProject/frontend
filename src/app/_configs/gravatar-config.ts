@@ -7,5 +7,5 @@ export const gravatarConfig: GravatarConfig = {
   borderWidth: 1,
   backgroundColor: 'rgba(0, 0, 0, 0.1)',
   borderColor: 'rgba(0, 0, 0, 0.1)',
-  hasBorder: true // Set this flag to true to have a border by default
-}
+  hasBorder: true
+};

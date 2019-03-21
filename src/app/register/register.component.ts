@@ -2,8 +2,6 @@
 import { Router } from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
-import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
-
 
 import { AlertService, UserService } from '../_services';
 import {MustMatch} from '../_helpers/';

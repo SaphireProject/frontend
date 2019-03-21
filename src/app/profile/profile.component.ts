@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Profile, User } from '../_models/';
 import { UserService } from '../_services';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import {ActivatedRoute} from '@angular/router';
 import {concatMap, tap} from 'rxjs/operators';
 
@@ -34,19 +33,6 @@ export class ProfileComponent implements OnInit {
       })
     ).subscribe();
   }
-
- //   this.userService.getUserProfile()
- //     .pipe(first())
- //     .subscribe(
- //       data => {console.log(data.username);
- //       },
- //       error => {});
-//
-
- //     this.currentUserSubscription = this.userService.getUserProfile().subscribe(profile => {
- //       this.profile = profile;
- //       console.log(profile.email);
- //     });
   onProfileEdit() {
     this.toggle = true;
   }

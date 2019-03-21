@@ -2,13 +2,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatButtonModule,
-  MatCardModule, MatExpansionModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatExpansionModule } from '@angular/material';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { GravatarModule } from  'ngx-gravatar';
-
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers';
+import { GravatarModule } from 'ngx-gravatar';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';

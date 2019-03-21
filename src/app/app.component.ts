@@ -1,17 +1,15 @@
-﻿import {Component, OnDestroy, OnInit} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, NavigationError,
   NavigationStart, Router } from '@angular/router';
 
 import { UserService } from './_services';
 import { User } from './_models';
-import {Subject} from 'rxjs';
 
 
-@Component({ selector: 'app',
+@Component({ selector: 'app-root',
             templateUrl: 'app.component.html',
             styleUrls: ['app.component.css']})
-export class AppComponent implements OnInit, OnDestroy {
-    private unsubscribe: Subject<any> = new Subject();
+export class AppComponent implements OnInit {
 
     currentUser: User;
     loading = false;
@@ -27,7 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
             this.loading = true;
             break;
           }
-
           case event instanceof NavigationEnd:
           case event instanceof NavigationCancel:
           case event instanceof NavigationError: {
@@ -48,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         this.interval = setInterval(() => {
           this.refreshData();
-        }, 10000);
+        }, 50000);
     }
   logout() {
         this.userService.logout();
@@ -58,13 +55,10 @@ export class AppComponent implements OnInit, OnDestroy {
   refreshData() {
       console.log('refreshing data');
     if (this.currentUser) {
-      this.userService.updateData().subscribe();
+      this.userService.updateGlobalProfileData().subscribe();
     }
   }
 
-  ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-  }
+
 
 }
