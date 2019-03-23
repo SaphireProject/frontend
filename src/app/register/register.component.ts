@@ -1,6 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, UserService } from '../_services';
@@ -44,32 +44,32 @@ export class RegisterComponent implements OnInit {
       this.showPasswordValid = true;
     }
 
-    checkForCheckStatusIcon(control: FormControl) {
+    checkForCheckStatusIcon(control: AbstractControl) {
       if (!control.errors && (control.touched || this.submitted)) {
         return true;
       }
     }
-    checkForErrorStatusIcon(control: FormControl)  {
+    checkForErrorStatusIcon(control: AbstractControl)  {
       if (control.errors && (control.touched || this.submitted)) {
         return true;
       }
     }
-    checkForValidField(control: FormControl) {
+    checkForValidField(control: AbstractControl) {
       if (control.valid && control.touched) {
         return true;
       }
     }
-    checkForInvalidField(control: FormControl) {
+    checkForInvalidField(control: AbstractControl) {
      if (control.errors && (control.touched || this.submitted)) {
        return true;
      }
    }
-    checkForFieldRequired(control: FormControl) {
+    checkForFieldRequired(control: AbstractControl) {
        if (!control.errors.required) {
          return true;
        }
    }
-    checkForMaxLength(control: FormControl) {
+    checkForMaxLength(control: AbstractControl) {
        if (!control.errors.maxlength) {
          return true;
        }
