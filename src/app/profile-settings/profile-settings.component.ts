@@ -5,10 +5,10 @@ import {MatPasswordStrengthComponent} from '@angular-material-extensions/passwor
 
 import { AlertService, UserService } from '../_services';
 import {MustMatch} from '../_helpers/';
-import {maxLines} from '../_helpers/max-lines';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {maxLines} from '../_helpers/';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first, tap} from 'rxjs/operators';
-import {Profile, User} from '../_models';
+import {Profile} from '../_models';
 
 @Component({
   selector: 'app-profile-settings',
@@ -20,8 +20,6 @@ export class ProfileSettingsComponent implements OnInit {
   submitted = false;
   loading = false;
   passwordEdit = false;
-  currentUserSubscription: Subscription;
-  currentUser: User;
   showingPasswordValid = false;
   strength: number;
   profile: Profile;
@@ -41,9 +39,6 @@ export class ProfileSettingsComponent implements OnInit {
         this.profile = data.profile;
       }
       ))).subscribe();
-   // this.currentUserSubscription = this.userService.currentUser.subscribe(user => {
-   //   this.currentUser = user;
-   // });
 
     this.userForm = this.formBuilder.group({
       email: [(this.profile.email != null) ? (this.profile.email) : '', [Validators.required, Validators.email, Validators.email]],

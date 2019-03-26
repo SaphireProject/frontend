@@ -1,0 +1,16 @@
+.nav-logo {
+  background: #2f66a9;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.navigationbar-button-name {
+  margin-left: 15px;
+}
+
+a:hover, a:active {
+  color: lightgray;
+}

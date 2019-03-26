@@ -37,4 +37,6 @@ export class ProfileComponent implements OnInit {
     this.toggle = true;
   }
 
+
+
 }

@@ -1,0 +1,124 @@
+<mat-sidenav #sidenav mode="over" class="sidenav">
+  <div class="menu-link">
+    <div class="nav-logo">
+    <img src="assets/images/logo_big.png" alt="logo" height="70" width="146">
+    </div>
+    <button mat-button (click)="sidenav.close()">
+      <mat-icon class="home">keyboard_backspace</mat-icon>
+      <span  class="navigationbar-button-name">Back</span>
+    </button>
+    <button mat-button routerLink="/me" (click)="sidenav.close()">
+      <mat-icon class="home">videogame_asset</mat-icon>
+      <span class="navigationbar-button-name">New Game</span>
+    </button>
+    <button mat-button routerLink="/home" (click)="sidenav.close()">
+      <mat-icon class="home">home</mat-icon>
+      <span class="navigationbar-button-name">Home</span>
+    </button>
+    <button mat-button routerLink="/me" (click)="sidenav.close()">
+      <mat-icon class="home">face</mat-icon>
+      <span class="navigationbar-button-name">My Profile</span>
+    </button>
+    <button mat-button routerLink="/strategies" (click)="sidenav.close()">
+      <mat-icon class="home">edit</mat-icon>
+      <span class="navigationbar-button-name">Strategies</span>
+    </button>
+    <button mat-button routerLink="/friends" (click)="sidenav.close()">
+      <mat-icon class="home">people</mat-icon>
+      <span class="navigationbar-button-name">Friends</span>
+    </button>
+    <button mat-button routerLink="/contact" (click)="sidenav.close()">
+      <mat-icon class="contact">email</mat-icon>
+      <span class="navigationbar-button-name">Contact</span>
+    </button>
+    <button mat-button routerLink="/misc" (click)="sidenav.close()">
+      <mat-icon class="help">help_outline</mat-icon>
+      <span class="navigationbar-button-name">Help</span>
+    </button>
+    <button mat-button routerLink="/about" (click)="sidenav.close()">
+      <mat-icon class="about">pageview</mat-icon>
+      <span class="navigationbar-button-name">About</span>
+    </button>
+
+  </div>
+</mat-sidenav>
+
+<mat-toolbar>
+  <div class="first-part">
+    <button type="button" mat-icon-button onclick="this.blur()" (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img src="assets/images/logorobo.png" alt="logo.png" width="34" height="35">
+    <span><a href="/" class="logo">crazyRobots</a></span>
+    <span><a routerLink="/" class="element">Home</a></span>
+    <span><a routerLink="/strategies" class="element">Strategies</a></span>
+    <span><a routerLink="/friends" class="element">Friends</a></span>
+  </div>
+  <div class="second-part">
+    <span></span>
+  </div>
+  <div class="third-part">
+    <span><a href="/#" class="element"><mat-icon>notifications_none</mat-icon></a></span>
+    <button mat-button class="profile-button" [matMenuTriggerFor]="menu">
+      <span>{{ currentUser?.username }}</span>
+      <img ngxGravatar [email]=currentUser?.email size=40 class="header-avatar" alt="avatar">
+    </button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item
+         routerLink="/me"  class="profile-item">
+        <mat-icon>face</mat-icon>
+        <span>My Profile</span>
+      </a>
+      <a mat-menu-item
+         routerLink="/" class="profile-item">
+        <mat-icon>edit</mat-icon>
+        <span>Strategies</span>
+      </a>
+      <a mat-menu-item
+         routerLink="/me" class="profile-item">
+        <mat-icon>people_outline</mat-icon>
+        <span>Friends</span>
+      </a>
+      <a mat-menu-item
+             routerLink="/me/edit" class="profile-item">
+      <mat-icon>settings</mat-icon>
+        <span>Account Settings</span>
+      </a>
+      <a mat-menu-item
+             routerLink="/me" class="profile-item">
+      <mat-icon>help_outline</mat-icon>
+        <span>Help</span>
+      </a>
+      <a mat-menu-item
+             routerLink="/me" class="profile-item" (click)="logout()">
+      <mat-icon>lock_outline</mat-icon>
+        <span>Log out</span>
+      </a>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+
+
+<!-- <header class="header">
+  <div class="wrapper">
+  <div class="container">
+      <a href="/" class="logo">{{appTitle}}</a>
+    <nav class="leftlist">
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/strategies">Strategies</a></li>
+          <li><a routerLink="/friends">Friends</a></li>
+        </ul>
+        </nav>
+        <nav class="rightlist">
+        <ul>
+            <li><a href="/#">Notifications</a></li>
+            <li><a class="lgout" (click)="logout()">Log out</a></li>
+        </ul>
+        </nav>
+      </div>
+      </div>
+</header>
+
+-->

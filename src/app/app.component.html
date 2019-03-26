@@ -1,13 +1,22 @@
-﻿<!-- nav -->
-<app-nav *ngIf="currentUser"></app-nav>
-<!-- progress bar of loading data -->
-<mat-progress-bar *ngIf="loading" color="blue" mode="indeterminate"></mat-progress-bar>
+﻿<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav mode="over" class="sidenav">
+    <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+  </mat-sidenav>
 
-<!-- main app container -->
-<router-outlet></router-outlet>
+  <mat-sidenav-content>
+    <!-- nav -->
+    <app-header *ngIf="currentUser" (sidenavToggle)="sidenav.toggle()"></app-header>
+    <!-- progress bar of loading data -->
+    <mat-progress-bar *ngIf="loading" color="blue" mode="indeterminate"></mat-progress-bar>
 
-<!-- global alert service -->
-<alert></alert>
 
-<!-- credits -->
-<app-footer *ngIf="currentUser"></app-footer>
+    <!-- main app container -->
+    <router-outlet></router-outlet>
+
+    <!-- global alert service -->
+    <alert></alert>
+
+    <!-- credits -->
+    <app-footer *ngIf="currentUser"></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
