@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { sha256 } from 'js-sha256';
 
 import {environment} from '../../environments/environment';
-import {User, UserRegisterRequest, UserEditRequest, Profile} from '../_models';
+import {User, UserRegisterRequest, UserEditRequest} from '../_models';
 
 
 @Injectable({ providedIn: 'root' })
@@ -74,11 +74,10 @@ export class UserService {
     if (passwordEdit === true) {
       user.oldPassword = sha256(user.oldPassword);
       user.password = sha256(user.password);
-      return this.http.put(`${environment.apiUrl}user/edit`, user);
     } else {
-       user.oldPassword = null;
-       user.password = null;
-       // return this.http.put(`${environment.apiUrl}user/edit`, user);
+      user.oldPassword = null;
+      user.password = null;
+    }
       return this.http.put<any>(`${environment.apiUrl}user/edit`, user )
         .pipe(map(newUser => {
           console.log('login successful if there\'s a jwt token in the response');
@@ -89,7 +88,6 @@ export class UserService {
           return user;
           }
         }));
-    }
   }
 
   getUserProfile() {
