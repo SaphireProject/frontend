@@ -8,7 +8,7 @@ import {ToastrComponent} from './toastr';
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileSettingsComponent} from './profile-settings/profile-settings.component';
 import {ProfileResolver} from './profile/profile-resolver.service';
-import {Profile} from './_models';
+import {ContactComponent} from './contact/contact.component';
 
 
 const appRoutes: Routes = [
@@ -16,6 +16,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'toastr', component: ToastrComponent},
+    { path: 'contact', component: ContactComponent},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
     { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
 

@@ -36,7 +36,7 @@
 
         <mat-form-field class="form-group">
           <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required>
-          <mat-error *ngIf="f.confirmPassword.invalid">{{getConfirmPasswordErrorMessage()}}</mat-error>
+          <mat-error *ngIf="f.confirmPassword.invalid ">{{getConfirmPasswordErrorMessage()}}</mat-error>
         </mat-form-field>
 
         <div *ngIf="showingPasswordValid" class="info-validation">

@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { sha256 } from 'js-sha256';
 
 import {environment} from '../../environments/environment';
-import {User, UserRegisterRequest, UserEditRequest} from '../_models';
+import {User, UserRegisterRequest, UserEditRequest, QuestionRequest} from '../_models';
 
 
 @Injectable({ providedIn: 'root' })
@@ -128,6 +128,10 @@ export class UserService {
   }
 
 
-
-
+  postQuestion(questionRequset: QuestionRequest) {
+    return this.http.post<any>(`${environment.apiUrl}contact`, questionRequset)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
 }
