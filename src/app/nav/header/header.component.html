@@ -48,11 +48,13 @@
     <button type="button" mat-icon-button onclick="this.blur()" (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
+    <div class="menu-item-left" fxFlex fxLayout fxHide.xs>
     <img src="assets/images/logorobo.png" alt="logo.png" width="34" height="35">
     <span><a href="/" class="logo">crazyRobots</a></span>
-    <span><a routerLink="/" class="element">Home</a></span>
-    <span><a routerLink="/strategies" class="element">Strategies</a></span>
-    <span><a routerLink="/friends" class="element">Friends</a></span>
+      <span><a routerLink="/" class="element">Home</a></span>
+      <span><a routerLink="/strategies" class="element">Strategies</a></span>
+      <span><a routerLink="/friends" class="element">Friends</a></span>
+  </div>
   </div>
   <div class="second-part">
     <span></span>

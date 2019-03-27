@@ -27,8 +27,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { gravatarConfig } from './_configs/';
 import {ProfileResolver} from './profile/profile-resolver.service';
-import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component';;
-import { ContactComponent } from './contact/contact.component'
+import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component';
+import { ContactComponent } from './contact/contact.component';
 
 // import { SocialComponent } from './social/social.component'
 
