@@ -77,7 +77,6 @@ export class ContactComponent implements OnInit, OnDestroy {
           this.router.navigate(['/']);
         },
         error => {
-          this.alertService.error(error);
           this.loading = false;
         }
         )

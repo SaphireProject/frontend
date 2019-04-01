@@ -28,10 +28,13 @@ export class ProfileResolver implements Resolve<Profile> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    console.log('ProfileResolver');
+    console.log('in ProfileResolver');
     // return this.userService.getUserProfile(route.params['username']) - when user-management will be done
     return this.userService.getUserProfile()
-      .pipe(catchError((err) => this.router.navigateByUrl('/')));
+      .pipe(catchError((err) => {
+        console.log('in catching error of profile');
+        return this.router.navigateByUrl('/contact');
+      }));
   }
 }
 

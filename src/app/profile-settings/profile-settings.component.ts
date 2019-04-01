@@ -129,8 +129,6 @@ export class ProfileSettingsComponent implements OnInit {
           this.router.navigate(['/me']);
         },
         error => {
-          console.log('error in editing');
-          this.alertService.error(error);
           this.loading = false;
         });
 

@@ -9,6 +9,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {ProfileSettingsComponent} from './profile-settings/profile-settings.component';
 import {ProfileResolver} from './profile/profile-resolver.service';
 import {ContactComponent} from './contact/contact.component';
+import {ErrorComponent} from './error/error.component';
 
 
 const appRoutes: Routes = [
@@ -17,11 +18,12 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'toastr', component: ToastrComponent},
     { path: 'contact', component: ContactComponent},
+    { path: 'error', component: ErrorComponent},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
     { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
 
 // otherwise redirect to home
-{ path: '**', redirectTo: '' }
+{ path: '**', redirectTo: '/error?type=404' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

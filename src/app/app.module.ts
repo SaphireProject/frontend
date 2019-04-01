@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+﻿import {ErrorHandler, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { ToastrComponent } from './toastr/';
 import { AlertComponent } from './_components';
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { JwtInterceptor, ServerErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
@@ -29,7 +29,8 @@ import { gravatarConfig } from './_configs/';
 import {ProfileResolver} from './profile/profile-resolver.service';
 import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component';
 import { ContactComponent } from './contact/contact.component';
-
+import {GlobalErrorHandler} from './_helpers/global-error-handler';
+import { ErrorComponent } from './error/error.component';
 // import { SocialComponent } from './social/social.component'
 
 
@@ -70,10 +71,12 @@ import { ContactComponent } from './contact/contact.component';
         ProfileSettingsComponent
 ,
         SidenavListComponent ,
-        ContactComponent   ],
+        ContactComponent ,
+        ErrorComponent  ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+      {provide: ErrorHandler, useClass: GlobalErrorHandler},
         ProfileResolver
 
         // provider used to create fake backend

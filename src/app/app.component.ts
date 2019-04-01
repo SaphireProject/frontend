@@ -38,14 +38,16 @@ export class AppComponent implements OnInit {
       });
     }
     ngOnInit() {
-      this.userService.currentUser.subscribe(x => this.currentUser = x);
-      this.refreshData();
-        if (this.interval) {
-          clearInterval(this.interval);
-        }
-        this.interval = setInterval(() => {
-          this.refreshData();
-        }, 50000);
+      this.userService.currentUser.subscribe(x => {
+        this.currentUser = x;
+      });
+      // this.refreshData();
+      //   if (this.interval) {
+      //     clearInterval(this.interval);
+      //   }
+      //   this.interval = setInterval(() => {
+      //     this.refreshData();
+      //   }, 50000);
     }
   logout() {
         this.userService.logout();
