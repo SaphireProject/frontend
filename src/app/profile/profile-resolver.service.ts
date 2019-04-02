@@ -1,19 +1,14 @@
 import { Injectable, } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import {Observable, throwError} from 'rxjs';
 
 import { Profile} from '../_models';
-import {catchError, first} from 'rxjs/operators';
-import {AlertService, UserService} from '../_services';
+import { catchError } from 'rxjs/operators';
+import { UserService} from '../_services';
 
 @Injectable()
 export class ProfileResolver implements Resolve<Profile> {
-  constructor(
-    private userService: UserService,
-    private alertService: AlertService,
-    private router: Router
-  ) {
-  }
+  constructor(private userService: UserService) {}
 
   // resolve(
   //   route: ActivatedRouteSnapshot,
@@ -33,8 +28,7 @@ export class ProfileResolver implements Resolve<Profile> {
     return this.userService.getUserProfile()
       .pipe(catchError((err) => {
         console.log('in catching error of profile');
-        return this.router.navigateByUrl('/contact');
+        return throwError(err);
       }));
   }
 }
-

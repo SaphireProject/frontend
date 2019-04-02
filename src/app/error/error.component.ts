@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {ErrorDescrpiption} from '../_configs/';
-import {errorMap} from '../_configs/error-descrpiption';
+import {errorMap} from '../_configs/';
 
 @Component({
   selector: 'app-error',
@@ -16,14 +16,14 @@ export class ErrorComponent implements OnInit {
   constructor( private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.routeParams = this.activatedRoute.snapshot.queryParams;
-    this.typeOfError = this.routeParams.type;
-    if (errorMap.has(this.typeOfError)) {
-      this.pageInfo = errorMap.get(this.typeOfError);
-    } else {
-      this.pageInfo = errorMap.get('404');
-    }
-    console.log(this.pageInfo.typeOfError);
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      console.log('Type of error: ' + params.get('type'));
+      this.typeOfError = params.get('type');
+      if (errorMap.has(this.typeOfError)) {
+        this.pageInfo = errorMap.get(this.typeOfError);
+      } else {
+        this.pageInfo = errorMap.get('404');
+      }
+    });
   }
-
 }
