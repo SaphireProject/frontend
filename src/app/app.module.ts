@@ -6,6 +6,7 @@ import { MatButtonModule, MatCardModule, MatExpansionModule, MatProgressBarModul
   MatSidenavModule, MatListModule } from '@angular/material';
 import { GravatarModule } from 'ngx-gravatar';
 
+
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { ToastrComponent } from './toastr/';
@@ -31,6 +32,7 @@ import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component'
 import { ContactComponent } from './contact/contact.component';
 import {GlobalErrorHandler} from './_helpers/global-error-handler';
 import { ErrorComponent } from './error/error.component';
+import { GameComponent } from './game/game.component';
 // import { SocialComponent } from './social/social.component'
 
 
@@ -72,7 +74,8 @@ import { ErrorComponent } from './error/error.component';
 ,
         SidenavListComponent ,
         ContactComponent ,
-        ErrorComponent  ],
+        ErrorComponent ,
+        GameComponent ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },

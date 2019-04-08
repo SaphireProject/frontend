@@ -10,6 +10,7 @@ import {ProfileSettingsComponent} from './profile-settings/profile-settings.comp
 import {ProfileResolver} from './profile/profile-resolver.service';
 import {ContactComponent} from './contact/contact.component';
 import {ErrorComponent} from './error/error.component';
+import {GameComponent} from './game/game.component';
 
 
 const appRoutes: Routes = [
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     { path: 'toastr', component: ToastrComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'error', component: ErrorComponent},
+    { path: 'game', component: GameComponent},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
     { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
 

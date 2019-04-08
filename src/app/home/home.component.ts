@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-
 import { User } from '../_models';
 import { UserService } from '../_services';
 
@@ -9,7 +8,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
     currentUserSubscription: Subscription;
 
-
     constructor(
         private userService: UserService
     ) {
@@ -17,9 +15,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.currentUser = user;
         });
     }
-
-
-
     ngOnInit() {
     }
 

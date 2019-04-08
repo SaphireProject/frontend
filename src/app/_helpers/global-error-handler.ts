@@ -14,7 +14,8 @@ export class GlobalErrorHandler implements ErrorHandler {
     console.log('Handling inner error of application (in client-side...');
     console.error('Error was handled: ' + error);
     const errorService = this.injector.get(ErrorService);
-    errorService.getClientErrorMessage(error);
+    // UNCOMMENT AFTER DEVELOP GAME
+    // errorService.getClientErrorMessage(error);
     // Client Error
     throwError(error);
   }
