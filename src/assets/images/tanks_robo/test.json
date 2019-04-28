@@ -1,0 +1,195 @@
+{
+  "preload": {
+    "tilemap": "NEEDTOPAST",
+    "objectsToInit": {
+      "tanks": [
+        {
+          "id": "1",
+          "color": "green"
+        },
+        {
+          "id": "2",
+          "color": "red"
+        }
+      ],
+      "blocks": "NEEDTOPAST"
+    }
+  },
+  "frames": [
+    {
+      "animations": {
+        "tanks": [
+          {
+            "id": "1",
+            "positionX": "60",
+            "positionY": "40",
+            "angle": "90",
+            "isActive": "true"
+          },
+          {
+            "id": "2",
+            "positionX": "150",
+            "positionY": "10",
+            "angle": "180",
+            "isActive": "true"
+          }
+        ],
+        "explosions": [
+          {
+            "positionX": "150",
+            "positionY": "10"
+          },
+          {
+            "positionX": "150",
+            "positionY": "10"
+          }
+        ],
+        "bullets": [
+          {
+            "positionX": "190",
+            "positiony": "100"
+          },
+          {
+            "positionX": "290",
+            "positiony": "10"
+          },
+          {
+            "positionX": "100",
+            "positiony": "50"
+          }
+        ]
+      }
+    },
+    {
+      "animations": {
+        "tanks": [
+          {
+            "id": "1",
+            "positionX": "80",
+            "positionY": "40",
+            "angle": "90",
+            "isActive": "true"
+          },
+          {
+            "id": "2",
+            "positionX": "150",
+            "positionY": "10",
+            "angle": "180",
+            "isActive": "true"
+          }
+        ],
+        "explosions": [
+          {
+            "positionX": "150",
+            "positionY": "10"
+          },
+          {
+            "positionX": "150",
+            "positionY": "10"
+          }
+        ],
+        "bullets": [
+          {
+            "positionX": "190",
+            "positiony": "100"
+          },
+          {
+            "positionX": "290",
+            "positiony": "10"
+          },
+          {
+            "positionX": "100",
+            "positiony": "50"
+          }
+        ]
+      }
+    },
+    {
+      "animations": {
+        "tanks": [
+          {
+            "id": "1",
+            "positionX": "120",
+            "positionY": "40",
+            "angle": "90",
+            "isActive": "true"
+          },
+          {
+            "id": "2",
+            "positionX": "150",
+            "positionY": "10",
+            "angle": "180",
+            "isActive": "true"
+          }
+        ],
+        "explosions": [
+          {
+            "positionX": "150",
+            "positionY": "10"
+          },
+          {
+            "positionX": "150",
+            "positionY": "10"
+          }
+        ],
+        "bullets": [
+          {
+            "positionX": "190",
+            "positiony": "100"
+          },
+          {
+            "positionX": "290",
+            "positiony": "10"
+          },
+          {
+            "positionX": "100",
+            "positiony": "50"
+          }
+        ]
+      }
+    },{
+      "animations": {
+        "tanks": [
+          {
+            "id": "1",
+            "positionX": "140",
+            "positionY": "40",
+            "angle": "90",
+            "isActive": "true"
+          },
+          {
+            "id": "2",
+            "positionX": "150",
+            "positionY": "10",
+            "angle": "180",
+            "isActive": "true"
+          }
+        ],
+        "explosions": [
+          {
+            "positionX": "150",
+            "positionY": "10"
+          },
+          {
+            "positionX": "150",
+            "positionY": "10"
+          }
+        ],
+        "bullets": [
+          {
+            "positionX": "190",
+            "positiony": "100"
+          },
+          {
+            "positionX": "290",
+            "positiony": "10"
+          },
+          {
+            "positionX": "100",
+            "positiony": "50"
+          }
+        ]
+      }
+    }
+  ]
+}
