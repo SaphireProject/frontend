@@ -8,6 +8,7 @@ import Tilemap = Phaser.Tilemap;
 import ScaleManager = Phaser.ScaleManager;
 import Sprite = Phaser.Sprite;
 import {GameUnit} from './GameUnit';
+import test from 'src/assets/images/tanks_robo/test.json';
 
 @Component({
   selector: 'app-game',
@@ -42,6 +43,7 @@ export class GameComponent implements OnInit {
 
   constructor() {
   this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, '', { preload: this.preload, create: this.create, render: this.render, update: this.update}, undefined, false);
+  console.log(test);
   }
 
   preload() {
