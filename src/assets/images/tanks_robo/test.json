@@ -5,11 +5,11 @@
       "tanks": [
         {
           "id": "1",
-          "color": "green"
+          "color": "tank_green"
         },
         {
           "id": "2",
-          "color": "red"
+          "color": "tank_red"
         }
       ],
       "blocks": "NEEDTOPAST"
@@ -21,41 +21,39 @@
         "tanks": [
           {
             "id": "1",
-            "positionX": "60",
-            "positionY": "40",
-            "angle": "90",
-            "isActive": "true"
+            "positionX": 60,
+            "positionY": 40,
+            "color": "tank_green"
           },
           {
             "id": "2",
-            "positionX": "150",
-            "positionY": "10",
-            "angle": "180",
-            "isActive": "true"
+            "positionX": 150,
+            "positionY": 10,
+            "color": "tank_red"
           }
         ],
         "explosions": [
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           },
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           }
         ],
         "bullets": [
           {
-            "positionX": "190",
-            "positiony": "100"
+            "positionX": 190,
+            "positionY": 100
           },
           {
-            "positionX": "290",
-            "positiony": "10"
+            "positionX": 290,
+            "positionY": 10
           },
           {
-            "positionX": "100",
-            "positiony": "50"
+            "positionX": 100,
+            "positionY": 50
           }
         ]
       }
@@ -65,41 +63,39 @@
         "tanks": [
           {
             "id": "1",
-            "positionX": "80",
-            "positionY": "40",
-            "angle": "90",
-            "isActive": "true"
+            "positionX": 80,
+            "positionY": 40,
+            "color": "tank_green"
           },
           {
             "id": "2",
-            "positionX": "150",
-            "positionY": "10",
-            "angle": "180",
-            "isActive": "true"
+            "positionX": 150,
+            "positionY": 10,
+            "color": "tank_red"
           }
         ],
         "explosions": [
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           },
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           }
         ],
         "bullets": [
           {
-            "positionX": "190",
-            "positiony": "100"
+            "positionX": 190,
+            "positionY": 100
           },
           {
-            "positionX": "290",
-            "positiony": "10"
+            "positionX": 290,
+            "positionY": 10
           },
           {
-            "positionX": "100",
-            "positiony": "50"
+            "positionX": 100,
+            "positionY": 50
           }
         ]
       }
@@ -109,84 +105,81 @@
         "tanks": [
           {
             "id": "1",
-            "positionX": "120",
-            "positionY": "40",
-            "angle": "90",
-            "isActive": "true"
+            "positionX": 120,
+            "positionY": 40,
+            "color": "tank_green"
           },
           {
             "id": "2",
-            "positionX": "150",
-            "positionY": "10",
-            "angle": "180",
-            "isActive": "true"
+            "positionX": 150,
+            "positionY": 10,
+            "color": "tank_red"
           }
         ],
         "explosions": [
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           },
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           }
         ],
         "bullets": [
           {
-            "positionX": "190",
-            "positiony": "100"
+            "positionX": 190,
+            "positionY": 100
           },
           {
-            "positionX": "290",
-            "positiony": "10"
+            "positionX": 290,
+            "positionY": 10
           },
           {
-            "positionX": "100",
-            "positiony": "50"
+            "positionX": 100,
+            "positionY": 50
           }
         ]
       }
-    },{
+    },
+    {
       "animations": {
         "tanks": [
           {
             "id": "1",
-            "positionX": "140",
-            "positionY": "40",
-            "angle": "90",
-            "isActive": "true"
+            "positionX": 140,
+            "positionY": 40,
+            "color": "tank_green"
           },
           {
             "id": "2",
-            "positionX": "150",
-            "positionY": "10",
-            "angle": "180",
-            "isActive": "true"
+            "positionX": 150,
+            "positionY": 10,
+            "color": "tank_red"
           }
         ],
         "explosions": [
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           },
           {
-            "positionX": "150",
-            "positionY": "10"
+            "positionX": 150,
+            "positionY": 10
           }
         ],
         "bullets": [
           {
-            "positionX": "190",
-            "positiony": "100"
+            "positionX": 190,
+            "positionY": 100
           },
           {
-            "positionX": "290",
-            "positiony": "10"
+            "positionX": 290,
+            "positionY": 10
           },
           {
-            "positionX": "100",
-            "positiony": "50"
+            "positionX": 100,
+            "positionY": 50
           }
         ]
       }

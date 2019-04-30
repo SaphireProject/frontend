@@ -4,6 +4,7 @@ import Tween = Phaser.Tween;
 import {count} from 'rxjs/operators';
 
 interface IUnitConfig {
+  id: string;
   positionX: number;
   positionY: number;
   type: string;
@@ -21,6 +22,7 @@ export class GameUnit {
   tweenCoordinatesQueue: Array<Array<number>>;
 
   constructor(config: IUnitConfig) {
+    this.id = config.id;
     this.tweenCoordinatesQueue = [];
     this.positionX = config.positionX;
     this.positionY = config.positionY;
