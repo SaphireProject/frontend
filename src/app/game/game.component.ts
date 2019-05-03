@@ -7,7 +7,6 @@ import TilemapLayer = Phaser.TilemapLayer;
 import Tilemap = Phaser.Tilemap;
 import ScaleManager = Phaser.ScaleManager;
 import Sprite = Phaser.Sprite;
-import {GameUnit} from './GameUnit';
 import test from 'src/assets/images/tanks_robo/test.json';
 import {BattleState} from './BattleState';
 

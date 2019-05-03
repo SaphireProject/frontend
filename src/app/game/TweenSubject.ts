@@ -1,27 +1,23 @@
 import Sprite = Phaser.Sprite;
 import Game = Phaser.Game;
 import Tween = Phaser.Tween;
-import {count} from 'rxjs/operators';
+import {ITweenSubjectConfig} from './ITweenSubjectConfig';
 
-interface IUnitConfig {
-  id: string;
-  positionX: number;
-  positionY: number;
-  type: string;
-  game: Game;
-}
 
-export class GameUnit {
+// TweenSubject - is one subject for animation from position to position
+// It could be game units, bullets and other
+
+export class TweenSubject {
   game: Game;
   id: string;
   positionX: number;
   positionY: number;
   type: string;
   spriteLink: Sprite;
-  tweenForUnit: Tween;
+  tweenAction: Tween;
   tweenCoordinatesQueue: Array<Array<number>>;
 
-  constructor(config: IUnitConfig) {
+  constructor(config: ITweenSubjectConfig) {
     this.id = config.id;
     this.tweenCoordinatesQueue = [];
     this.positionX = config.positionX;
@@ -29,8 +25,10 @@ export class GameUnit {
     this.type = config.type;
     this.game = config.game;
     this.spriteLink = this.generateSprite();
-    this.tweenForUnit = this.game.add.tween(this.spriteLink);
+    this.tweenAction = this.game.add.tween(this.spriteLink);
     this.spriteLink.anchor.setTo(0.5, 0.5);
+    console.log('center in Tween ' + this.game.world.centerX);
+    console.log('center in Tween ' + this.game.world.centerY);
   }
 
   private generateSprite(): Sprite {
@@ -38,15 +36,15 @@ export class GameUnit {
   }
 
 
-  public moveTo(newPositionX: number, newPositionY: number) {
-    if (this.tweenForUnit.isRunning) {
+  public moveTor(newPositionX: number, newPositionY: number) {
+    if (this.tweenAction.isRunning) {
       this.tweenCoordinatesQueue.push([newPositionX, newPositionY]);
     } else {
-      this.countUnitAngle(newPositionX, newPositionY);
-      this.tweenForUnit = this.game.add.tween(this.spriteLink)
-        .to({x: newPositionX, y: newPositionY}, 1000, Phaser.Easing.Linear.None)
+      this.countTweenSubjectAngle(newPositionX, newPositionY);
+      this.tweenAction = this.game.add.tween(this.spriteLink)
+        .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
         .start();
-      this.tweenForUnit.onComplete.add(() => {
+      this.tweenAction.onComplete.add(() => {
         if (this.tweenCoordinatesQueue.length > 0) {
           const nextPosition = this.tweenCoordinatesQueue.shift();
           newPositionX = nextPosition.shift();
@@ -57,7 +55,20 @@ export class GameUnit {
     }
   }
 
-  private countUnitAngle(newPositionX: number, newPositionY: number) {
+  public moveTo(newPositionX: number, newPositionY: number) {
+    this.countTweenSubjectAngle(newPositionX, newPositionY);
+    // don't make movement, if new position the same, that was
+    if ((newPositionX === this.spriteLink.x) && (newPositionY === this.spriteLink.y)) {
+      return;
+    } else {
+      this.tweenAction = this.game.add.tween(this.spriteLink)
+        .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
+        .start();
+    }
+  }
+
+  // count angle of unit
+  private countTweenSubjectAngle(newPositionX: number, newPositionY: number) {
     let currentPositionX: number;
     let currentPositionY: number;
     currentPositionX = this.spriteLink.x;
@@ -71,7 +82,7 @@ export class GameUnit {
     }
 
     if (newPositionY > currentPositionY) {
-        this.spriteLink.angle = 0;
+      this.spriteLink.angle = 0;
     } else {
       if (newPositionY < currentPositionY) {
         this.spriteLink.angle = 180;
