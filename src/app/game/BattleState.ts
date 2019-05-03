@@ -132,6 +132,9 @@ export class BattleState extends Phaser.State {
   }
 
   private initUnits() {
+
+    // check whether there is a bullets in a first snapshot
+    if (test.frames[0].animations.tanks.length > 0) {
     // generating units
     for (const unit of test.frames[0].animations.tanks) {
       const unitId = unit.id,
@@ -140,13 +143,16 @@ export class BattleState extends Phaser.State {
         positionY = unit.positionY;
       this.units.push(new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, game: this.game}));
     }
-
+    }
+    // check whether there is a bullets in a first snapshot
+    if (test.frames[0].animations.bullets.length > 0) {
     // generating bullets
     for (const bullet of test.frames[0].animations.bullets) {
       const positionX = bullet.positionX,
         positionY = bullet.positionY,
         colorBullet = 'green_bullet';
       this.bullets.push(new BulletTweenSubject({id: undefined, positionX: positionX, positionY: positionY, type: colorBullet, game: this.game}));
+    }
     }
   }
 
