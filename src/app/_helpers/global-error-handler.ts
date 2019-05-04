@@ -18,6 +18,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     // errorService.getClientErrorMessage(error);
     // Client Error
     throwError(error);
+    console.log(error.stack);
   }
 
 }

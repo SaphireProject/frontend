@@ -20,8 +20,8 @@ export class TweenSubject {
   constructor(config: ITweenSubjectConfig) {
     this.id = config.id;
     this.tweenCoordinatesQueue = [];
-    this.positionX = config.positionX;
-    this.positionY = config.positionY;
+    this.positionX = this.convertCellToPixels(config.positionX);
+    this.positionY = this.convertCellToPixels(config.positionY);
     this.type = config.type;
     this.game = config.game;
     this.spriteLink = this.generateSprite();
@@ -56,14 +56,18 @@ export class TweenSubject {
   }
 
   public moveTo(newPositionX: number, newPositionY: number) {
+    newPositionX = this.convertCellToPixels(newPositionX);
+    newPositionY = this.convertCellToPixels(newPositionY);
     this.countTweenSubjectAngle(newPositionX, newPositionY);
     // don't make movement, if new position the same, that was
-    if ((newPositionX === this.spriteLink.x) && (newPositionY === this.spriteLink.y)) {
+    if ((newPositionX === this.positionX) && (newPositionY === this.positionY)) {
       return;
     } else {
       this.tweenAction = this.game.add.tween(this.spriteLink)
         .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
         .start();
+        this.positionX = newPositionX;
+        this.positionY = newPositionY;
     }
   }
 
@@ -71,16 +75,10 @@ export class TweenSubject {
   private countTweenSubjectAngle(newPositionX: number, newPositionY: number) {
     let currentPositionX: number;
     let currentPositionY: number;
-    currentPositionX = this.spriteLink.x;
-    currentPositionY = this.spriteLink.y;
-    if (newPositionX > currentPositionX) {
-      this.spriteLink.angle = 270;
-    } else {
-      if (newPositionX < currentPositionX) {
-        this.spriteLink.angle = 90;
-      }
-    }
-
+    currentPositionX = this.positionX;
+    currentPositionY = this.positionY;
+    console.log('New Current X ' + newPositionX + ' ' + currentPositionX);
+    console.log('New Current Y ' + newPositionY + ' ' + currentPositionY);
     if (newPositionY > currentPositionY) {
       this.spriteLink.angle = 0;
     } else {
@@ -89,6 +87,17 @@ export class TweenSubject {
       }
     }
 
+    if (newPositionX > currentPositionX) {
+      this.spriteLink.angle = 270;
+    } else {
+      if (newPositionX < currentPositionX) {
+        this.spriteLink.angle = 90;
+      }
+    }
+  }
+
+  private convertCellToPixels(cellPosition: number): number {
+    return cellPosition * 64 + 32;
   }
 
 

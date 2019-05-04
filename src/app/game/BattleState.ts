@@ -35,6 +35,7 @@ export class BattleState extends Phaser.State {
   yTest: number;
   tweenK: Tween;
   testy: number;
+  mapDrawer: MapDrawer;
 
   preload() {
     console.log('test in preload' + this.testy);
@@ -42,7 +43,7 @@ export class BattleState extends Phaser.State {
       'assets/images/tanks_robo/location.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles', 'assets/images/tanks_robo/allSprites_default.png');
     this.game.load.image('green_bullet', 'assets/images/tanks_robo/bulletGreen2.png');
-    this.game.load.image('tank_green', 'assets/images/tanks_robo/tank_green.png');
+    this.game.load.image('tank_green', 'assets/images/tanks_robo/tank_green2.png');
     this.game.load.image('tank_red', 'assets/images/tanks_robo/tank_red.png');
     this.game.load.image('tank_blue', 'assets/images/tanks_robo/tank_blue.png');
     this.game.load.image('tank_sand', 'assets/images/tanks_robo/tank_sand.png');
@@ -50,19 +51,30 @@ export class BattleState extends Phaser.State {
     this.game.load.image('tank_bigRed', 'assets/images/tanks_robo/tank_bigRed.png');
     this.game.load.image('tank_darkLarge', 'assets/images/tanks_robo/tank_darkLarge.png');
     this.game.load.image('explosion-first', 'assets/images/tanks_robo/explosion_firstshot.png');
+    this.game.load.image('barricadeMetal', 'assets/images/tanks_robo/barricadeMetal.png');
+    this.game.load.image('barricadeWood', 'assets/images/tanks_robo/barricadeWood.png');
+    this.game.load.image('crateMetal', 'assets/images/tanks_robo/crateMetal.png');
+    this.game.load.image('crateWood', 'assets/images/tanks_robo/crateWood.png');
+    this.game.load.image('tileGrass1', 'assets/images/tanks_robo/tileGrass1.png');
+    this.game.load.image('tileGrass2', 'assets/images/tanks_robo/tileGrass2.png');
+    this.game.load.image('tileSand1', 'assets/images/tanks_robo/tileSand1.png');
+    this.game.load.image('tileSand2', 'assets/images/tanks_robo/tileSand2.png');
+    this.game.load.image('tileSand3', 'assets/images/tanks_robo/tileSand3.png');
+
     this.game.load.spritesheet('explosion', 'assets/images/tanks_robo/piskel.png', 65, 65);
     this.game.load.spritesheet('fireFromBullet', 'assets/images/tanks_robo/bullet_fire.png', 21, 38);
     this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVertically = true;
-    console.log('test ' + this.testy);
+
   }
 
 
   create() {
-   const mapDrawer = new MapDrawer(this.game);
-   mapDrawer.generateMap();
 
+    const mapDrawer = new MapDrawer(this.game, test.preload.blocks);
+    this.mapDrawer = mapDrawer;
+    mapDrawer.generateMap();
     this.initUnits();
     this.makeFrameAnimation();
 
@@ -135,24 +147,33 @@ export class BattleState extends Phaser.State {
 
     // check whether there is a bullets in a first snapshot
     if (test.frames[0].animations.tanks.length > 0) {
-    // generating units
-    for (const unit of test.frames[0].animations.tanks) {
-      const unitId = unit.id,
-        color = unit.color,
-        positionX = unit.positionX,
-        positionY = unit.positionY;
-      this.units.push(new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, game: this.game}));
-    }
+      // generating units
+      for (const unit of test.frames[0].animations.tanks) {
+        const unitId = unit.id,
+          color = unit.color,
+          positionX = unit.positionX,
+          positionY = unit.positionY;
+        console.log('Test Units: ' + unit.id + ' ' + unit.positionX + ' ' + unit.positionY);
+        this.units.push(new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, game: this.game}));
+      }
     }
     // check whether there is a bullets in a first snapshot
-    if (test.frames[0].animations.bullets.length > 0) {
-    // generating bullets
-    for (const bullet of test.frames[0].animations.bullets) {
-      const positionX = bullet.positionX,
-        positionY = bullet.positionY,
-        colorBullet = 'green_bullet';
-      this.bullets.push(new BulletTweenSubject({id: undefined, positionX: positionX, positionY: positionY, type: colorBullet, game: this.game}));
-    }
+    if (typeof test.frames[0].animations.bullets !== 'undefined' && test.frames[0].animations.bullets.length > 0) {
+      // generating bullets
+      for (const bullet of test.frames[0].animations.bullets) {
+        if ((bullet.isFirstSnapshot) && (bullet.isLastSnapshot)) {
+          const positionX = bullet.positionX,
+            positionY = bullet.positionY,
+            colorBullet = 'green_bullet';
+          this.bullets.push(new BulletTweenSubject({
+            id: undefined,
+            positionX: positionX,
+            positionY: positionY,
+            type: colorBullet,
+            game: this.game
+          }));
+        }
+      }
     }
   }
 
@@ -199,11 +220,12 @@ export class BattleState extends Phaser.State {
       this.makeUnitMovement(unitSpecifications, numberOfUnit);
       numberOfUnit++;
     }
-
-    let numberOfBullet = 0;
-    for (const bulletSpecifications of test.frames[numberOfCurrentSnapshot].animations.bullets) {
-      this.makeBulletMovement(bulletSpecifications, numberOfBullet);
-      numberOfBullet++;
+    if (typeof test.frames[numberOfCurrentSnapshot].animations.bullets !== 'undefined' && test.frames[numberOfCurrentSnapshot].animations.bullets.length > 0) {
+      let numberOfBullet = 0;
+      for (const bulletSpecifications of test.frames[numberOfCurrentSnapshot].animations.bullets) {
+        this.makeBulletMovement(bulletSpecifications, numberOfBullet);
+        numberOfBullet++;
+      }
     }
   }
 
@@ -230,6 +252,7 @@ export class BattleState extends Phaser.State {
     console.log(unitSpecifications);
     console.log('test ' + unitSpecifications.positionX);
     console.log('test ' + unitSpecifications.positionY);
+
     // check unit is alive and making move,ent
     if (unitSpecifications.isFirstSnapshot) {
       console.log('isFirsSnap in');
@@ -311,7 +334,8 @@ export class BattleState extends Phaser.State {
   }
 
   render() {
-    this.game.renderer.resize(640, 640);
+    const renderSizes = this.mapDrawer.getSizeOfTheWorld();
+    this.game.renderer.resize(renderSizes.get('sizeOfX'), renderSizes.get('sizeOfY'));
   }
 
 }
