@@ -7,6 +7,7 @@ import Tilemap = Phaser.Tilemap;
 import Tileset = Phaser.Tileset;
 import TilemapLayer = Phaser.TilemapLayer;
 import {MapDrawer} from './MapDrawer';
+import {forEach} from '@angular/router/src/utils/collection';
 
 export class BattleState extends Phaser.State {
 
@@ -36,6 +37,7 @@ export class BattleState extends Phaser.State {
   tweenK: Tween;
   testy: number;
   mapDrawer: MapDrawer;
+  snapshots: any[] = [];
 
   preload() {
     console.log('test in preload' + this.testy);
@@ -71,14 +73,18 @@ export class BattleState extends Phaser.State {
 
 
   create() {
-
     const mapDrawer = new MapDrawer(this.game, test.preload.blocks);
     this.mapDrawer = mapDrawer;
     mapDrawer.generateMap();
+    this.addSnapshotsInStorage(test);
+    setTimeout( () => {
+      this.addSnapshotsInStorage(test);
+    }, 15000);
+    console.log(this.snapshots);
     this.initUnits();
     this.makeFrameAnimation();
 
-    this.tank = this.game.add.sprite(mapDrawer.game.world.centerX, mapDrawer.game.world.centerY, 'tank_green');
+    // this.tank = this.game.add.sprite(mapDrawer.game.world.centerX, mapDrawer.game.world.centerY, 'tank_green');
     // this.tank.anchor.setTo(0.5, 0.5); ??
     // this.bullet = this.game.add.sprite(null, null, 'green_bullet');
 
@@ -92,9 +98,9 @@ export class BattleState extends Phaser.State {
     this.explosion = this.game.add.sprite(30, 30, 'explosion');
     this.explosion.animations.add('explosion', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10);
 
-    let kek = this.tank.animations.add('fireFromBullet', [0, 1, 2, 3, 4], 10);
-    kek = this.tank.animations.play('fireFromBullet', 20);
-    this.tweenForTank = this.game.add.tween(this.tank);
+    // let kek = this.tank.animations.add('fireFromBullet', [0, 1, 2, 3, 4], 10);
+    // kek = this.tank.animations.play('fireFromBullet', 20);
+    // this.tweenForTank = this.game.add.tween(this.tank);
     // this.weapon.addBulletAnimation('fireFromBullet', [0, 1, 2, 3], 10);
     // let unit = new GameUnit({ positionX: 50, positionY: 40, type: 'tank_green', game: this.game});
     // let unit2 = new GameUnit({ positionX: 100, positionY: 100, type: 'tank_blue', game: this.game});
@@ -144,11 +150,10 @@ export class BattleState extends Phaser.State {
   }
 
   private initUnits() {
-
     // check whether there is a bullets in a first snapshot
-    if (test.frames[0].animations.tanks.length > 0) {
+    if (this.snapshots[0].animations.tanks.length > 0) {
       // generating units
-      for (const unit of test.frames[0].animations.tanks) {
+      for (const unit of this.snapshots[0].animations.tanks) {
         const unitId = unit.id,
           color = unit.color,
           positionX = unit.positionX,
@@ -158,9 +163,10 @@ export class BattleState extends Phaser.State {
       }
     }
     // check whether there is a bullets in a first snapshot
-    if (typeof test.frames[0].animations.bullets !== 'undefined' && test.frames[0].animations.bullets.length > 0) {
+    if (typeof this.snapshots[0].animations.bullets !== 'undefined' && this.snapshots[0].animations.bullets.length > 0) {
       // generating bullets
-      for (const bullet of test.frames[0].animations.bullets) {
+      for (const bullet of this.snapshots[0].animations.bullets) {
+        // TODO works with lastshot?
         if ((bullet.isFirstSnapshot) && (bullet.isLastSnapshot)) {
           const positionX = bullet.positionX,
             positionY = bullet.positionY,
@@ -181,15 +187,16 @@ export class BattleState extends Phaser.State {
     let numberOfCurrentSnapshot = 0;
     // actions, that do every frame
     setInterval(() => {
-      if (numberOfCurrentSnapshot < test.frames.length) {
+      console.log('keke');
+      if (typeof this.snapshots !== 'undefined' && this.snapshots.length > 0) {
         // making movement for every unit in one snapshot
-        this.processAllItemsInSnapshot(numberOfCurrentSnapshot);
+        this.processAllItemsInSnapshot(this.snapshots.shift());
         // clear destroyed units from array of units
         this.clearEmptyData();
         numberOfCurrentSnapshot++;
       } else {
         // end SetInterval after all snapshots
-        return;
+        console.log('Nothing elements for painting');
       }
     }, 500);
 
@@ -214,15 +221,17 @@ export class BattleState extends Phaser.State {
     // }
   }
 
-  private processAllItemsInSnapshot(numberOfCurrentSnapshot: number) {
+  private processAllItemsInSnapshot(snapshot: any) {
     let numberOfUnit = 0;
-    for (const unitSpecifications of test.frames[numberOfCurrentSnapshot].animations.tanks) {
+    console.log('Test snapshot ');
+    console.log(snapshot);
+    for (const unitSpecifications of snapshot.animations.tanks) {
       this.makeUnitMovement(unitSpecifications, numberOfUnit);
       numberOfUnit++;
     }
-    if (typeof test.frames[numberOfCurrentSnapshot].animations.bullets !== 'undefined' && test.frames[numberOfCurrentSnapshot].animations.bullets.length > 0) {
+    if (typeof snapshot.animations.bullets !== 'undefined' && snapshot.animations.bullets.length > 0) {
       let numberOfBullet = 0;
-      for (const bulletSpecifications of test.frames[numberOfCurrentSnapshot].animations.bullets) {
+      for (const bulletSpecifications of snapshot.animations.bullets) {
         this.makeBulletMovement(bulletSpecifications, numberOfBullet);
         numberOfBullet++;
       }
@@ -249,9 +258,9 @@ export class BattleState extends Phaser.State {
     const positionX = unitSpecifications.positionX;
     const positionY = unitSpecifications.positionY;
     const colorBullet = 'green_bullet';
+
+    console.log('unit specification');
     console.log(unitSpecifications);
-    console.log('test ' + unitSpecifications.positionX);
-    console.log('test ' + unitSpecifications.positionY);
 
     // check unit is alive and making move,ent
     if (unitSpecifications.isFirstSnapshot) {
@@ -285,6 +294,14 @@ export class BattleState extends Phaser.State {
 
     this.bullets = this.bullets.filter((bulletSpecifications) => {
         return bulletSpecifications != null;
+      }
+    );
+  }
+
+
+  public addSnapshotsInStorage(snapshots: any) {
+    snapshots.frames.forEach(frame => {
+      this.snapshots.push(frame);
       }
     );
   }

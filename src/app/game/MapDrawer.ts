@@ -12,7 +12,7 @@ export class MapDrawer {
   heightOfBackgroundTilest: number;
   widthOfBackgroundTileset: number;
   storageOfBlocks = ['crateWood', 'crateMetal', 'barricadeMetal', 'barricadeWood'];
-  storageOfGround = ['tileGrass1', 'tileGrass2', 'tileSand1'];
+  storageOfGround = ['tileGrass1', 'tileGrass2', 'tileSand1', 'tileSand2', 'tileSand3'];
   countOfXBlocks: number;
   countOfYBlocks: number;
 
