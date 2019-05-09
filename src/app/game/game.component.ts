@@ -7,8 +7,9 @@ import TilemapLayer = Phaser.TilemapLayer;
 import Tilemap = Phaser.Tilemap;
 import ScaleManager = Phaser.ScaleManager;
 import Sprite = Phaser.Sprite;
-import test from 'src/assets/images/tanks_robo/test.json';
 import {BattleState} from './BattleState';
+import {SnapshotService} from './snapshot.service';
+import test from 'src/assets/images/tanks_robo/test.json';
 
 @Component({
   selector: 'app-game',
@@ -42,15 +43,16 @@ export class GameComponent implements OnInit {
   tweenK: Tween;
   testy: number;
 
-  constructor() {
+  constructor(private snapshotService: SnapshotService) {
   this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, '');
-    this.game.state.add('BattleState', BattleState);
-    this.testy = 3;
-    console.log('test in constr' + this.testy);
+    this.game.state.add('BattleState', new BattleState(snapshotService));
     this.game.state.start('BattleState');
   }
 
   ngOnInit() {
+    setInterval(() => {
+      this.snapshotService.sendSnapshots(test);
+    }, 150);
   }
 
 }

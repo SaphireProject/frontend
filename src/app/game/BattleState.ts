@@ -8,9 +8,12 @@ import Tileset = Phaser.Tileset;
 import TilemapLayer = Phaser.TilemapLayer;
 import {MapDrawer} from './MapDrawer';
 import {forEach} from '@angular/router/src/utils/collection';
+import {SnapshotService} from './snapshot.service';
+import {OnInit} from '@angular/core';
+import {UserService} from '../_services';
+import {Observable, Subscription} from 'rxjs';
 
 export class BattleState extends Phaser.State {
-
 
   // tween: TweenManager;
   units: UnitTweenSubject[] = [];
@@ -38,9 +41,18 @@ export class BattleState extends Phaser.State {
   testy: number;
   mapDrawer: MapDrawer;
   snapshots: any[] = [];
+  message: any;
+  snapshotService: SnapshotService;
+
+  constructor(snapshotService: SnapshotService) {
+    super();
+    this.snapshotService = snapshotService;
+    this.snapshotService.currentMessage.subscribe((response): any => {
+      this.addSnapshotsInStorage(response);
+    });
+  }
 
   preload() {
-    console.log('test in preload' + this.testy);
     this.game.load.tilemap('mapa',
       'assets/images/tanks_robo/location.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles', 'assets/images/tanks_robo/allSprites_default.png');
@@ -62,25 +74,19 @@ export class BattleState extends Phaser.State {
     this.game.load.image('tileSand1', 'assets/images/tanks_robo/tileSand1.png');
     this.game.load.image('tileSand2', 'assets/images/tanks_robo/tileSand2.png');
     this.game.load.image('tileSand3', 'assets/images/tanks_robo/tileSand3.png');
-
     this.game.load.spritesheet('explosion', 'assets/images/tanks_robo/piskel.png', 65, 65);
     this.game.load.spritesheet('fireFromBullet', 'assets/images/tanks_robo/bullet_fire.png', 21, 38);
     this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVertically = true;
-
   }
 
 
   create() {
+
     const mapDrawer = new MapDrawer(this.game, test.preload.blocks);
     this.mapDrawer = mapDrawer;
     mapDrawer.generateMap();
-    this.addSnapshotsInStorage(test);
-    setTimeout( () => {
-      this.addSnapshotsInStorage(test);
-    }, 15000);
-    console.log(this.snapshots);
     this.initUnits();
     this.makeFrameAnimation();
 
@@ -95,8 +101,6 @@ export class BattleState extends Phaser.State {
     // this.weapon.fireAngle = 90;
     // this.fireButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     // this.game.add.tween(this.tank).from({x: +10}, 2000, Phaser.Easing.Linear.None).start();
-    this.explosion = this.game.add.sprite(30, 30, 'explosion');
-    this.explosion.animations.add('explosion', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10);
 
     // let kek = this.tank.animations.add('fireFromBullet', [0, 1, 2, 3, 4], 10);
     // kek = this.tank.animations.play('fireFromBullet', 20);
@@ -151,7 +155,7 @@ export class BattleState extends Phaser.State {
 
   private initUnits() {
     // check whether there is a bullets in a first snapshot
-    if (this.snapshots[0].animations.tanks.length > 0) {
+    if (typeof this.snapshots[0].animations.tanks !== 'undefined' && this.snapshots[0].animations.tanks.length > 0) {
       // generating units
       for (const unit of this.snapshots[0].animations.tanks) {
         const unitId = unit.id,
@@ -187,7 +191,6 @@ export class BattleState extends Phaser.State {
     let numberOfCurrentSnapshot = 0;
     // actions, that do every frame
     setInterval(() => {
-      console.log('keke');
       if (typeof this.snapshots !== 'undefined' && this.snapshots.length > 0) {
         // making movement for every unit in one snapshot
         this.processAllItemsInSnapshot(this.snapshots.shift());
@@ -222,9 +225,8 @@ export class BattleState extends Phaser.State {
   }
 
   private processAllItemsInSnapshot(snapshot: any) {
+    localStorage.setItem('currentSnapshotNumber', snapshot.snapshotNumber);
     let numberOfUnit = 0;
-    console.log('Test snapshot ');
-    console.log(snapshot);
     for (const unitSpecifications of snapshot.animations.tanks) {
       this.makeUnitMovement(unitSpecifications, numberOfUnit);
       numberOfUnit++;
@@ -241,8 +243,6 @@ export class BattleState extends Phaser.State {
   private makeUnitMovement(unitSpecifications: any, index: number) {
     const positionX = unitSpecifications.positionX;
     const positionY = unitSpecifications.positionY;
-    console.log('test ' + unitSpecifications.positionX);
-    console.log('test ' + unitSpecifications.positionY);
     // check unit is alive and making move,ent
     if (unitSpecifications.isAlive) {
       this.units[index].moveTo(positionX, positionY);
@@ -258,10 +258,6 @@ export class BattleState extends Phaser.State {
     const positionX = unitSpecifications.positionX;
     const positionY = unitSpecifications.positionY;
     const colorBullet = 'green_bullet';
-
-    console.log('unit specification');
-    console.log(unitSpecifications);
-
     // check unit is alive and making move,ent
     if (unitSpecifications.isFirstSnapshot) {
       console.log('isFirsSnap in');
@@ -274,13 +270,9 @@ export class BattleState extends Phaser.State {
       }));
     } else {
       if (unitSpecifications.isLastSnapshot) {
-        console.log('isLastSnap in');
         this.bullets[index].destroy();
         this.bullets[index] = null;
       } else {
-        console.log('isMoveto in');
-        console.log('index ' + index);
-        console.log(this.bullets[index]);
         this.bullets[index].moveTo(positionX, positionY);
       }
     }
@@ -300,8 +292,10 @@ export class BattleState extends Phaser.State {
 
 
   public addSnapshotsInStorage(snapshots: any) {
+    console.log('test snap');
+    console.log(snapshots);
     snapshots.frames.forEach(frame => {
-      this.snapshots.push(frame);
+        this.snapshots.push(frame);
       }
     );
   }
