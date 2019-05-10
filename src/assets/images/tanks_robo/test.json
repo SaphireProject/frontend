@@ -1,17 +1,22 @@
 {
   "preload": {
     "blocks": [
-      "1000110011",
-      "0000000000",
-      "1001011001",
-      "0001100000",
-      "0000000010",
-      "0010001010",
-      "0000101010",
-      "0000101010",
-      "0000111010",
-      "0010001010",
-      "0010001010"
+      "100011001109300",
+      "000000000009300",
+      "100101100109300",
+      "000110000009300",
+      "000000001009300",
+      "001000101009300",
+      "000010101009300",
+      "000010101009300",
+      "000011101009300",
+      "001000101009300",
+      "001000101009300",
+      "001000101009300",
+      "001000101009300",
+      "001000101009300",
+      "001000101009300",
+      "001000101009300"
     ]
   },
   "frames": [
@@ -46,6 +51,7 @@
           {
             "positionX": 0,
             "positionY": 1,
+            "bulletDirection": "down",
             "isFirstSnapshot": true,
             "isLastSnapshot": false
           }
@@ -82,12 +88,14 @@
           {
             "positionX": 0,
             "positionY": 3,
+            "bulletDirection": "down",
             "isFirstSnapshot": false,
             "isLastSnapshot": false
           },
           {
             "positionX": 5,
             "positionY": 9,
+            "bulletDirection": "down",
             "isFirstSnapshot": true,
             "isLastSnapshot": false
           }
@@ -124,12 +132,14 @@
           {
             "positionX": 0,
             "positionY": 5,
+            "bulletDirection": "down",
             "isFirstSnapshot": false,
             "isLastSnapshot": true
           },
           {
             "positionX": 7,
             "positionY": 1,
+            "bulletDirection": "down",
             "isFirstSnapshot": false,
             "isLastSnapshot": false
           }
@@ -159,6 +169,7 @@
           {
             "positionX": 9,
             "positionY": 1,
+            "bulletDirection": "down",
             "isFirstSnapshot": false,
             "isLastSnapshot": true
           }

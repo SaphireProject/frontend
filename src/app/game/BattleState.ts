@@ -181,7 +181,7 @@ export class BattleState extends Phaser.State {
             positionY: positionY,
             type: colorBullet,
             game: this.game
-          }));
+          }, bullet.bulletDirection));
         }
       }
     }
@@ -267,10 +267,10 @@ export class BattleState extends Phaser.State {
         positionY: positionY,
         type: colorBullet,
         game: this.game
-      }));
+      }, unitSpecifications.bulletDirection));
     } else {
       if (unitSpecifications.isLastSnapshot) {
-        this.bullets[index].destroy();
+        this.bullets[index].destroy(positionX, positionY, unitSpecifications.bulletDirection);
         this.bullets[index] = null;
       } else {
         this.bullets[index].moveTo(positionX, positionY);

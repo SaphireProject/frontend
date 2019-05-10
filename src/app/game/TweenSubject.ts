@@ -55,7 +55,7 @@ export class TweenSubject {
     }
   }
 
-  public moveTo(newPositionX: number, newPositionY: number) {
+  public moveTo(newPositionX: number, newPositionY: number): Tween {
     newPositionX = this.convertCellToPixels(newPositionX);
     newPositionY = this.convertCellToPixels(newPositionY);
     this.countTweenSubjectAngle(newPositionX, newPositionY);
@@ -68,6 +68,7 @@ export class TweenSubject {
         .start();
         this.positionX = newPositionX;
         this.positionY = newPositionY;
+        return this.tweenAction;
     }
   }
 
@@ -96,7 +97,7 @@ export class TweenSubject {
     }
   }
 
-  private convertCellToPixels(cellPosition: number): number {
+   convertCellToPixels(cellPosition: number): number {
     return cellPosition * 64 + 32;
   }
 
