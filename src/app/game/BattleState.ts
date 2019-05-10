@@ -76,14 +76,15 @@ export class BattleState extends Phaser.State {
     this.game.load.image('tileSand3', 'assets/images/tanks_robo/tileSand3.png');
     this.game.load.spritesheet('explosion', 'assets/images/tanks_robo/piskel.png', 65, 65);
     this.game.load.spritesheet('fireFromBullet', 'assets/images/tanks_robo/bullet_fire.png', 21, 38);
-    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVertically = true;
   }
 
 
   create() {
-
+    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.game.input.onDown.add(this.gofull, this);
     const mapDrawer = new MapDrawer(this.game, test.preload.blocks);
     this.mapDrawer = mapDrawer;
     mapDrawer.generateMap();
@@ -298,6 +299,14 @@ export class BattleState extends Phaser.State {
         this.snapshots.push(frame);
       }
     );
+  }
+
+  gofull() {
+    if (this.game.scale.isFullScreen) {
+      this.game.scale.stopFullScreen();
+    } else {
+      this.game.scale.startFullScreen(false);
+    }
   }
 
   update() {

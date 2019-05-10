@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Game, AUTO, TweenManager } from 'phaser-ce';
 import Tween = Phaser.Tween;
 import World = Phaser.World;
@@ -16,7 +16,7 @@ import test from 'src/assets/images/tanks_robo/test.json';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   game: Game;
   units: number[] = [];
@@ -44,15 +44,20 @@ export class GameComponent implements OnInit {
   testy: number;
 
   constructor(private snapshotService: SnapshotService) {
-  this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, '');
-    this.game.state.add('BattleState', new BattleState(snapshotService));
-    this.game.state.start('BattleState');
   }
 
   ngOnInit() {
+  this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
+    this.game.state.add('BattleState', new BattleState(this.snapshotService));
+    this.game.state.start('BattleState');
     setInterval(() => {
       this.snapshotService.sendSnapshots(test);
     }, 150);
+  }
+
+  ngOnDestroy() {
+    this.game.state.destroy();
+    this.game.destroy();
   }
 
 }

@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     { path: 'toastr', component: ToastrComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'error', component: ErrorComponent},
-    { path: 'game', component: GameComponent},
+    { path: 'game', component: GameComponent, canActivate: [AuthGuard]},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
     { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
 
