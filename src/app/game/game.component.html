@@ -1,2 +1,11 @@
-<div id="gameDIV"></div>
+<mat-card>
+  <mat-card-content>
+  <div id="gameDIV" class="game"></div>
+  </mat-card-content>
+  <div class="actions">
+  <button mat-raised-button routerLink="/">Back to Home</button>
+  <span class="space-between"></span>
+  <button mat-raised-button id="fullScreenTurn" (click)="fullScreenByClick()">Enter Full Screen</button>
+  </div>
+</mat-card>
 

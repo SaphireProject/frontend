@@ -43,11 +43,13 @@ export class BattleState extends Phaser.State {
   snapshots: any[] = [];
   message: any;
   snapshotService: SnapshotService;
+  intervalForAnimation: any;
+  subscribingForSnapshotMessages: any;
 
   constructor(snapshotService: SnapshotService) {
     super();
     this.snapshotService = snapshotService;
-    this.snapshotService.currentMessage.subscribe((response): any => {
+    this.subscribingForSnapshotMessages = this.snapshotService.currentMessage.subscribe((response): any => {
       this.addSnapshotsInStorage(response);
     });
   }
@@ -76,13 +78,14 @@ export class BattleState extends Phaser.State {
     this.game.load.image('tileSand3', 'assets/images/tanks_robo/tileSand3.png');
     this.game.load.spritesheet('explosion', 'assets/images/tanks_robo/piskel.png', 65, 65);
     this.game.load.spritesheet('fireFromBullet', 'assets/images/tanks_robo/bullet_fire.png', 21, 38);
-    this.game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVertically = true;
   }
 
 
   create() {
+    document.getElementById('fullScreenTurn')
     this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.input.onDown.add(this.gofull, this);
     const mapDrawer = new MapDrawer(this.game, test.preload.blocks);
@@ -191,7 +194,7 @@ export class BattleState extends Phaser.State {
   private makeFrameAnimation() {
     let numberOfCurrentSnapshot = 0;
     // actions, that do every frame
-    setInterval(() => {
+    this.intervalForAnimation = setInterval(() => {
       if (typeof this.snapshots !== 'undefined' && this.snapshots.length > 0) {
         // making movement for every unit in one snapshot
         this.processAllItemsInSnapshot(this.snapshots.shift());
@@ -307,6 +310,11 @@ export class BattleState extends Phaser.State {
     } else {
       this.game.scale.startFullScreen(false);
     }
+  }
+
+  public stopTimer() {
+    clearInterval(this.intervalForAnimation);
+    this.subscribingForSnapshotMessages.unsubscribe();
   }
 
   update() {

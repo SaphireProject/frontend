@@ -42,13 +42,15 @@ export class GameComponent implements OnInit, OnDestroy {
   yTest: number;
   tweenK: Tween;
   testy: number;
+  battleState: BattleState;
 
   constructor(private snapshotService: SnapshotService) {
   }
 
   ngOnInit() {
+  this.battleState = new BattleState(this.snapshotService);
   this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
-    this.game.state.add('BattleState', new BattleState(this.snapshotService));
+    this.game.state.add('BattleState', this.battleState);
     this.game.state.start('BattleState');
     setInterval(() => {
       this.snapshotService.sendSnapshots(test);
@@ -58,6 +60,10 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.game.state.destroy();
     this.game.destroy();
+    this.battleState.stopTimer();
   }
 
+  fullScreenByClick() {
+    this.game.scale.startFullScreen();
+  }
 }
