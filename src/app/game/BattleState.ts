@@ -16,6 +16,7 @@ import {first} from 'rxjs/operators';
 import {ISnapshotResponse, IPreload, IBullets, ITanks, IFrames, IEndOfGame} from './ISnapshotResponse';
 import {Router} from '@angular/router';
 import {User} from '../_models';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 export class BattleState extends Phaser.State {
 
@@ -49,36 +50,46 @@ export class BattleState extends Phaser.State {
   snapshotService: SnapshotService;
   userService: UserService;
   intervalForAnimation: any;
+  intervalForRequestingData: any;
   subscribingForSnapshotMessages$: Subscription;
   subscribingForMap$: Subscription;
   subscribingForWinner$: Subscription;
+  subscribingForSnapshotsFromServer: Subscription;
   initInfo: any;
   router: Router;
   acceptToReroutePage = false;
-  numberOfCurrentGetSnapshot = 1;
+  numberOfCurrentGetSnapshot: number;
+  countOfGettedSnapshot: number;
 
-  // countOfGettedSnapshot = this.snapshotService.countOfRequestingSnapshots;
-
-  constructor(snapshotService: SnapshotService, router: Router, userService: UserService) {
+  constructor(snapshotService: SnapshotService, router: Router, userService: UserService, firstPullOfSnapshots: ISnapshotResponse) {
     super();
     this.snapshotService = snapshotService;
     this.router = router;
     this.userService = userService;
-    this.subscribingForMap$ = this.snapshotService.currentMessage
-      .pipe(first())
-      .subscribe((response: ISnapshotResponse) => {
-        this.initInfo = response.preload;
-      });
+    this.initInfo = firstPullOfSnapshots.preload;
+    this.numberOfCurrentGetSnapshot = firstPullOfSnapshots.frames.length;
+    this.countOfGettedSnapshot = this.snapshotService.getCountOfRequestingSnapshots();
+    this.addSnapshotsInStorage(firstPullOfSnapshots);
+    if (firstPullOfSnapshots.endOfGame !== undefined) {
+      this.toEndGame(firstPullOfSnapshots.endOfGame);
+    }
+    this.checkNewSnapshotsFromServer();
 
-    this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {
-      console.log('this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {');
-      console.log(response);
-      this.addSnapshotsInStorage(response);
-      if (response.endOfGame !== undefined) {
-        this.toEndGame(response.endOfGame);
-        console.log('this.toEndGame(response.endOfGame);');
-      }
-    });
+    // this.subscribingForMap$ = this.snapshotService.currentMessage
+    //   .pipe(first())
+    //   .subscribe((response: ISnapshotResponse) => {
+    //     this.initInfo = response.preload;
+    //   });
+
+    // this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {
+    //   console.log('this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {');
+    //   console.log(response);
+    //   this.addSnapshotsInStorage(response);
+    //   if (response.endOfGame !== undefined) {
+    //     this.toEndGame(response.endOfGame);
+    //     console.log('this.toEndGame(response.endOfGame);');
+    //   }
+    // });
   }
 
 
@@ -185,16 +196,32 @@ export class BattleState extends Phaser.State {
     }
   }
 
+  // private checkNewSnapshotsFromServer() {
+  //   this.intervalForRequestingData = setInterval(() => {
+  //     this.snapshotService.getSnapshots()
+  //       .pipe(first())
+  //       .subscribe(requestData => {
+  //         this.addSnapshotsInStorage(requestData);
+  //         if (requestData.endOfGame !== undefined) {
+  //           this.toEndGame(requestData.endOfGame);
+  //            this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
+  //         }
+  //       });
+  //   }, 60000);
+  // }
+
   private checkNewSnapshotsFromServer() {
-    setInterval(() => {
-      this.snapshotService.getSnapshots()
+    this.intervalForRequestingData = setTimeout(() => {
+      this.snapshotService.getSnapshots(this.numberOfCurrentGetSnapshot)
         .pipe(first())
         .subscribe(requestData => {
+          this.addSnapshotsInStorage(requestData);
           if (requestData.endOfGame !== undefined) {
-            this.addSnapshotsInStorage(requestData);
+            this.toEndGame(requestData.endOfGame);
             // this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
           } else {
-            console.log('ENDGAME');
+            this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
+            this.checkNewSnapshotsFromServer();
           }
         });
     }, 60000);
@@ -304,7 +331,8 @@ export class BattleState extends Phaser.State {
     console.log('toendgame');
     this.userService.addWinnerOfTheGame(endOfGame);
     console.log('перед отпиской');
-    this.unsubscribeToAll();
+    clearInterval(this.intervalForRequestingData);
+    // this.unsubscribeToAll();
     console.log('this.unsubscribeToAll();');
     console.log('перед подпиской победителя');
     this.subscribingForWinner$ = this.userService.currentWinner.subscribe(data => {
@@ -335,14 +363,14 @@ export class BattleState extends Phaser.State {
   }
 
   private unsubscribeToAll() {
-    console.log('before unsubscribe of snapshots');
-    if (this.subscribingForSnapshotMessages$) {
-      this.subscribingForSnapshotMessages$.unsubscribe();
-    }
-    console.log('before unsubscribe of map');
-    if (this.subscribingForMap$) {
-      this.subscribingForMap$.unsubscribe();
-    }
+    // console.log('before unsubscribe of snapshots');
+    // if (this.subscribingForSnapshotMessages$) {
+    //   this.subscribingForSnapshotMessages$.unsubscribe();
+    // }
+    // console.log('before unsubscribe of map');
+    // if (this.subscribingForMap$) {
+    //   this.subscribingForMap$.unsubscribe();
+    // }
   }
 
   update() {

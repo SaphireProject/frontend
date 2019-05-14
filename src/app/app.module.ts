@@ -37,6 +37,7 @@ import {ErrorComponent} from './error/error.component';
 import {GameComponent} from './game/game.component';
 import {ConfirmDeactivateGuard} from './_guards';
 import {EndgameComponent} from './endgame/endgame.component';
+import {GameResolver} from './game/game-resolver.service';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import {EndgameComponent} from './endgame/endgame.component';
     {provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     ProfileResolver,
+    GameResolver,
     ConfirmDeactivateGuard
 
     // provider used to create fake backend

@@ -11,9 +11,10 @@ import {BattleState} from './BattleState';
 import {SnapshotService} from './snapshot.service';
 import test from 'src/assets/images/tanks_robo/test.json';
 import {ComponentCanDeactivate} from '../_guards';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../_services';
 import {Subject, Subscription} from 'rxjs';
+import {ISnapshotResponse} from './ISnapshotResponse';
 
 @Component({
   selector: 'app-game',
@@ -49,8 +50,10 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   battleState: BattleState;
   waiterForWinner: Subscription;
   acceptToSkipGame = false;
+  firstPullOfSnapshots: ISnapshotResponse;
 
-  constructor(private snapshotService: SnapshotService,
+  constructor(private route: ActivatedRoute,
+              private snapshotService: SnapshotService,
               private router: Router,
               private userService: UserService) {
     this.waiterForWinner = this.userService.currentWinner.subscribe(() => {
@@ -59,7 +62,8 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   ngOnInit() {
-    this.battleState = new BattleState(this.snapshotService, this.router, this.userService);
+    this.firstPullOfSnapshots = this.route.snapshot.data.game;
+    this.battleState = new BattleState(this.snapshotService, this.router, this.userService, this.firstPullOfSnapshots);
     this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
     this.game.state.add('BattleState', this.battleState);
     this.game.state.start('BattleState');

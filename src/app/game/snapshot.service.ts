@@ -13,12 +13,12 @@ export class SnapshotService {
   private preloadSource = new ReplaySubject<Object>(1);
   preload = this.snapshotSource.asObservable();
   page: number;
-  private _countOfRequestingSnapshots = 10;
+  private countOfRequestingSnapshots = 10;
 
   constructor(private http: HttpClient) {
   }
 
-  public getSnapshots(numberOfSnapshot?: number): Observable<any> {
+  public getSnapshots(numberOfSnapshot?: number): Observable<ISnapshotResponse> {
     // check to having info about current state in localStorage
     switch (numberOfSnapshot) {
       case undefined:
@@ -32,13 +32,16 @@ export class SnapshotService {
     }
     // request to snapshot
     return this.http.get<ISnapshotResponse>(`${environment.apiUrl}game`, {
-      params: {page: `${numberOfSnapshot}`, size: `${this._countOfRequestingSnapshots}`}
+      params: {page: `${numberOfSnapshot}`, size: `${this.countOfRequestingSnapshots}`}
     });
   }
 
 
   public sendSnapshots(responseSnapshots: any) {
     this.snapshotSource.next(responseSnapshots);
+  }
+  public getCountOfRequestingSnapshots(): number {
+    return this.countOfRequestingSnapshots;
   }
 
 }

@@ -12,6 +12,7 @@ import {ContactComponent} from './contact/contact.component';
 import {ErrorComponent} from './error/error.component';
 import {GameComponent} from './game/game.component';
 import {EndgameComponent} from './endgame/endgame.component';
+import {GameResolver} from './game/game-resolver.service';
 
 
 const appRoutes: Routes = [
@@ -21,7 +22,7 @@ const appRoutes: Routes = [
     { path: 'toastr', component: ToastrComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'error', component: ErrorComponent},
-    { path: 'game', component: GameComponent, canActivate: [AuthGuard], canDeactivate: [ConfirmDeactivateGuard]},
+    { path: 'game', component: GameComponent, canActivate: [AuthGuard], canDeactivate: [ConfirmDeactivateGuard], resolve: {game: GameResolver}},
     { path: 'endgame', component: EndgameComponent, canActivate: [AuthGuard]},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
     { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
