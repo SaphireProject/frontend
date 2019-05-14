@@ -9,7 +9,7 @@ import {ITweenSubjectConfig} from './ITweenSubjectConfig';
 
 export class TweenSubject {
   game: Game;
-  id: string;
+  id: number;
   positionX: number;
   positionY: number;
   type: string;

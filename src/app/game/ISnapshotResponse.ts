@@ -19,7 +19,7 @@ export interface IAnimations {
 }
 
 export interface ITanks {
-  id: string;
+  id: number;
   positionX: number;
   positionY: number;
   color: string;
