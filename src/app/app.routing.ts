@@ -3,7 +3,7 @@
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
-import { AuthGuard } from './_guards';
+import { AuthGuard, ConfirmDeactivateGuard } from './_guards';
 import {ToastrComponent} from './toastr';
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileSettingsComponent} from './profile-settings/profile-settings.component';
@@ -11,6 +11,7 @@ import {ProfileResolver} from './profile/profile-resolver.service';
 import {ContactComponent} from './contact/contact.component';
 import {ErrorComponent} from './error/error.component';
 import {GameComponent} from './game/game.component';
+import {EndgameComponent} from './endgame/endgame.component';
 
 
 const appRoutes: Routes = [
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
     { path: 'toastr', component: ToastrComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'error', component: ErrorComponent},
-    { path: 'game', component: GameComponent, canActivate: [AuthGuard]},
+    { path: 'game', component: GameComponent, canActivate: [AuthGuard], canDeactivate: [ConfirmDeactivateGuard]},
+    { path: 'endgame', component: EndgameComponent, canActivate: [AuthGuard]},
     { path: 'me', component: ProfileComponent, resolve: { profile: ProfileResolver}, canActivate: [AuthGuard]},
     { path: 'me/edit', component: ProfileSettingsComponent, resolve: { profile: ProfileResolver }, canActivate: [AuthGuard]},
 

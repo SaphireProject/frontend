@@ -45,7 +45,6 @@
             "color": "tank_sand",
             "isAlive": true
           }
-
         ],
         "bullets": [
           {
@@ -542,5 +541,13 @@
         ]
       }
     }
-  ]
+  ],
+  "endOfGame": {
+    "typeOfEnding": "win",
+    "idOfWinner": [
+      {
+        "id": 1
+      }
+    ]
+  }
 }

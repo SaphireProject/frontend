@@ -10,13 +10,16 @@ import Sprite = Phaser.Sprite;
 import {BattleState} from './BattleState';
 import {SnapshotService} from './snapshot.service';
 import test from 'src/assets/images/tanks_robo/test.json';
+import {ComponentCanDeactivate} from '../_guards';
+import {Router} from '@angular/router';
+import {UserService} from '../_services';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit, OnDestroy {
+export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   game: Game;
   units: number[] = [];
@@ -44,11 +47,13 @@ export class GameComponent implements OnInit, OnDestroy {
   testy: number;
   battleState: BattleState;
 
-  constructor(private snapshotService: SnapshotService) {
+  constructor(private snapshotService: SnapshotService,
+              private router: Router,
+              private userService: UserService) {
   }
 
   ngOnInit() {
-  this.battleState = new BattleState(this.snapshotService);
+  this.battleState = new BattleState(this.snapshotService, this.router, this.userService);
   this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
     this.game.state.add('BattleState', this.battleState);
     this.game.state.start('BattleState');
@@ -60,10 +65,26 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.game.state.destroy();
     this.game.destroy();
-    this.battleState.stopTimer();
+    this.battleState.stopGameElements();
   }
 
   fullScreenByClick() {
     this.game.scale.startFullScreen();
+  }
+
+  canDeactivate() {
+    if (this.battleState.acceptToReroutePage === false) {
+    return confirm('Are you sure to exit in current game?');
+    } else {
+      return true;
+    }
+  }
+
+  repeatGame() {
+    const confirmReload = confirm('Are you want repeat the current game?');
+    if (confirmReload) {
+    localStorage.removeItem('currentSnapshotNumber');
+    location.reload();
+    }
   }
 }

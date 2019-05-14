@@ -1,44 +1,54 @@
-﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { sha256 } from 'js-sha256';
-
+﻿import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {sha256} from 'js-sha256';
 import {environment} from '../../environments/environment';
 import {User, UserRegisterRequest, UserEditRequest, QuestionRequest} from '../_models';
+import {IEndOfGame} from '../game/ISnapshotResponse';
+import {ICurrentWinner} from '../_helpers/ICurrentWinner';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class UserService {
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  private currentWinnerSubject: BehaviorSubject<ICurrentWinner>;
+  public currentWinner: Observable<ICurrentWinner>;
+  private bufferWinnerSubject: ReplaySubject<Object>;
+  public bufferWinner: Observable<Object>;
+
   private passwordWithoutHash: string;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.currentWinnerSubject = new BehaviorSubject<ICurrentWinner>({typeOfEnding: 'none', idOfWinner: undefined, user: undefined});
+    this.currentWinner = this.currentWinnerSubject.asObservable();
+    this.bufferWinnerSubject = new ReplaySubject<Object>(1);
+    this.bufferWinner = this.bufferWinnerSubject.asObservable();
   }
 
   public get currentUserValue(): User {
-    console.log('return this.currentUserSubject.value;');
     return this.currentUserSubject.value;
   }
 
   register(userRequest: UserRegisterRequest) {
     this.passwordWithoutHash = userRequest.password;
     userRequest.password = sha256(userRequest.password);
-    return this.http.post<any>(`${environment.apiUrl}auth/registration`, userRequest).pipe(map(user => {
-      console.log('login successful if there\'s a jwt token in the response');
-      this.saveCurrentUser(user);
-      return user;
-    }));
+    return this.http.post<any>(`${environment.apiUrl}auth/registration`, userRequest)
+      .pipe(map(user => {
+        console.log('login successful if there\'s a jwt token in the response');
+        this.saveCurrentUser(user);
+        return user;
+      }));
   }
 
   login(username: string, password: string) {
     password = sha256(password);
     // return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-    return this.http.post<any>(`${environment.apiUrl}auth/authenticate/generate-token`, { username, password })
+    return this.http.post<any>(`${environment.apiUrl}auth/authenticate/generate-token`, {username, password})
       .pipe(map(user => {
         console.log('login successful if there\'s a jwt token in the response');
         this.saveCurrentUser(user);
@@ -52,23 +62,23 @@ export class UserService {
     this.currentUserSubject.next(null);
   }
 
-    /*
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
-    }
+  /*
+  getAll() {
+      return this.http.get<User[]>(`${environment.apiUrl}/users`);
+  }
 
-    getById(id: number) {
-        return this.http.get(`${environment.apiUrl}/users/${id}`);
-    }
+  getById(id: number) {
+      return this.http.get(`${environment.apiUrl}/users/${id}`);
+  }
 
-    update(user: User) {
-        return this.http.put(`${environment.apiUrl}/users/${user.id}`, user);
-    }
+  update(user: User) {
+      return this.http.put(`${environment.apiUrl}/users/${user.id}`, user);
+  }
 
-    delete(id: number) {
-        return this.http.delete(`${environment.apiUrl}/users/${id}`);
-    }
-    */
+  delete(id: number) {
+      return this.http.delete(`${environment.apiUrl}/users/${id}`);
+  }
+  */
 
   editProfile(user: UserEditRequest, passwordEdit: boolean) {
     if (passwordEdit === true) {
@@ -78,16 +88,16 @@ export class UserService {
       user.oldPassword = null;
       user.password = null;
     }
-      return this.http.put<any>(`${environment.apiUrl}user/edit`, user )
-        .pipe(map(newUser => {
-          console.log('login successful if there\'s a jwt token in the response');
-          if ((newUser.username !== this.currentUserValue.username) ||
-                (newUser.email !== this.currentUserValue.email) ||
-                  (newUser.token !== this.currentUserValue.token)) {
+    return this.http.put<any>(`${environment.apiUrl}user/edit`, user)
+      .pipe(map(newUser => {
+        console.log('login successful if there\'s a jwt token in the response');
+        if ((newUser.username !== this.currentUserValue.username) ||
+          (newUser.email !== this.currentUserValue.email) ||
+          (newUser.token !== this.currentUserValue.token)) {
           this.saveCurrentUser(newUser);
           return user;
-          }
-        }));
+        }
+      }));
   }
 
   getUserProfile() {
@@ -96,6 +106,7 @@ export class UserService {
     }))
       ;
   }
+
 //   past after user management will be done
 //
 //  get(username: string): Observable<Profile> {
@@ -127,11 +138,36 @@ export class UserService {
     }
   }
 
+  getUserByID(id: number) {
+    return this.http.get<any>(`${environment.apiUrl}user/${id}`).pipe(map(user => {
+      return user;
+    }));
+  }
+
+  addWinnerOfTheGame(endOfGameInfo: IEndOfGame) {
+    if (endOfGameInfo.typeOfEnding === 'win') {
+      this.bufferWinnerSubject.next({typeOfEnding: endOfGameInfo.typeOfEnding, id:  Number(endOfGameInfo.idOfWinner[0].id)})
+      this.getUserByID(Number(endOfGameInfo.idOfWinner[0].id)).subscribe(data => {
+          let typeOfEnding = 'win-other';
+          if (data.username === this.currentUserValue.username) {
+            typeOfEnding = 'win-me';
+          }
+          this.currentWinnerSubject.next({typeOfEnding: typeOfEnding, idOfWinner: endOfGameInfo.idOfWinner[0].id,  user: data  });
+        }
+      );
+    } else {
+      this.currentWinnerSubject.next({typeOfEnding: 'drawn', idOfWinner: undefined, user: undefined});
+    }
+  }
 
   postQuestion(questionRequset: QuestionRequest) {
     return this.http.post<any>(`${environment.apiUrl}contact`, questionRequset)
       .pipe(map(response => {
         return response;
       }));
+  }
+
+  public get currentWinnerValue() {
+    return this.currentWinnerSubject.value;
   }
 }

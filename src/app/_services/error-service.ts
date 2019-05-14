@@ -40,6 +40,9 @@ export class ErrorService {
         case 404:
           this.router.navigate(['/error'], {queryParams: {type: 404}});
           break;
+        case 410:
+          this.router.navigate(['/error'], {queryParams: {type: 410}});
+          break;
         default:
           if ((err.error.message !== null) && (err.error.message !== 'No message available')) {
             console.log('Testing in error intercept ' + err.error.message);
