@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {sha256} from 'js-sha256';
 import {environment} from '../../environments/environment';
@@ -147,7 +147,7 @@ export class UserService {
   addWinnerOfTheGame(endOfGameInfo: IEndOfGame) {
     if (endOfGameInfo.typeOfEnding === 'win') {
       this.bufferWinnerSubject.next({typeOfEnding: endOfGameInfo.typeOfEnding, id:  Number(endOfGameInfo.idOfWinner[0].id)})
-      this.getUserByID(Number(endOfGameInfo.idOfWinner[0].id)).subscribe(data => {
+     return this.getUserByID(Number(endOfGameInfo.idOfWinner[0].id)).subscribe(data => {
           let typeOfEnding = 'win-other';
           if (data.username === this.currentUserValue.username) {
             typeOfEnding = 'win-me';
@@ -165,6 +165,10 @@ export class UserService {
       .pipe(map(response => {
         return response;
       }));
+  }
+
+  clearWinner() {
+    this.currentWinnerSubject.next({typeOfEnding: 'none', idOfWinner: undefined, user: undefined});
   }
 
   public get currentWinnerValue() {

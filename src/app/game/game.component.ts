@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Game, AUTO, TweenManager } from 'phaser-ce';
+import {Game, AUTO, TweenManager} from 'phaser-ce';
 import Tween = Phaser.Tween;
 import World = Phaser.World;
 import Tileset = Phaser.Tileset;
@@ -13,6 +13,7 @@ import test from 'src/assets/images/tanks_robo/test.json';
 import {ComponentCanDeactivate} from '../_guards';
 import {Router} from '@angular/router';
 import {UserService} from '../_services';
+import {Subject, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -46,15 +47,20 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   tweenK: Tween;
   testy: number;
   battleState: BattleState;
+  waiterForWinner: Subscription;
+  acceptToSkipGame = false;
 
   constructor(private snapshotService: SnapshotService,
               private router: Router,
               private userService: UserService) {
+    this.waiterForWinner = this.userService.currentWinner.subscribe(() => {
+      this.acceptToSkipGame = true;
+    });
   }
 
   ngOnInit() {
-  this.battleState = new BattleState(this.snapshotService, this.router, this.userService);
-  this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
+    this.battleState = new BattleState(this.snapshotService, this.router, this.userService);
+    this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
     this.game.state.add('BattleState', this.battleState);
     this.game.state.start('BattleState');
     setInterval(() => {
@@ -74,7 +80,7 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   canDeactivate() {
     if (this.battleState.acceptToReroutePage === false) {
-    return confirm('Are you sure to exit in current game?');
+      return confirm('Are you sure to exit in current game?');
     } else {
       return true;
     }
@@ -83,8 +89,24 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   repeatGame() {
     const confirmReload = confirm('Are you want repeat the current game?');
     if (confirmReload) {
-    localStorage.removeItem('currentSnapshotNumber');
-    location.reload();
+      localStorage.removeItem('currentSnapshotNumber');
+      location.reload();
+    }
+  }
+
+  skipGame() {
+    const confirmReload = confirm('Are you want skip the current game?');
+    if (confirmReload) {
+      localStorage.removeItem('currentSnapshotNumber');
+      clearInterval(this.battleState.intervalForAnimation);
+      if (this.game.scale.isFullScreen) {
+        this.game.scale.stopFullScreen();
+      }
+      if (this.battleState.subscribingForWinner$) {
+        this.battleState.subscribingForWinner$.unsubscribe();
+      }
+      this.battleState.acceptToReroutePage = true;
+      this.router.navigate(['/endgame']);
     }
   }
 }

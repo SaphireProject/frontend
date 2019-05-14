@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {quotesWin, quotesLoose} from '../_configs/quotes-description';
 import {UserService} from '../_services';
 import {Subscription} from 'rxjs';
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   templateUrl: './endgame.component.html',
   styleUrls: ['./endgame.component.css']
 })
-export class EndgameComponent implements OnInit {
+export class EndgameComponent implements OnInit, OnDestroy {
   quoteMessage: string;
   infoAboutWinner$: Subscription;
   typeOfEnding: string;
@@ -59,8 +59,15 @@ export class EndgameComponent implements OnInit {
     if (this.pageInfo.typeOfEndgame === 'win-me') {
     this.quoteMessage = quotesWin[Math.round(0 - 0.5 + Math.random() * (quotesWin.length))];
     } else {
-      this.quoteMessage = quotesLoose[Math.round(0 - 0.5 + Math.random() * (quotesWin.length))];
+      this.quoteMessage = quotesLoose[Math.round(0 - 0.5 + Math.random() * (quotesLoose.length))];
+      console.log('Цитата');
+      console.log(this.quoteMessage);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.infoAboutWinner$.unsubscribe();
+    this.userService.clearWinner();
   }
 
 }

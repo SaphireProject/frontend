@@ -33,7 +33,7 @@ h3 {
 }
 
 .wrapper {
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: flex-start;
   margin-top: 6%;
@@ -63,5 +63,5 @@ button {
   font-weight: bold;
   width: 55%;
   height: 9%;
-  margin-top: 10%;
+  margin-top: 7%;
 }

@@ -51,6 +51,7 @@ export class BattleState extends Phaser.State {
   intervalForAnimation: any;
   subscribingForSnapshotMessages$: Subscription;
   subscribingForMap$: Subscription;
+  subscribingForWinner$: Subscription;
   initInfo: any;
   router: Router;
   acceptToReroutePage = false;
@@ -68,10 +69,14 @@ export class BattleState extends Phaser.State {
       .subscribe((response: ISnapshotResponse) => {
         this.initInfo = response.preload;
       });
+
     this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {
+      console.log('this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {');
+      console.log(response);
       this.addSnapshotsInStorage(response);
       if (response.endOfGame !== undefined) {
         this.toEndGame(response.endOfGame);
+        console.log('this.toEndGame(response.endOfGame);');
       }
     });
   }
@@ -296,20 +301,32 @@ export class BattleState extends Phaser.State {
   }
 
   private toEndGame(endOfGame: IEndOfGame) {
+    console.log('toendgame');
     this.userService.addWinnerOfTheGame(endOfGame);
-
-
+    console.log('перед отпиской');
     this.unsubscribeToAll();
-    const timeToEndGame = this.snapshots.length * 500 + 1000;
-    setTimeout(() => {
-      this.acceptToReroutePage = true;
-      this.stopGameElements();
-      localStorage.removeItem('currentSnapshotNumber');
-      if (this.game.scale.isFullScreen) {
-        this.game.scale.stopFullScreen();
+    console.log('this.unsubscribeToAll();');
+    console.log('перед подпиской победителя');
+    this.subscribingForWinner$ = this.userService.currentWinner.subscribe(data => {
+      console.log('this.userService.currentWinner.subscribe(data => {');
+      if (data.typeOfEnding !== 'none') {
+        const timeToEndGame = this.snapshots.length * 500 + 1000;
+        console.log('заводим таймер на редирект');
+        setTimeout(() => {
+          console.log('исполняем таймер на директ');
+          this.acceptToReroutePage = true;
+          clearInterval(this.intervalForAnimation);
+          localStorage.removeItem('currentSnapshotNumber');
+          if (this.game.scale.isFullScreen) {
+            this.game.scale.stopFullScreen();
+          }
+          if (this.subscribingForWinner$) {
+            this.subscribingForWinner$.unsubscribe();
+          }
+          this.router.navigate(['/endgame']);
+        }, timeToEndGame);
       }
-      this.router.navigate(['/endgame']);
-    }, timeToEndGame);
+    });
   }
 
   public stopGameElements() {
@@ -318,8 +335,14 @@ export class BattleState extends Phaser.State {
   }
 
   private unsubscribeToAll() {
-    this.subscribingForSnapshotMessages$.unsubscribe();
-    this.subscribingForMap$.unsubscribe();
+    console.log('before unsubscribe of snapshots');
+    if (this.subscribingForSnapshotMessages$) {
+      this.subscribingForSnapshotMessages$.unsubscribe();
+    }
+    console.log('before unsubscribe of map');
+    if (this.subscribingForMap$) {
+      this.subscribingForMap$.unsubscribe();
+    }
   }
 
   update() {
@@ -329,5 +352,6 @@ export class BattleState extends Phaser.State {
     const renderSizes = this.mapDrawer.getSizeOfTheWorld();
     this.game.renderer.resize(renderSizes.get('sizeOfX'), renderSizes.get('sizeOfY'));
   }
+
 
 }

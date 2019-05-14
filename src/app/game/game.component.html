@@ -8,6 +8,8 @@
   <button mat-raised-button id="fullScreenTurn" (click)="fullScreenByClick()">Enter Full Screen</button>
   <span class="space-between"></span>
   <button mat-raised-button id="Repeat" (click)="repeatGame()">Repeat</button>
+  <span *ngIf="acceptToSkipGame" class="space-between"></span>
+  <button mat-raised-button *ngIf="acceptToSkipGame" id="skipGame" (click)="skipGame()">Skip</button>
   </div>
 </mat-card>
 
