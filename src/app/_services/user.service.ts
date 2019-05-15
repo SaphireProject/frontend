@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {sha256} from 'js-sha256';
 import {environment} from '../../environments/environment';
@@ -115,19 +115,19 @@ export class UserService {
 //      ;
 //  }
 
-  updateGlobalProfileData() {
-    return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
-      if ((user.username !== this.currentUserValue.username) ||
-        (user.email !== this.currentUserValue.email)) {
-        if (user) {
-          user.token = this.currentUserValue.token;
-          user.bio = null;
-          this.saveCurrentUser(user);
-        }
-      }
-    }))
-      ;
-  }
+  // updateGlobalProfileData() {
+  //   return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
+  //     if ((user.username !== this.currentUserValue.username) ||
+  //       (user.email !== this.currentUserValue.email)) {
+  //       if (user) {
+  //         user.token = this.currentUserValue.token;
+  //         user.bio = null;
+  //         this.saveCurrentUser(user);
+  //       }
+  //     }
+  //   }))
+  //     ;
+  // }
 
   private saveCurrentUser(user: User) {
     if (user && user.token) {
@@ -146,13 +146,13 @@ export class UserService {
 
   addWinnerOfTheGame(endOfGameInfo: IEndOfGame) {
     if (endOfGameInfo.typeOfEnding === 'win') {
-      this.bufferWinnerSubject.next({typeOfEnding: endOfGameInfo.typeOfEnding, id:  Number(endOfGameInfo.idOfWinner[0].id)})
-     return this.getUserByID(Number(endOfGameInfo.idOfWinner[0].id)).subscribe(data => {
+      this.bufferWinnerSubject.next({typeOfEnding: endOfGameInfo.typeOfEnding, id: Number(endOfGameInfo.idOfWinner[0].id)});
+      return this.getUserByID(Number(endOfGameInfo.idOfWinner[0].id)).subscribe(data => {
           let typeOfEnding = 'win-other';
           if (data.username === this.currentUserValue.username) {
             typeOfEnding = 'win-me';
           }
-          this.currentWinnerSubject.next({typeOfEnding: typeOfEnding, idOfWinner: endOfGameInfo.idOfWinner[0].id,  user: data  });
+          this.currentWinnerSubject.next({typeOfEnding: typeOfEnding, idOfWinner: endOfGameInfo.idOfWinner[0].id, user: data});
         }
       );
     } else {
@@ -160,8 +160,8 @@ export class UserService {
     }
   }
 
-  postQuestion(questionRequset: QuestionRequest) {
-    return this.http.post<any>(`${environment.apiUrl}contact`, questionRequset)
+  postQuestion(questionRequest: QuestionRequest) {
+    return this.http.post<any>(`${environment.apiUrl}contact`, questionRequest)
       .pipe(map(response => {
         return response;
       }));
@@ -169,9 +169,5 @@ export class UserService {
 
   clearWinner() {
     this.currentWinnerSubject.next({typeOfEnding: 'none', idOfWinner: undefined, user: undefined});
-  }
-
-  public get currentWinnerValue() {
-    return this.currentWinnerSubject.value;
   }
 }

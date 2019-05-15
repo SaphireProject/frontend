@@ -12,9 +12,9 @@ mat-card-header{
   display: inline;
 }
 
-mat-card-header-text {
-  margin: 0 auto;
-}
+/*mat-card-header-text {*/
+  /*margin: 0 auto;*/
+/*}*/
 
 h4, h3 {
   display: flex;

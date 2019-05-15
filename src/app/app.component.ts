@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
     currentUser: User;
     loading = false;
-    interval: any;
+    // interval: any;
 
     constructor(
         private router: Router,
@@ -49,17 +49,17 @@ export class AppComponent implements OnInit {
       //     this.refreshData();
       //   }, 50000);
     }
-  logout() {
-        this.userService.logout();
-        this.router.navigate(['/login']);
-    }
+    // logout() {
+  //       this.userService.logout();
+  //       this.router.navigate(['/login']);
+  //   }
 
-  refreshData() {
-      console.log('refreshing data');
-    if (this.currentUser) {
-      this.userService.updateGlobalProfileData().subscribe();
-    }
-  }
+  // refreshData() {
+  //     console.log('refreshing data');
+  //   if (this.currentUser) {
+  //     this.userService.updateGlobalProfileData().subscribe();
+  //   }
+  // }
 
 
 

@@ -1,5 +1,4 @@
 import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot} from '@angular/router';
-import {GameComponent} from '../game/game.component';
 import {Observable} from 'rxjs';
 
 export interface ComponentCanDeactivate {

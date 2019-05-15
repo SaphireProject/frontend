@@ -1,60 +1,42 @@
 import {UnitTweenSubject} from './UnitTweenSubject';
 import {BulletTweenSubject} from './BulletTweenSubject';
-import test from 'src/assets/images/tanks_robo/test.json';
 import Sprite = Phaser.Sprite;
-import Tween = Phaser.Tween;
 import Tilemap = Phaser.Tilemap;
-import Tileset = Phaser.Tileset;
 import TilemapLayer = Phaser.TilemapLayer;
 import {MapDrawer} from './MapDrawer';
-import {forEach} from '@angular/router/src/utils/collection';
 import {SnapshotService} from './snapshot.service';
-import {OnInit} from '@angular/core';
 import {UserService} from '../_services';
-import {Observable, Observer, Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {ISnapshotResponse, IPreload, IBullets, ITanks, IFrames, IEndOfGame} from './ISnapshotResponse';
 import {Router} from '@angular/router';
-import {User} from '../_models';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 export class BattleState extends Phaser.State {
 
   // tween: TweenManager;
   units: UnitTweenSubject[] = [];
   bullets: BulletTweenSubject[] = [];
-  tank: Sprite;
+  // tank: Sprite;
   explosion: Sprite;
-  explosionAnimation: any;
-  land: any;
-  tweenA: Tween;
-  tweenForTank: Tween;
   map: Tilemap;
   layer: TilemapLayer;
-  location: Tileset;
-  heightOfBackgroundTilest: number;
-  widthOfBackgroundTileset: number;
-  widthOfTheScreen = 1000;
-  heightOfTheScreen = 1000;
-  bullet: Sprite;
-  weapon: Phaser.Weapon;
-  fireButton: any;
-  tween3: Tween;
-  xTest: number;
-  yTest: number;
-  tweenK: Tween;
-  testy: number;
+  // heightOfBackgroundTilest: number;
+  // widthOfBackgroundTileset: number;
+  // widthOfTheScreen = 1000;
+  // heightOfTheScreen = 1000;
+  // bullet: Sprite;
+  // weapon: Phaser.Weapon;
+  // fireButton: any;
   mapDrawer: MapDrawer;
   snapshots: any[] = [];
-  message: any;
   snapshotService: SnapshotService;
   userService: UserService;
   intervalForAnimation: any;
   intervalForRequestingData: any;
-  subscribingForSnapshotMessages$: Subscription;
-  subscribingForMap$: Subscription;
+  // subscribingForSnapshotMessages$: Subscription;
+  // subscribingForMap$: Subscription;
   subscribingForWinner$: Subscription;
-  subscribingForSnapshotsFromServer: Subscription;
+  // subscribingForSnapshotsFromServer: Subscription;
   initInfo: any;
   router: Router;
   acceptToReroutePage = false;
@@ -82,7 +64,8 @@ export class BattleState extends Phaser.State {
     //   });
 
     // this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {
-    //   console.log('this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage.subscribe((response: ISnapshotResponse) => {');
+    //   console.log('this.subscribingForSnapshotMessages$ = this.snapshotService.currentMessage
+    //                                        .subscribe((response: ISnapshotResponse) => {');
     //   console.log(response);
     //   this.addSnapshotsInStorage(response);
     //   if (response.endOfGame !== undefined) {
@@ -179,7 +162,7 @@ export class BattleState extends Phaser.State {
     if (typeof this.snapshots[0].animations.bullets !== 'undefined' && this.snapshots[0].animations.bullets.length > 0) {
       // generating bullets
       for (const bullet of this.snapshots[0].animations.bullets) {
-        // TODO works with lastshot?
+        // works with lastshot?
         if ((bullet.isFirstSnapshot) && (bullet.isLastSnapshot)) {
           const positionX = bullet.positionX,
             positionY = bullet.positionY,
@@ -382,4 +365,4 @@ export class BattleState extends Phaser.State {
   }
 
 
-}
+}/**/

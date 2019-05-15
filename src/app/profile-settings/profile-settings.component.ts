@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
+// import {MatPasswordStrengthComponent} from '@angular-material-extensions/password-strength';
 
 import { AlertService, UserService } from '../_services';
 import {MustMatch} from '../_helpers/';
@@ -123,12 +122,12 @@ export class ProfileSettingsComponent implements OnInit {
     this.userService.editProfile(this.userForm.value, this.passwordEdit)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           console.log('data');
           this.alertService.success('Profile was saved', true);
           this.router.navigate(['/me']);
         },
-        error => {
+        () => {
           this.loading = false;
         });
 

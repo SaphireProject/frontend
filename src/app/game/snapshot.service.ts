@@ -1,17 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {ISnapshotResponse} from './ISnapshotResponse';
 
 @Injectable({providedIn: 'root'})
 export class SnapshotService {
-  newSnapshots: [];
-  private snapshotSource = new ReplaySubject<Object>(1);
-  currentMessage = this.snapshotSource.asObservable();
-  private preloadSource = new ReplaySubject<Object>(1);
-  preload = this.snapshotSource.asObservable();
+  // private snapshotSource = new ReplaySubject<Object>(1);
+  // currentMessage = this.snapshotSource.asObservable();
+  // private preloadSource = new ReplaySubject<Object>(1);
+  // preload = this.snapshotSource.asObservable();
   page: number;
   private countOfRequestingSnapshots = 10;
 
@@ -37,9 +35,9 @@ export class SnapshotService {
   }
 
 
-  public sendSnapshots(responseSnapshots: any) {
-    this.snapshotSource.next(responseSnapshots);
-  }
+  // public sendSnapshots(responseSnapshots: any) {
+  //   this.snapshotSource.next(responseSnapshots);
+  // }
   public getCountOfRequestingSnapshots(): number {
     return this.countOfRequestingSnapshots;
   }

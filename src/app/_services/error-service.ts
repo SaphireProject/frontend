@@ -12,10 +12,10 @@ export class ErrorService {
               private userService: UserService,
               private router: Router) {}
 
-  getClientErrorMessage(err: Error) {
-    console.error('Navigate to page error... ' + err);
-    this.router.navigate(['/error'], {queryParams: {type: 'inner'}});
-  }
+  // getClientErrorMessage(err: Error) {
+  //   console.error('Navigate to page error... ' + err);
+  //   this.router.navigate(['/error'], {queryParams: {type: 'inner'}});
+  // }
 
   getServerErrorMessage(err: HttpErrorResponse) {
     if (!navigator.onLine) {

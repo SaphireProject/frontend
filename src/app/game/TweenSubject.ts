@@ -36,24 +36,24 @@ export class TweenSubject {
   }
 
 
-  public moveTor(newPositionX: number, newPositionY: number) {
-    if (this.tweenAction.isRunning) {
-      this.tweenCoordinatesQueue.push([newPositionX, newPositionY]);
-    } else {
-      this.countTweenSubjectAngle(newPositionX, newPositionY);
-      this.tweenAction = this.game.add.tween(this.spriteLink)
-        .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
-        .start();
-      this.tweenAction.onComplete.add(() => {
-        if (this.tweenCoordinatesQueue.length > 0) {
-          const nextPosition = this.tweenCoordinatesQueue.shift();
-          newPositionX = nextPosition.shift();
-          newPositionY = nextPosition.shift();
-          this.moveTo(newPositionX, newPositionY);
-        }
-      }, this);
-    }
-  }
+  // public moveTor(newPositionX: number, newPositionY: number) {
+  //   if (this.tweenAction.isRunning) {
+  //     this.tweenCoordinatesQueue.push([newPositionX, newPositionY]);
+  //   } else {
+  //     this.countTweenSubjectAngle(newPositionX, newPositionY);
+  //     this.tweenAction = this.game.add.tween(this.spriteLink)
+  //       .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
+  //       .start();
+  //     this.tweenAction.onComplete.add(() => {
+  //       if (this.tweenCoordinatesQueue.length > 0) {
+  //         const nextPosition = this.tweenCoordinatesQueue.shift();
+  //         newPositionX = nextPosition.shift();
+  //         newPositionY = nextPosition.shift();
+  //         this.moveTo(newPositionX, newPositionY);
+  //       }
+  //     }, this);
+  //   }
+  // }
 
   public moveTo(newPositionX: number, newPositionY: number): Tween {
     newPositionX = this.convertCellToPixels(newPositionX);

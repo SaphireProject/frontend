@@ -58,11 +58,11 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.alertService.success('Hello, ' + this.f.username.value + '!');
           this.router.navigate([this.returnUrl]);
         },
-        error => {
+        () => {
           this.loading = false;
         });
   }

@@ -16,11 +16,8 @@
 }
 
 .userbarcontent {
-    padding-top: 137px;
-    padding-bottom: 84px;
-    padding-left: 164px;
-    padding-right: 347px;
-    display:flex;
+  padding: 137px 347px 84px 164px;
+  display:flex;
     align-items: center;
     /*display: flex;*/
 }

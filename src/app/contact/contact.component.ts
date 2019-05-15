@@ -1,9 +1,8 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService, UserService} from '../_services';
-import {first, tap} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Profile} from '../_models';
+import {first} from 'rxjs/operators';
+import { Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -35,9 +34,9 @@ export class ContactComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.contactForm = this.formBuilder.group({
         email: [this.email != null ? this.email : '', [Validators.required, Validators.email]],
-        firstName: [, [Validators.maxLength(50), Validators.required]],
-        lastName: [, [Validators.maxLength(50)]],
-        questionToContact: [, [Validators.required, Validators.maxLength(1000)]]
+        firstName: [undefined, [Validators.maxLength(50), Validators.required]],
+        lastName: [undefined, [Validators.maxLength(50)]],
+        questionToContact: [undefined, [Validators.required, Validators.maxLength(1000)]]
       }
     )
     ;
@@ -72,11 +71,11 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.userService.postQuestion(this.contactForm.value)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.alertService.success('Thanks for asking! We will answer you as soon as possible' );
           this.router.navigate(['/']);
         },
-        error => {
+        () => {
           this.loading = false;
         }
         )

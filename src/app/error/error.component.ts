@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {ErrorDescrpiption} from '../_configs/';
 import {errorMap} from '../_configs/';
 
@@ -9,7 +9,7 @@ import {errorMap} from '../_configs/';
   styleUrls: ['./error.component.css']
 })
 export class ErrorComponent implements OnInit {
-  routeParams: Params;
+  // routeParams: Params;
   typeOfError: String;
   pageInfo: ErrorDescrpiption;
 

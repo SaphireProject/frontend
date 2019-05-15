@@ -13,12 +13,10 @@ import {Router} from '@angular/router';
 export class EndgameComponent implements OnInit, OnDestroy {
   quoteMessage: string;
   infoAboutWinner$: Subscription;
-  typeOfEnding: string;
+  // userId: number;
   username: string;
   email: string;
-  userId: number;
   pageInfo: IEndgameDescription;
-  statusEnd: string;
 
   constructor(private userService: UserService,
               private router: Router) {
@@ -36,21 +34,6 @@ export class EndgameComponent implements OnInit, OnDestroy {
         } else {
           router.navigate(['/error?type=404']);
         }
-
-        // console.log('endgame');
-        // console.log(endgameMap);
-        // console.log(data);
-        // this.statusEnd = data.typeOfEnding;
-        // console.log(this.statusEnd);
-        // if (endgameMap.has(this.statusEnd)) {
-        //
-        //
-        //
-        //
-        //
-        // } else {
-        //   router.navigate(['/error?type=404']);
-        // }
       }
     );
   }

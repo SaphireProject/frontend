@@ -69,8 +69,8 @@ h1 {
   line-height: normal;
   letter-spacing: normal;
   border-radius: 18px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
+  /*-webkit-transition: all 0.3 ease;*/
+  /*transition: all 0.3 ease;*/
   cursor: pointer;
 }
 
@@ -117,13 +117,13 @@ p {
   color: #4a4a4a;
 }
 
-a {
-  text-weight: bold;
-}
+/*a {*/
+  /*text-weight: bold;*/
+/*}*/
 
 a:hover {
   color: #00e521;
-  text-weight: bold;
+  /*text-weight: bold;*/
 }
 
 .alert-wrapper {
