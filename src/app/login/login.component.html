@@ -1,0 +1,24 @@
+﻿<div class="menu">
+  <div class="wrapper">
+    <div class="login-page">
+      <div class="form">
+        <h1>Login</h1>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+             <input type="text" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <div class="alert-wrapper"><div *ngIf="submitted && f.username.errors" class="alert-info">
+              <div *ngIf="f.username.errors.required">Username is required</div>
+            </div></div>
+             <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div class="alert-wrapper"><div *ngIf="submitted && f.password.errors" class="alert-info">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+            </div></div>
+             <button [disabled]="loading" class="btn btn-primary">Sign In</button>
+            <div class="registerAcc">
+             <p class="/register">Not registered? <a routerLink="/register" class="btn btn-link">Create an account</a>
+            </div>
+            <div class="load-ring"><mat-progress-spinner ng *ngIf="loading" mode="indeterminate" diameter="32" style="margin:0 auto;"></mat-progress-spinner></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

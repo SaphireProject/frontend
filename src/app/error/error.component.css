@@ -1,0 +1,32 @@
+h1 {
+  font-size: 200px;
+  font-weight: bold;
+  height: 52%;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-style: italic;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 6%;
+  margin-bottom: 5%;
+}
+
+button {
+  background-color: rgba(0, 167, 121, 0.81);
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  width: 55%;
+  height: 9%;
+  margin-top: 12%;
+}

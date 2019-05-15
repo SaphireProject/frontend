@@ -1,0 +1,90 @@
+﻿<div class="menu">
+  <div class="wrapper">
+    <div class="login-page">
+      <div class="form">
+        <h1>Register</h1>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <input type="text" placeholder="Email" formControlName="email" class="form-control" autofocus required [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+              <div class="icon-wrapper">
+                <div class="icon">
+                  <mat-icon *ngIf="checkForCheckStatusIcon(f.email)" class="valid-icon">check_circle</mat-icon>
+                  <mat-icon *ngIf="checkForErrorStatusIcon(f.email)" class="invalid-icon">error</mat-icon>
+                </div>
+              </div>
+            <div class="alert-wrapper">
+             <div *ngIf="checkForValidField(f.email)" class="valid-info">Email is correct. Keep moving!</div>
+             <div *ngIf="checkForInvalidField(f.email)" class="alert-info">
+               <div [hidden]="!f.email.errors.email">Email is not correct</div>
+               <div [hidden]="checkForFieldRequired(f.email)">Email is required</div>
+            </div>
+          </div>
+
+          <input type="text" placeholder="Username" formControlName="username" class="form-control" required [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+              <div class="icon-wrapper">
+                <div class="icon">
+                  <mat-icon *ngIf="checkForCheckStatusIcon(f.username)" class="valid-icon">check_circle</mat-icon>
+                  <mat-icon *ngIf="checkForErrorStatusIcon(f.username)" class="invalid-icon">error</mat-icon>
+                </div>
+              </div>
+            <div class="alert-wrapper">
+              <div *ngIf="checkForValidField(f.username)" class="valid-info">Username is correct</div>
+              <div *ngIf="checkForInvalidField(f.username)" class="alert-info">
+              <div [hidden]="checkForFieldRequired(f.username)">Username is required</div>
+              <div [hidden]="checkForMaxLength(f.username)">Username must be less than 50 characters</div>
+          </div>
+            </div>
+
+          <input type="password" matInput #password placeholder="Password" formControlName="password" required class="form-control-password" [ngClass]="{ 'is-invalid': ( submitted && f.password.errors )}" (input)="togglePasswordInput()"/>
+              <div class="icon-wrapper">
+                <div class="icon">
+                  <mat-icon *ngIf="checkForCheckStatusIcon(f.password)" class="valid-icon">check_circle</mat-icon>
+                  <mat-icon *ngIf="checkForErrorStatusIcon(f.password)" class="invalid-icon">error</mat-icon>
+                </div>
+              </div>
+            <div class="alert-wrapper">
+              <div *ngIf="checkForValidField(f.password)" class="valid-info">Password is good, confirm it</div>
+              <div *ngIf="checkForInvalidField(f.password)" class="alert-info">
+              <div [hidden]="checkForFieldRequired(f.password)">Password is required</div>
+              <div *ngIf="f.password.errors.pattern && !f.password.errors.maxlength">Password is not strong :(</div>
+              <div [hidden]="checkForMaxLength(f.password)">Password must be less than 50 characters</div>
+              </div>
+          </div>
+
+          <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+             <div class="icon-wrapper">
+               <div class="icon">
+                 <div *ngIf="checkForCheckStatusIcon(f.confirmPassword)"><mat-icon class="valid-icon">check_circle</mat-icon></div>
+                 <div *ngIf="checkForErrorStatusIcon(f.confirmPassword)"><mat-icon class="invalid-icon">error</mat-icon></div>
+               </div>
+             </div>
+           <div class="alert-wrapper">
+             <div *ngIf="f.confirmPassword.valid" class="valid-info">Passwords match</div>
+             <div *ngIf="checkForInvalidField(f.confirmPassword)" class="alert-info">
+               <div [hidden]="checkForFieldRequired(f.confirmPassword)">Password needs to be confirmed</div>
+               <div [hidden]="!f.confirmPassword.errors.mustMatch">Passwords must match</div>
+           </div>
+          </div>
+
+          <div *ngIf="showPasswordValid" class="info-validation">
+          <mat-password-strength #passwordComponent
+                                 (onStrengthChanged)="onStrengthChanged($event)"
+                                 [password]="password.value"
+                                 [enableSpecialCharRule] = false>
+          </mat-password-strength>
+            <mat-password-strength-info
+              [passwordComponent]="passwordComponent"
+              lowerCaseCriteriaMsg="contains at least one lower character in English"
+              upperCaseCriteriaMsg="contains at least one upper character in English"
+            >
+            </mat-password-strength-info>
+          </div>
+
+          <button [disabled]="loading" class="register-button">Register</button>
+
+          <div class="load-ring"><mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="32" style="margin:0 auto;"></mat-progress-spinner></div>
+        </form>
+        <p class="ask">Already have an account? <a routerLink="/login" class="sign-in">Sign in</a>
+      </div>
+    </div>
+  </div>
+</div>

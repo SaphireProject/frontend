@@ -1,0 +1,19 @@
+.mat-card {
+  width: 75%;
+  height: 60%;
+  margin: 7% auto;
+  display: flex;
+}
+
+.img {
+  position: center;
+}
+
+.question {
+  width: 95%;
+  padding-bottom: 12%;
+  padding-top: 2%;
+}
+
+.button {
+}

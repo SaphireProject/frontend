@@ -1,0 +1,80 @@
+.profile {
+  padding: 20px;
+}
+
+mat-card {
+  width: 400px;
+  height: 460px;
+  margin: 100px auto;
+}
+
+mat-card-header{
+  display: inline;
+}
+
+/*mat-card-header-text {*/
+  /*margin: 0 auto;*/
+/*}*/
+
+h4, h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-card-subtitle {
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+mat-card-title {
+  text-align: center;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+  border-radius: 50%;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.button {
+  display: flex;
+  align-items: stretch;
+  position: absolute;
+  bottom: 35px;
+  margin: 0 auto;
+
+}
+
+.buttons-top {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
+.mat-raised-button.top {
+  display: flex;
+  align-content: stretch;
+}
+
+mat-card-subtitle.bio {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.mat-icon {
+  font-size: 1.5em;
+  padding-right: 5px;
+}
+
+.mat-icon {
+  font-size: 23px;
+}

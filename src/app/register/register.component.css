@@ -1,0 +1,181 @@
+
+
+.ng-valid:not(form)  {
+  border: 1px solid #00e521; /* green */
+}
+
+
+.ng-invalid:not(form), .ng-valid.touched, .is-invalid.ng-untouched:not(form)  {
+  border: 1px solid #ff463f;
+}
+
+.ng-untouched:not(form) {
+  border: 0px;
+}
+
+.wrapper {
+  margin: 0 auto;
+  height: inherit;
+  width: 1440px;
+  background-color: white;
+}
+
+h1 {
+  font-size: 25px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+  margin-bottom: 34px;
+}
+
+.login-page {
+  width: 681px;
+  padding-top: 198px;
+  margin: 0px 529px 100px 530px;
+}
+.form {
+  width: 381px;
+  /*position: relative;
+  z-index: 1;*/
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  /*border: 0;*/
+  margin: 0 0 28px;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 81px;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+
+.form button {
+  outline: 0;
+  background-color: rgba(111, 160, 218, 0.65);
+  width: 100%;
+  border: 0;
+  margin-top: 20px;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  border-radius: 18px;
+  /*-webkit-transition: all 0.3 ease;*/
+  /*transition: all 0.3 ease;*/
+  cursor: pointer;
+}
+
+.form button:hover,.form button:active,.form button:focus {
+  background-color: rgba(0, 167, 121, 0.81);
+}
+
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+.alert {
+  color: red;
+}
+
+div.invalid-feedback {
+  padding-top: 3px;
+  color: red;
+  font-weight: bold;
+}
+
+div.sign-in {
+  padding-top: 26px;
+}
+
+.loading-ring {
+  padding-top: 10px;
+}
+
+.form-control-password {
+  color: #4a4a4a;
+}
+
+.load-ring {
+  padding-top: 25px;
+}
+
+.valid-icon {
+  font-size: 37px;
+  color: rgba(0, 167, 121, 0.81);
+  margin-left: 5px;
+}
+
+.invalid-icon {
+  font-size: 37px;
+  color: red;
+  margin-left: 5px;
+}
+
+.alert-wrapper {
+  position: relative;
+}
+
+.alert-info {
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  font-size: 14px;
+  color: red;
+}
+
+.valid-info {
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 167, 121, 0.81);
+}
+
+.icon {
+  position: absolute;
+  /*bottom: 31.5px;*/
+  bottom: 32px;
+  left: 380px;
+}
+
+.icon-wrapper {
+  position: relative;
+}
+
+p {
+  font-size: 16px;
+  font-weight: bolder;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+
+/*a {*/
+  /*text-weight: bold;*/
+/*}*/
+
+a:hover {
+  color: #00e521;
+  /*text-weight: bold;*/
+}

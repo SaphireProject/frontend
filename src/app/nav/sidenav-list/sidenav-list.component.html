@@ -1,0 +1,43 @@
+<div class="menu-link">
+  <div class="nav-logo">
+    <img src="assets/images/logo_big.png" alt="logo" height="70" width="146">
+  </div>
+  <mat-nav-list>
+  <a mat-list-item (click)="onSidenavClose()">
+    <mat-icon class="home">keyboard_backspace</mat-icon>
+    <span  class="navigationbar-button-name">Back</span>
+  </a>
+  <a mat-list-item routerLink="/game" (click)="onSidenavClose()">
+    <mat-icon class="home">videogame_asset</mat-icon>
+    <span class="navigationbar-button-name">New Game</span>
+  </a>
+  <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
+    <mat-icon class="home">home</mat-icon>
+    <span class="navigationbar-button-name">Home</span>
+  </a>
+  <a mat-list-item routerLink="/me" (click)="onSidenavClose()">
+    <mat-icon class="home">face</mat-icon>
+    <span class="navigationbar-button-name">My Profile</span>
+  </a>
+  <a mat-list-item routerLink="/strategies" (click)="onSidenavClose()">
+    <mat-icon class="home">edit</mat-icon>
+    <span class="navigationbar-button-name">Strategies</span>
+  </a>
+  <a mat-list-item routerLink="/friends" (click)="onSidenavClose()">
+    <mat-icon class="home">people</mat-icon>
+    <span class="navigationbar-button-name">Friends</span>
+  </a>
+  <a mat-list-item routerLink="/contact" (click)="onSidenavClose()">
+    <mat-icon class="contact">email</mat-icon>
+    <span class="navigationbar-button-name">Contact</span>
+  </a>
+  <a mat-list-item routerLink="/misc" (click)="onSidenavClose()">
+    <mat-icon class="help">help_outline</mat-icon>
+    <span class="navigationbar-button-name">Help</span>
+  </a>
+  <a mat-list-item routerLink="/about" (click)="onSidenavClose()">
+    <mat-icon class="about">pageview</mat-icon>
+    <span class="navigationbar-button-name">About</span>
+  </a>
+  </mat-nav-list>
+</div>

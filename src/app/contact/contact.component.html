@@ -1,0 +1,33 @@
+<div class="body">
+  <div class="card">
+    <mat-card>
+      <mat-card-header>
+        <div>
+          <mat-card-title>Contact us</mat-card-title>
+          <mat-card-subtitle>Do you have any questions for us? We are always ready to answer.</mat-card-subtitle>
+          <img src="assets/images/robotask.svg" alt="place for question" width="70%" height="70%">
+        </div>
+      </mat-card-header>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input autofocus matInput required formControlName="email" id="email" name="email" placeholder="Email">
+          <mat-error *ngIf="f.email.invalid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput required="" formControlName="firstName" id="first-name" name="first-name" placeholder="First Name">
+          <mat-error *ngIf="f.firstName.invalid"> {{getFirstNameMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="lastName" id="last-name" name="last-name" placeholder="Last Name">
+        </mat-form-field>
+        <mat-form-field class="question">
+          <textarea required matInput cdkTextareaAutosize cdkAutosizeMinRows="5" formControlName="questionToContact" id="question" name="question" placeholder="Your Question" maxRows="1000"></textarea>
+          <mat-error *ngIf="f.questionToContact.invalid">{{getQuestionErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-card-actions>
+          <button mat-raised-button type="submit" class="submit">Ask</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+</div>

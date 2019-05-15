@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <img src="{{pageInfo.imageSrc}}" alt="{{pageInfo.description}}" height="480px" width="480px">
+  <span class="placeholder"></span>
+  <span class="informaton">
+    <div class="wrapper-for-username">
+    <h1 [ngClass]="{'article-for-drawn': pageInfo.typeOfEndgame === 'drawn'}">{{pageInfo.headerOfResult}}</h1>
+    <div *ngIf="(pageInfo.typeOfEndgame === 'win-me') || (pageInfo.typeOfEndgame === 'win-other')">The winner is:</div>
+    <div class="avatar" *ngIf="(pageInfo.typeOfEndgame === 'win-me') || (pageInfo.typeOfEndgame === 'win-other')"><img ngxGravatar [email]= email size=150 alt="avatar"></div>
+    <div class="username" *ngIf="(pageInfo.typeOfEndgame === 'win-me') || (pageInfo.typeOfEndgame === 'win-other')">{{username}}</div>
+    </div>
+    <h2>{{pageInfo.description}}</h2>
+    <h3>{{quoteMessage}}</h3>
+    <button a routerLink="/" mat-button>Go Home</button>
+  </span>
+</div>

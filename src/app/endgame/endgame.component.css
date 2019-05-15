@@ -1,0 +1,67 @@
+h1 {
+  /*padding-top: 14%;*/
+  font-size: 100px;
+  font-weight: bold;
+  /*height: 24%;*/
+  /*padding-bottom: 2%;*/
+}
+
+.article-for-drawn {
+  padding-top: 14%;
+  padding-bottom: 2%
+}
+
+
+.test {
+  font-size: 100px;
+  font-weight: bold;
+  height: 24%;
+}
+
+h2 {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+h3 {
+  font-style: italic;
+}
+
+.placeholder {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.wrapper {
+  width: 90%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 6%;
+  margin-bottom: 5%;
+  margin-left: 5%;
+}
+
+.wrapper-for-username {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /*margin-left: 135px;*/
+  /*margin-right: 20px;*/
+}
+
+.username {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+button {
+  background-color: rgba(0, 167, 121, 0.81);
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  width: 55%;
+  height: 9%;
+  margin-top: 7%;
+}

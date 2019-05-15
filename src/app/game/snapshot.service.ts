@@ -1,0 +1,45 @@
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {ISnapshotResponse} from './ISnapshotResponse';
+
+@Injectable({providedIn: 'root'})
+export class SnapshotService {
+  // private snapshotSource = new ReplaySubject<Object>(1);
+  // currentMessage = this.snapshotSource.asObservable();
+  // private preloadSource = new ReplaySubject<Object>(1);
+  // preload = this.snapshotSource.asObservable();
+  page: number;
+  private countOfRequestingSnapshots = 10;
+
+  constructor(private http: HttpClient) {
+  }
+
+  public getSnapshots(numberOfSnapshot?: number): Observable<ISnapshotResponse> {
+    // check to having info about current state in localStorage
+    switch (numberOfSnapshot) {
+      case undefined:
+        const numberFromLocalStorage = Number(localStorage.getItem('currentSnapshotNumber'));
+        if (numberFromLocalStorage !== 0) {
+          numberOfSnapshot = numberFromLocalStorage;
+        } else {
+          numberOfSnapshot = 0;
+        }
+        break;
+    }
+    // request to snapshot
+    return this.http.get<ISnapshotResponse>(`${environment.apiUrl}game`, {
+      params: {page: `${numberOfSnapshot}`, size: `${this.countOfRequestingSnapshots}`}
+    });
+  }
+
+
+  // public sendSnapshots(responseSnapshots: any) {
+  //   this.snapshotSource.next(responseSnapshots);
+  // }
+  public getCountOfRequestingSnapshots(): number {
+    return this.countOfRequestingSnapshots;
+  }
+
+}

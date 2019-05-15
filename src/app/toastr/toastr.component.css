@@ -1,0 +1,20 @@
+.message-toastr {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 4px;
+}
+
+.error {
+  color: white;
+  background-color: red;
+}
+
+.alert-danger {
+  color: white;
+  background-color: #fff969;
+}
+
+.success {
+  color: white;
+  background-color: rgba(0, 167, 121, 0.81);
+}
