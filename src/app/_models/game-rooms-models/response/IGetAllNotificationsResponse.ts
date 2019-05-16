@@ -1,10 +1,9 @@
-import {ICreateRoomRequest} from './ICreateRoomRequest';
-
 export interface IGetAllNotificationsResponse {
   invite: [];
 }
 
 export interface NotificationInfo {
+  idOfInvite: number;
   idOfRoom: number;
   nameOfRoom: string;
   idOfAdmin: number;

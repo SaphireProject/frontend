@@ -1,4 +1,4 @@
 export interface IDeletedInvutedUserResponse {
   status: boolean;
-  idOfDeteledUser: number;
+  idOfDeletedUser: number;
 }

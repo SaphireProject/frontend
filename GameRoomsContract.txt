@@ -1,6 +1,5 @@
 1. Создание комнаты.
 POST /room
-
 Тело запроса
 {
   idOfAdmin: number;
@@ -13,8 +12,7 @@ POST /room
   // levelType: string; // 'tileGrass1', 'tileGrass2', 'tileSand1', 'tileSand2', 'tileSand3'
 }
 
-Тело Ответа
-{
+Тело Ответа {
   idOfRoom: number;
   nameOfRoom: string;
   idOfAdmin: number;
@@ -28,12 +26,10 @@ POST /room
 
 2. Инвайт игрока в лобби
 PUT /invite-user
-
 Тело запроса
 {
   username: string;
 }
-
 Тело Ответа
 {
   id: number;
@@ -46,7 +42,6 @@ PUT /invite-user
 GET /game-status
 Возвращать массив всех игроков и их статус. Если сложно посчитать - можно договориться
 о запросе по одному юзеру, но количество запросов, значительно возрастет.
-
 Тело ответа
 {
   users: [User];
@@ -76,13 +71,11 @@ Strategy {
 }
 
 ========
-
 5. Подтверждение, что юзер готов к бою
 PUT /user-ready
-
 Тело запроса:
 {
-  username: string;
+    username: string;
   idOfChosenStrategy: number;
   chosenTank: string;
   // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
@@ -90,8 +83,8 @@ PUT /user-ready
 
 Тело ответа:
 {
-  status: true;
-  username: string;
+    status: true;
+      username: string;
   idOfChosenStrategy: number;
   chosenTank: string;
   // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
@@ -118,6 +111,7 @@ GET /notification
 }
 
 Invite {
+  idOfInvite: number;
   idOfRoom: number;
   nameOfRoom: string;
   idOfAdmin: number;
@@ -127,7 +121,6 @@ Invite {
   widthOfMapForGame: number;
 }
 =========
-
 9. Получить текущих игроков в лобби
 GET /game/users
 
@@ -140,7 +133,7 @@ users: [User];
   idOfUser: number;
   username: string;
   email: string;
-  chosenTank: string;
+  choosenTank: string;
   readyToPlay: boolean;
 }
 
@@ -155,12 +148,40 @@ GET /game/is-started
 }
 
 =========
-////////
+///////
+11. Удалить уведомление
+DELETE /invite
+Тело запроса
+{
+  username: string;
+  idOfInvite: string;
+}
 
-11. Удалить админом игрока из лобби
+Тело ответа{
+status: boolean;
+}
+====
+12. Принять уведомление
+Тело запроса{
+    username: string;
+    idOfInvite: string;
+}
+
+Тело ответа{
+  idOfInvite: number;
+  idOfRoom: number;
+  nameOfRoom: string;
+  idOfAdmin: number;
+  usernameOfAdmin: string;
+  countOfPlayers: number;
+  heightOfMapForGame: number;
+  widthOfMapForGame: number;
+}
+
+====
+13. Удалить админом игрока из лобби
 
 DELETE /invite-user
-
 Тело запроса
 {
   idOfUser: number;
@@ -169,10 +190,10 @@ DELETE /invite-user
 Тело ответа
 {
   status: boolean;
-  idOfDeteledUser: number;
+  idOfDeletedUser: number;
 }
-
-12. Выйти из лобби
+====
+14. Выйти из лобби
 PUT game/exit
 
 Тело запроса
@@ -185,3 +206,5 @@ PUT game/exit
 {
   status: boolean;
 }
+=========
+////
