@@ -1,0 +1,187 @@
+1. Создание комнаты.
+POST /room
+
+Тело запроса
+{
+  idOfAdmin: number;
+  usernameOfAdmin: string;
+  nameOfRoom: string;
+  countOfPlayers: number;
+  heightOfMapForGame: number;
+  widthOfMapForGame: number;
+  // next, if we with selecting level;
+  // levelType: string; // 'tileGrass1', 'tileGrass2', 'tileSand1', 'tileSand2', 'tileSand3'
+}
+
+Тело Ответа
+{
+  idOfRoom: number;
+  nameOfRoom: string;
+  idOfAdmin: number;
+  usernameOfAdmin: string;
+  countOfPlayers: number;
+  heightOfMapForGame: number;
+  widthOfMapForGame: number;
+}
+
+=========
+
+2. Инвайт игрока в лобби
+PUT /invite-user
+
+Тело запроса
+{
+  username: string;
+}
+
+Тело Ответа
+{
+  id: number;
+  email: string;
+  username: string;
+}
+==========
+
+3 Проверить, готовы ли игроки к игре
+GET /game-status
+Возвращать массив всех игроков и их статус. Если сложно посчитать - можно договориться
+о запросе по одному юзеру, но количество запросов, значительно возрастет.
+
+Тело ответа
+{
+  users: [User];
+}
+
+User {
+  idOfUser: number;
+  username: string;
+  email: string;
+  readyToPlay: boolean;
+  chosenTank?: string | null;
+  // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
+}
+
+=======
+4.  Получить стратегии юзера
+GET user/strategies?game=tanks
+
+export interface IGetUserStrategiesResponse {
+  strategies: [Strategy];
+}
+
+Strategy {
+  id: number;
+  name: string;
+  descriptionOfCode: string;
+}
+
+========
+
+5. Подтверждение, что юзер готов к бою
+PUT /user-ready
+
+Тело запроса:
+{
+  username: string;
+  idOfChosenStrategy: number;
+  chosenTank: string;
+  // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
+}
+
+Тело ответа:
+{
+  status: true;
+  username: string;
+  idOfChosenStrategy: number;
+  chosenTank: string;
+  // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
+}
+=======
+6. Запустить игру (может только админ)
+GET /game/start
+
+=======
+7. Получить количество новых инвайтов, которые, есть у юзера
+GET /notification-new
+
+Тело ответа:
+{
+    countOfNotifications: number;
+}
+========
+8. Получить список инвайтов
+При получении запроса обнулять количество новых уведомлений
+GET /notification
+Тело ответа:
+{
+    invite: [Invite];
+}
+
+Invite {
+  idOfRoom: number;
+  nameOfRoom: string;
+  idOfAdmin: number;
+  usernameOfAdmin: string;
+  countOfPlayers: number;
+  heightOfMapForGame: number;
+  widthOfMapForGame: number;
+}
+=========
+
+9. Получить текущих игроков в лобби
+GET /game/users
+
+Тело ответа
+{
+users: [User];
+}
+
+ User {
+  idOfUser: number;
+  username: string;
+  email: string;
+  chosenTank: string;
+  readyToPlay: boolean;
+}
+
+==========
+10. Узнать началась ли игра
+
+GET /game/is-started
+
+Тело ответа
+{
+  status: boolean;
+}
+
+=========
+////////
+
+11. Удалить админом игрока из лобби
+
+DELETE /invite-user
+
+Тело запроса
+{
+  idOfUser: number;
+}
+
+Тело ответа
+{
+  status: boolean;
+  idOfDeteledUser: number;
+}
+
+12. Выйти из лобби
+PUT game/exit
+
+Тело запроса
+{
+  idOfUser: number;
+  username: string;
+}
+
+Тело ответа
+{
+  status: boolean;
+}
