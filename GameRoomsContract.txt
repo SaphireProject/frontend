@@ -163,6 +163,7 @@ status: boolean;
 }
 ====
 12. Принять уведомление
+put /invite/accept
 Тело запроса{
     username: string;
     idOfInvite: string;
