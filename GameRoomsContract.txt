@@ -60,7 +60,8 @@ User {
 4.  Получить стратегии юзера
 GET user/strategies?game=tanks
 
-export interface IGetUserStrategiesResponse {
+Тело ответа
+ {
   strategies: [Strategy];
 }
 
