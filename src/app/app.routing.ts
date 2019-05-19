@@ -13,6 +13,8 @@ import {ErrorComponent} from './error/error.component';
 import {GameComponent} from './game/game.component';
 import {EndgameComponent} from './endgame/endgame.component';
 import {GameResolver} from './game/game-resolver.service';
+import {RoomcreatorComponent} from './roomcreator/roomcreator.component';
+import {CarouselComponent} from './carousel/carousel.component';
 
 
 const appRoutes: Routes = [
@@ -22,11 +24,13 @@ const appRoutes: Routes = [
   {path: 'toastr', component: ToastrComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'error', component: ErrorComponent},
+  {path: 'carousel', component: CarouselComponent},
   {
     path: 'game', component: GameComponent, canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard], resolve: {game: GameResolver}
   },
   {path: 'endgame', component: EndgameComponent, canActivate: [AuthGuard]},
+  {path: 'create-room', component: RoomcreatorComponent, canActivate: [AuthGuard]},
   {path: 'me', component: ProfileComponent, resolve: {profile: ProfileResolver}, canActivate: [AuthGuard]},
   {path: 'me/edit', component: ProfileSettingsComponent, resolve: {profile: ProfileResolver}, canActivate: [AuthGuard]},
 

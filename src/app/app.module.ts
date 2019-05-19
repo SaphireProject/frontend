@@ -4,8 +4,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {
   MatButtonModule, MatCardModule, MatExpansionModule, MatProgressBarModule, MatToolbarModule,
-  MatSidenavModule, MatListModule
+  MatSidenavModule, MatListModule, MatStepperModule
 } from '@angular/material';
+import { NgImageSliderModule } from 'ng-image-slider';
 import {GravatarModule} from 'ngx-gravatar';
 
 
@@ -25,8 +26,10 @@ import {MatInputModule, MatIconModule, MatMenuModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material';
+import {MatDividerModule} from '@angular/material/divider';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ProfileComponent} from './profile/profile.component';
+import {SlideshowModule} from 'ng-simple-slideshow';
 import {ProfileSettingsComponent} from './profile-settings/profile-settings.component';
 import {gravatarConfig} from './_configs/';
 import {ProfileResolver} from './profile/profile-resolver.service';
@@ -38,6 +41,11 @@ import {GameComponent} from './game/game.component';
 import {ConfirmDeactivateGuard} from './_guards';
 import {EndgameComponent} from './endgame/endgame.component';
 import {GameResolver} from './game/game-resolver.service';
+import { RoomcreatorComponent } from './roomcreator/roomcreator.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxModule} from '@angular/material';
+import {MatSliderModule} from '@angular/material/slider';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 @NgModule({
@@ -51,17 +59,24 @@ import {GameResolver} from './game/game-resolver.service';
     BrowserAnimationsModule,
     MatIconModule,
     MatFormFieldModule,
+    MatTabsModule,
+    NgImageSliderModule,
     MatInputModule,
+    MatCheckboxModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSliderModule,
+    MatDividerModule,
     MatButtonModule,
     MatExpansionModule,
     MatProgressBarModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatStepperModule,
     MatMenuModule,
     MatListModule,
+    SlideshowModule,
     GravatarModule.forRoot(gravatarConfig),
     routing],
   declarations: [
@@ -79,6 +94,8 @@ import {GameResolver} from './game/game-resolver.service';
     ContactComponent,
     ErrorComponent,
     GameComponent,
+    RoomcreatorComponent,
+    CarouselComponent,
     EndgameComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
