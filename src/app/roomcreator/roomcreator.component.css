@@ -1,0 +1,62 @@
+
+.carousel {
+  padding-top: 30px;
+  width: 60%;
+  position: absolute;
+}
+
+img {
+  float: left;
+  margin-right: 30px;
+}
+
+h1 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+p {
+  padding-top: 10px;
+}
+
+.wrapper-for-button {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  background-color: rgba(0, 167, 121, 0.81);
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  width: 160px;
+  height: 40px;
+}
+
+.select-game {
+  margin-top: 7%;
+  margin-bottom: 10%;
+}
+
+mat-slider {
+  margin-top: 20px;
+  width: 40%;
+}
+
+.number-input-room-config {
+  margin-left: 20px;
+}
+
+.room-setting-button {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.placeholder {
+  margin-right: 5px;
+  margin-left: 5px;
+}

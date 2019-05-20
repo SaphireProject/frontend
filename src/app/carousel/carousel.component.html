@@ -1,0 +1,18 @@
+<!--<div class="wrapper">-->
+  <!--<div class="carousel">-->
+    <!--<ul class="slides">-->
+      <!--<li *ngFor="let image of images">-->
+        <!--<h2>{{image.title}}</h2>-->
+        <!--<img src="{{image.url}}" alt="">-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<slideshow #slideshow-->
+           <!--[height]="'200px'"-->
+           <!--[autoPlay]="true"-->
+           <!--[showArrows]="true"-->
+           <!--[showDots]="true"-->
+           <!--[imageUrls]="imageUrls"-->
+           <!--&gt;></slideshow>-->
+<ng-image-slider [images]="imageObject" [imageSize]="{width: 200, height: 200}" #nav></ng-image-slider>

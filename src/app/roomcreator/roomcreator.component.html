@@ -1,0 +1,130 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [completed]= "isCompletedFirstPage" >
+    <!--<form [formGroup]="firstFormGroup">-->
+    <ng-template matStepLabel>Choose the game</ng-template>
+    <mat-tab-group>
+      <mat-tab label="Tanks">
+        <div class="left">
+        <img src="assets/images/tanks_logo.svg" height="480" width="480">
+        </div>
+        <div class="right">
+          <h1>Code Of Tanks</h1>
+          <p>
+            Test your skills in creating code in the Java language and in the management of an army of tanks. Write the best strategy for the fight, call your friends and start a fierce battle with them for the title of the best tanker coder.
+          </p>
+          <span class="carousel">
+          <app-carousel></app-carousel>
+          <div class="wrapper-for-button">
+          <button mat-button type="button" matStepperNext class="select-game" (click)="onSelectGame('tanks')">Select the game</button>
+          </div>
+          </span>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Avalible soon"> This game will be avalible soon.</mat-tab>
+      <mat-tab label="Avalible soon"> This game will be avalible soon.</mat-tab>
+    </mat-tab-group>
+    <!--<mat-form-field>-->
+    <!--<input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>-->
+    <!--</mat-form-field>-->
+    <!--<div>-->
+    <!--</div>-->
+    <!--</form>-->
+  </mat-step>
+  <mat-step [stepControl]="roomForm" [completed]="false">
+    <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+    <ng-template matStepLabel>Set up mode</ng-template>
+    <!--<mat-form-field>-->
+    <!--<input matInput placeholder="Address" formControlName="secondCtrl" required>-->
+    <!--</mat-form-field>-->
+    <!--<div>-->
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Enter Name Of Game Room
+          </mat-panel-title>
+          <mat-panel-description>Enter a name in the room where you can invite other players to the game
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+          <input matInput placeholder="Name Of Room" formControlName="nameOfRoom" required>
+        <mat-error *ngIf="f.nameOfRoom.invalid">{{getNameOfRoomErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Specify Your Game Settings
+          </mat-panel-title>
+          <mat-panel-description>Specify the features of the game you want to play
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>Specify size of map for game</p>
+        <mat-slider
+          class="example-margin"
+          [max]="1000"
+          [min]="10"
+          [thumbLabel] = "true" formControlName="sizeOfMap"
+          [value]="roomForm.value.sizeOfMap"
+        >
+        <mat-error *ngIf="f.sizeOfMap.invalid">{{getMapErrorMessage()}}</mat-error>
+        </mat-slider>
+        <mat-form-field class="number-input-room-config">
+          <input matInput type="number" placeholder="Cell Count" required formControlName="sizeOfMap" [value]="roomForm.value.sizeOfMap">
+        <mat-error *ngIf="f.sizeOfMap.invalid">{{getMapErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <!--<div>Final size of map for battle (in cells): {{value}} x {{value}}</div>-->
+        <div *ngIf="f.sizeOfMap.valid">Final size of map for battle (in cells): {{roomForm.value.sizeOfMap}} x {{roomForm.value.sizeOfMap}}</div>
+      </mat-expansion-panel>
+    </mat-accordion>
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Enter the number of players
+            </mat-panel-title>
+            <mat-panel-description>Enter the number of players to play (optional)
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>Specify size of map for game</p>
+          <mat-slider
+            class="example-margin"
+            [max]="100"
+            [min]="2"
+            [thumbLabel] = "true" formControlName="countOfPlayers"
+            [value]="roomForm.value.countOfPlayers"
+          >
+            <mat-error *ngIf="f.countOfPlayers.invalid">{{getMapErrorMessage()}}</mat-error>
+          </mat-slider>
+          <mat-form-field class="number-input-room-config">
+            <input matInput type="number" placeholder="Number Of Players" formControlName="countOfPlayers" [value]="roomForm.value.countOfPlayers">
+            <button mat-button type="button" *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="f.countOfPlayers.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="f.countOfPlayers.invalid">{{getCountOfPlayersErrorMessage()}}</mat-error>
+          </mat-form-field>
+          <div>Final number of players<span *ngIf="roomForm.value.countOfPlayers !== ''; else unlimPlayers"> : {{roomForm.value.countOfPlayers}}</span></div>
+          <ng-template #unlimPlayers> is not limited
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    <button mat-button type="button" (click)="moveStepper('back')" class="room-setting-button">Back</button>
+    <span class="placeholder"></span>
+    <button mat-button type="submit"class="room-setting-button">Next</button>
+    </form>
+    <!--</div>-->
+    <!--</form>-->
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

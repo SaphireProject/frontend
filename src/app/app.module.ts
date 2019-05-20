@@ -44,8 +44,15 @@ import {GameResolver} from './game/game-resolver.service';
 import { RoomcreatorComponent } from './roomcreator/roomcreator.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { CarouselComponent } from './carousel/carousel.component';
+import { RoomComponent } from './room/room.component';;
+import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
+import {DataRoomService} from './_services/dataroom.service';;
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component'
 
 
 @NgModule({
@@ -61,11 +68,14 @@ import { CarouselComponent } from './carousel/carousel.component';
     MatFormFieldModule,
     MatTabsModule,
     NgImageSliderModule,
+    MatTableModule,
+    MatDialogModule,
     MatInputModule,
     MatCheckboxModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatPaginatorModule,
     MatSliderModule,
     MatDividerModule,
     MatButtonModule,
@@ -96,14 +106,22 @@ import { CarouselComponent } from './carousel/carousel.component';
     GameComponent,
     RoomcreatorComponent,
     CarouselComponent,
+    RoomComponent,
+    InviteDialogComponent,
+    DeleteDialogComponent,
     EndgameComponent],
+  entryComponents: [
+    InviteDialogComponent,
+    DeleteDialogComponent
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     ProfileResolver,
     GameResolver,
-    ConfirmDeactivateGuard
+    ConfirmDeactivateGuard,
+    DataRoomService,
 
     // provider used to create fake backend
     // fakeBackendProvider
