@@ -46,6 +46,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSortModule} from '@angular/material';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CarouselComponent } from './carousel/carousel.component';
@@ -71,6 +72,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component'
     MatTableModule,
     MatDialogModule,
     MatInputModule,
+    MatSortModule,
     MatCheckboxModule,
     MatCardModule,
     MatProgressSpinnerModule,

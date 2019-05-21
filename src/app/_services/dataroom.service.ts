@@ -7,10 +7,12 @@ import {IInviteUserInGameRequest} from '../_models/game-rooms-models/request/IIn
 import {IInviteUserInGameResponse} from '../_models/game-rooms-models/response/IInviteUserInGameResponse';
 import {IDeletedInvutedUserResponse} from '../_models/game-rooms-models/response/IDeletedInvutedUserResponse';
 import {IGetUserStatusResponse, IUserStatus} from '../_models/game-rooms-models/response/IGetUserStatusResponse';
-import {element} from 'protractor';
+
 
 @Injectable()
 export class DataRoomService {
+
+
   dataChange: BehaviorSubject<IUserStatus[]> = new BehaviorSubject<IUserStatus[]>([]);
 
   dialogData: IUserStatus;
@@ -58,21 +60,32 @@ export class DataRoomService {
   }
 
   getAllUsers() {
-    let ELEMENT_DATA: IUserStatus[] = [
-      {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 5, username: 'Boron', email: 'tet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 6, username: 'Carbon', email: 'twqet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 7, username: 'Nitrogen', email: 'dftet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 8, username: 'Oxygen', email: 'tets@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      {idOfUser: 10, username: 'Neon', email: 'dsfs@.ru', readyToPlay: 0, chosenTank: 'sdfsf'}
-    ];
-    console.log('in element data');
+    setTimeout(() => {
+      let ELEMENT_DATA: IUserStatus[] = [
+        {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 5, username: 'Boron', email: 'tet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 6, username: 'Carbon', email: 'twqet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 7, username: 'Nitrogen', email: 'dftet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 8, username: 'Oxygen', email: 'tets@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+        {idOfUser: 10, username: 'Neon', email: 'dsfs@.ru', readyToPlay: 0, chosenTank: 'sdfsf'}
+      ];
     this.dataChange.next(ELEMENT_DATA);
+    }, 400)
+    ;
+
+    console.log('in element data');
     console.log(this.dataChange.value);
+
+    // this.httpClient.get<IGetUserStatusResponse>(`${environment.apiUrl}game-status`).subscribe(data => {
+    //     this.dataChange.next(data.users);
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.log (error.name + ' ' + error.message);
+    //   });
   }
 
   nextPackUsers(test: IUserStatus[]) {

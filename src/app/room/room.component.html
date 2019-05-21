@@ -1,13 +1,10 @@
-<!--<mat-toolbar color="primary">-->
-  <!--<span>Angular 6 MatTable CRUD Example</span>-->
-  <!--<span class="spacer"></span>-->
+<mat-toolbar color="primary">
+  <span>Angular 6 MatTable CRUD Example</span>
+  <span class="spacer"></span>
   <!--Reload data:-->
-  <!--<button mat-icon-button (click)="refresh()">-->
-    <!--<mat-icon>refresh</mat-icon>-->
-  <!--</button>-->
-<!--</mat-toolbar>-->
+</mat-toolbar>
 
-<!--<div class="container mat-elevation-z8">-->
+<div class="container mat-elevation-z8">
 
   <div class="form">
     <mat-form-field floatPlaceholder="never" color="accent">
@@ -23,7 +20,7 @@
     <!-- ID Column -->
     <ng-container matColumnDef="avatar">
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell *matCellDef="let row"><img ngxGravatar [email]=row.email size=100 alt="avatar"></mat-cell>
+      <mat-cell *matCellDef="let row"><img ngxGravatar [email]=row.email size=80 alt="avatar"></mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="username">
@@ -36,14 +33,15 @@
       <mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="readyToPlay">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.readyToPlay}}</mat-cell>
+      <mat-cell *matCellDef="let row" [ngStyle]="{'color': getColorForStatus(row.readyToPlay), 'font-weight': 'bold'}" > {{gameStatus[row.readyToPlay]}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="chosenTank">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Choosen tank</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.chosenTank}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Chosen tank</mat-header-cell>
+      <mat-cell *matCellDef="let row"><span *ngIf="getColorOfTank(row.chosenTank)==='not found'; else imagineTank">Not selected</span> <ng-template #imagineTank><img class="tank" [src]="getColorOfTank(row.chosenTank)" alt="Tank" ></ng-template></mat-cell>
+
     </ng-container>
 
 
@@ -56,7 +54,7 @@
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.email, row.username, row.status, row.chosenTank)">
+        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.email, row.username, row.readyToPlay, row.chosenTank)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
@@ -67,14 +65,15 @@
   </mat-table>
 
 
-  <!--<div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">-->
-    <!--No results-->
-  <!--</div>-->
+  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+    No results
+  </div>
 
-  <!--<mat-paginator #paginator-->
-                 <!--[length]="dataSource.filteredData.length"-->
-                 <!--[pageIndex]="0"-->
-                 <!--[pageSize]="10"-->
-                 <!--[pageSizeOptions]="[5, 10, 25, 100]">-->
-  <!--</mat-paginator>-->
-<!--</div>-->
+
+  <mat-paginator #paginator
+                 [length]="dataSource.filteredData.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>
