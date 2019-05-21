@@ -38,6 +38,6 @@ export class InviteDialogComponent implements OnInit {
 
   public confirmAdd(): void {
     console.log('add');
-    this.dataRoomService.addUser(this.data);
+    this.dataRoomService.addUser(this.data.username);
   }
 }
