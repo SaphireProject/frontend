@@ -1,0 +1,9 @@
+<div class="container">
+  <h3 mat-dialog-title>
+    Are you you want to give up the game?</h3>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="1" (click)="confirmRefuse()">Yes</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>
+</div>

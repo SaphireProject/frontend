@@ -6,7 +6,7 @@ a {
 	text-decoration: none;
 }
 
-a:hover, .contact {
+a:hover, .contact, .element:hover {
 	color: #FAFAFA;
 }
 
@@ -20,6 +20,7 @@ a:hover, .contact {
 .element {
   margin-left: 20px;
 }
+
 
 .menu-link button, .menu-link a:hover {
   width: 100%;

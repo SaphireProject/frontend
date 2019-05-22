@@ -1,3 +1,3 @@
-export class IGetNotificationNewResponse {
+export interface IGetNotificationNewResponse {
  countOfNotifications: number;
 }

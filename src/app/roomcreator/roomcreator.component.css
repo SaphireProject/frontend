@@ -60,3 +60,9 @@ mat-slider {
   margin-right: 5px;
   margin-left: 5px;
 }
+
+.wrapper-for-room {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

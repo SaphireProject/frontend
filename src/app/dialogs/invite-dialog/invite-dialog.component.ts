@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {DataRoomService} from '../_services/dataroom.service';
+import {DataRoomService} from '../../_services/dataroom.service';
 
 @Component({
   selector: 'app-invite-dialog',

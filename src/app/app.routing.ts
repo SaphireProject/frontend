@@ -16,6 +16,8 @@ import {GameResolver} from './game/game-resolver.service';
 import {RoomcreatorComponent} from './roomcreator/roomcreator.component';
 import {CarouselComponent} from './carousel/carousel.component';
 import {RoomComponent} from './room/room.component';
+import {SetupforbattleComponent} from './setupforbattle/setupforbattle.component';
+import {InvitelistComponent} from './invitelist/invitelist.component';
 
 
 const appRoutes: Routes = [
@@ -26,6 +28,8 @@ const appRoutes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'carousel', component: CarouselComponent},
+  {path: 'setup', component: SetupforbattleComponent, canActivate: [AuthGuard]},
+  {path: 'notifications', component: InvitelistComponent, canActivate: [AuthGuard]},
   {path: 'room', component: RoomComponent, canActivate: [AuthGuard]},
   {
     path: 'game', component: GameComponent, canActivate: [AuthGuard],

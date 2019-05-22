@@ -27,6 +27,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatBadgeModule} from '@angular/material/badge';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ProfileComponent} from './profile/profile.component';
 import {SlideshowModule} from 'ng-simple-slideshow';
@@ -46,15 +47,21 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
 import {MatSortModule} from '@angular/material';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CarouselComponent } from './carousel/carousel.component';
-import { RoomComponent } from './room/room.component';;
-import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
-import {DataRoomService} from './_services/dataroom.service';;
-import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component'
-
+import { RoomComponent } from './room/room.component';
+import { InviteDialogComponent } from './dialogs/invite-dialog/invite-dialog.component';
+import {DataRoomService} from './_services/dataroom.service';
+import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { SetupforbattleComponent } from './setupforbattle/setupforbattle.component';
+import { InvitelistComponent } from './invitelist/invitelist.component';
+import { GotogameDialogComponent } from './dialogs/gotogame-dialog/gotogame-dialog.component'
+;
+import { RefusegameDialogComponent } from './dialogs/refusegame-dialog/refusegame-dialog.component';
+import {NotificationService} from './_services/notification.service';
 
 @NgModule({
   imports: [
@@ -70,8 +77,10 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component'
     MatTabsModule,
     NgImageSliderModule,
     MatTableModule,
+    MatChipsModule,
     MatDialogModule,
     MatInputModule,
+    MatBadgeModule,
     MatSortModule,
     MatCheckboxModule,
     MatCardModule,
@@ -111,10 +120,16 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component'
     RoomComponent,
     InviteDialogComponent,
     DeleteDialogComponent,
+    SetupforbattleComponent,
+    InvitelistComponent,
+    RefusegameDialogComponent,
+    GotogameDialogComponent,
     EndgameComponent],
   entryComponents: [
     InviteDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    RefusegameDialogComponent,
+    GotogameDialogComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
@@ -124,6 +139,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component'
     GameResolver,
     ConfirmDeactivateGuard,
     DataRoomService,
+    NotificationService
 
     // provider used to create fake backend
     // fakeBackendProvider

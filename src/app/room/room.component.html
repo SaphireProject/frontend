@@ -8,7 +8,7 @@
 
   <div class="form">
     <mat-form-field floatPlaceholder="never" color="accent">
-      <input matInput #filter placeholder="Filter issues">
+      <input matInput #filter placeholder="Filter Users">
     </mat-form-field>
   </div>
 
@@ -16,7 +16,6 @@
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
-
     <!-- ID Column -->
     <ng-container matColumnDef="avatar">
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
@@ -40,7 +39,7 @@
 
     <ng-container matColumnDef="chosenTank">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Chosen tank</mat-header-cell>
-      <mat-cell *matCellDef="let row"><span *ngIf="getColorOfTank(row.chosenTank)==='not found'; else imagineTank">Not selected</span> <ng-template #imagineTank><img class="tank" [src]="getColorOfTank(row.chosenTank)" alt="Tank" ></ng-template></mat-cell>
+      <mat-cell *matCellDef="let row"><span *ngIf="getColorOfTank(row.chosenTank)==='not found'; else imagineTank">Not selected</span> <ng-template #imagineTank><img class="tank6" [src]="getColorOfTank(row.chosenTank)" alt="Tank" ></ng-template></mat-cell>
 
     </ng-container>
 

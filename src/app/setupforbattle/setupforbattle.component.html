@@ -1,0 +1,37 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Prepare for the game
+      </mat-panel-title>
+      <mat-panel-description>
+        You must set up your army
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+      <div class="wrapper-for-tanks">
+      <mat-chip-list class="mat-chip-list-stacked">
+        <mat-chip class="tank-green" (click)="choseArmy('tank_green')">Forest</mat-chip>
+        <mat-chip class="tank-red" (click)="choseArmy('tank_red')">Red</mat-chip>
+        <mat-chip class="tank-blue" (click)="choseArmy('tank_blue')">Blue</mat-chip>
+        <mat-chip class="tank-dark" (click)="choseArmy('tank_dark')">Dark</mat-chip>
+        <mat-chip class="tank-sand" (click)="choseArmy('tank_sand')">Sand</mat-chip>
+      </mat-chip-list>
+       <div class="tank-descr" *ngIf="chosenTank!==undefined">
+      <div>Chosen army of tanks:</div>
+      <img class="image-of-tank" [src]="getPathToImage()">
+       </div>
+      </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Choose your strategy for fight
+      </mat-panel-title>
+      <mat-panel-description>
+        Choose your strategy
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>

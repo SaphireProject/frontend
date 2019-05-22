@@ -4,6 +4,7 @@ POST /room
 {
   idOfAdmin: number;
   usernameOfAdmin: string;
+  game: string; //current - 'codeOfTanks'
   nameOfRoom: string;
   countOfPlayers: number;
   heightOfMapForGame: number;
@@ -14,6 +15,7 @@ POST /room
 
 Тело Ответа {
   idOfRoom: number;
+  game: string; //current - 'codeOfTanks'
   nameOfRoom: string;
   idOfAdmin: number;
   usernameOfAdmin: string;
@@ -29,17 +31,19 @@ PUT /invite-user
 Тело запроса
 {
   username: string;
+  idOfRoom: number;
 }
 Тело Ответа
 {
   id: number;
   email: string;
   username: string;
+  idOfRoom: number;
 }
 ==========
 
 3 Проверить, готовы ли игроки к игре
-GET /game-status
+GET /game-status?idOfRoom={3423}
 Возвращать массив всех игроков и их статус. Если сложно посчитать - можно договориться
 о запросе по одному юзеру, но количество запросов, значительно возрастет.
 Тело ответа
@@ -51,24 +55,23 @@ User {
   idOfUser: number;
   username: string;
   email: string;
-  readyToPlay: boolean;
+  readyToPlay: number; //0, 1, 2
   chosenTank?: string | null;
-  // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
+  idOfRoom: number;
+  // could be
 }
 
 =======
 4.  Получить стратегии юзера
-GET user/strategies?game=tanks
+GET user/strategies?game=codeOfTanks&idOfRoom={32423}
 
-Тело ответа
- {
+export interface IGetUserStrategiesResponse {
   strategies: [Strategy];
 }
 
 Strategy {
   id: number;
   name: string;
-  descriptionOfCode: string;
 }
 
 ========
@@ -78,15 +81,17 @@ PUT /user-ready
 {
     username: string;
   idOfChosenStrategy: number;
+  idOfRoom: number;
   chosenTank: string;
   // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
 }
 
 Тело ответа:
 {
-    status: true;
-      username: string;
+  status: true;
+  username: string;
   idOfChosenStrategy: number;
+  idOfRoom: number;
   chosenTank: string;
   // could be 'tank_green', 'tank_red', ' tank_sand', 'tank_blue', 'tank_dark'
 }
@@ -117,13 +122,14 @@ Invite {
   nameOfRoom: string;
   idOfAdmin: number;
   usernameOfAdmin: string;
+  emailOfAdmin: number;
   countOfPlayers: number;
   heightOfMapForGame: number;
   widthOfMapForGame: number;
 }
 =========
 9. Получить текущих игроков в лобби
-GET /game/users
+GET /game/users?idOfRoom={23324}
 
 Тело ответа
 {
@@ -135,35 +141,33 @@ users: [User];
   username: string;
   email: string;
   choosenTank: string;
-  readyToPlay: boolean;
+  readyToPlay: number; // 0, 1 ,2
+  idOfRoom: number;
 }
 
 ==========
 10. Узнать началась ли игра
 
-GET /game/is-started
+GET /game/is-started?idOfRoom={32423}
 
 Тело ответа
 {
   status: boolean;
+  idOfRoom: number;
 }
 
 =========
 ///////
 11. Удалить уведомление
-DELETE /invite
-Тело запроса
-{
-  username: string;
-  idOfInvite: string;
-}
+DELETE /invite-user?idOfInvite={234}&username={Dima}
 
 Тело ответа{
 status: boolean;
 }
+
 ====
 12. Принять уведомление
-put /invite/accept
+POST /accept-invite
 Тело запроса{
     username: string;
     idOfInvite: string;
@@ -183,16 +187,13 @@ put /invite/accept
 ====
 13. Удалить админом игрока из лобби
 
-DELETE /invite-user
-Тело запроса
-{
-  idOfUser: number;
-}
+DELETE /invite-user?idOfUser={253}&idOfRoom={3435}
 
 Тело ответа
 {
   status: boolean;
   idOfDeletedUser: number;
+  idOfRoom: number;
 }
 ====
 14. Выйти из лобби
@@ -201,12 +202,14 @@ PUT game/exit
 Тело запроса
 {
   idOfUser: number;
+  idOfRoom: number;
   username: string;
 }
 
 Тело ответа
 {
   status: boolean;
+  idOfRoom: number;
 }
 =========
 ////

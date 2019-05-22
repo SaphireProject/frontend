@@ -8,6 +8,7 @@ export interface NotificationInfo {
   nameOfRoom: string;
   idOfAdmin: number;
   usernameOfAdmin: string;
+  emailOfAdmin: string;
   countOfPlayers: number;
   heightOfMapForGame: number;
   widthOfMapForGame: number;

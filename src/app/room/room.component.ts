@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTable} from '@angular/material';
-import {InviteDialogComponent} from '../invite-dialog/invite-dialog.component';
+import {InviteDialogComponent} from '../dialogs/invite-dialog/invite-dialog.component';
 import {DataRoomService} from '../_services/dataroom.service';
-import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
+import {DeleteDialogComponent} from '../dialogs/delete-dialog/delete-dialog.component';
 import {DataSource} from '@angular/cdk/collections';
 import {IUserStatus} from '../_models/game-rooms-models/response/IGetUserStatusResponse';
 import {BehaviorSubject, fromEvent, merge, Observable, of} from 'rxjs';

@@ -121,7 +121,10 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
+    <div class="wrapper-for-room">
     <app-room></app-room>
+    <app-setupforbattle></app-setupforbattle>
+    </div>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
