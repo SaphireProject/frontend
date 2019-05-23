@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTable} from '@angular/material';
 import {ExampleDataSource} from '../room/room.component';
 import {NotificationService} from '../_services/notification.service';
@@ -14,13 +14,14 @@ import {IGetNotificationNewResponse} from '../_models/game-rooms-models/response
 import {IGetAllNotificationsResponse, NotificationInfo} from '../_models/game-rooms-models/response/IGetAllNotificationsResponse';
 import {GotogameDialogComponent} from '../dialogs/gotogame-dialog/gotogame-dialog.component';
 import {RefusegameDialogComponent} from '../dialogs/refusegame-dialog/refusegame-dialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-invitelist',
   templateUrl: './invitelist.component.html',
   styleUrls: ['./invitelist.component.css']
 })
-export class InvitelistComponent implements OnInit {
+export class InvitelistComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,14 +31,16 @@ export class InvitelistComponent implements OnInit {
   dataSource: NotificationDataSource | null;
   exampleDatabase: NotificationService | null;
   index: number;
-  id: number;
+  id: string;
   displayedColumns: string[] = ['emailOfAdmin', 'usernameOfAdmin', 'nameOfRoom', 'countOfPlayers', 'gameCardSize', 'actions'];
+  timerForNotifications;
 
   constructor(public dialog: MatDialog,
               public notificationService: NotificationService,
               public httpClient: HttpClient,
               public userService: UserService,
-              public alertService: AlertService) {
+              public alertService: AlertService,
+              public router: Router) {
   }
 
 
@@ -45,9 +48,13 @@ export class InvitelistComponent implements OnInit {
     this.loadData();
   }
 
+  ngOnDestroy(): void {
+    clearInterval(this.timerForNotifications);
+  }
+
   private refreshTable() {
-    // this.paginator._changePageSize(this.paginator.pageSize);
-    this.table.renderRows();
+    this.paginator._changePageSize(this.paginator.pageSize);
+    // this.table.renderRows();
   }
 
   public loadData() {
@@ -62,31 +69,33 @@ export class InvitelistComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    // setInterval(() => {
-    //   this.exampleDatabase.getAllUsers();
+    // this.timerForNotifications = setInterval(() => {
+    //   this.exampleDatabase.getAllNotifications();
     // }, 6000)
     // ;
   }
 
-  getToInvite(i: any, idOfInvite: number) {
+  getToInvite(i: any, idOfInvite: string) {
+    const idOfRoom = this.exampleDatabase.dataChange.value
+      .find(x => x.idOfInvite === idOfInvite).idOfRoom;
     const dialogRef = this.dialog.open(GotogameDialogComponent, {
-      data: {idOfInvite: idOfInvite}
+      data: {idOfInvite: idOfRoom}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
-        console.log('gopa1');
-        this.exampleDatabase.dataChange.value.push(this.notificationService.getDialogData());
-        console.log('gopa');
-        this.refreshTable();
-        console.log(this.exampleDatabase.dataChange.value);
+        this.notificationService.acceptInvite(idOfInvite).subscribe(data => {
+          // this.router.navigate([/room]);
+        }, error => {
+          this.alertService.error('Invite was not accept, please try later  ');
+        } );
       }
     });
   }
 
-  cancelFromInvite(i: any, idOfInvite: number) {
+  cancelFromInvite(i: any, idOfInvite: string) {
     this.index = i;
     this.id = idOfInvite;
     const dialogRef = this.dialog.open(RefusegameDialogComponent, {
@@ -99,6 +108,7 @@ export class InvitelistComponent implements OnInit {
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
+        this.paginator._changePageSize(this.paginator.pageSize);
       }
     });
   }
@@ -138,7 +148,7 @@ export class NotificationDataSource extends DataSource<NotificationInfo> {
       this._paginator.page
     ];
 
-    this._exampleDatabase.getAllUsers();
+    this._exampleDatabase.getAllNotifications();
 
 
     return merge(...displayDataChanges).pipe(map(() => {

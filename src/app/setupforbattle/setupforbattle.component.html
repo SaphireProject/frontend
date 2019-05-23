@@ -33,5 +33,15 @@
         Choose your strategy
       </mat-panel-description>
     </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-label>Your Strategies</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let strategy of strategies" (click)="test(strategy.id)" [value]="strategy.id">
+          {{strategy.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="idOfChosenStrategy !== undefined">Your strategy is {{searchValueOfStrategy()}} <button mat-button (click)="showStrategy()">Look at</button></div>
+    <div><button mat-raised-button [disabled]="checkForDisablingConfirm()" (click)="confirmData()">Confirm</button></div>
   </mat-expansion-panel>
 </mat-accordion>

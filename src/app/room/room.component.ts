@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTable} from '@angular/material';
 import {InviteDialogComponent} from '../dialogs/invite-dialog/invite-dialog.component';
 import {DataRoomService} from '../_services/dataroom.service';
@@ -8,7 +8,7 @@ import {IUserStatus} from '../_models/game-rooms-models/response/IGetUserStatusR
 import {BehaviorSubject, fromEvent, merge, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {AlertService} from '../_services';
+import {AlertService, UserService} from '../_services';
 
 
 //
@@ -31,7 +31,7 @@ import {AlertService} from '../_services';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css']
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
 
   gameStatus: any[] = ['Invited', 'Preparing for game', 'Ready'];
   // colorDescription = [
@@ -53,11 +53,13 @@ export class RoomComponent implements OnInit {
   exampleDatabase: DataRoomService | null;
   index: number;
   id: number;
+  timerForUpdateBase;
 
   constructor(public dialog: MatDialog,
               public dataRoomService: DataRoomService,
               public httpClient: HttpClient,
-              public alertService: AlertService) {
+              public alertService: AlertService,
+              public userService: UserService) {
   }
 
   displayedColumns: string[] = ['avatar', 'username', 'email', 'readyToPlay', 'chosenTank', 'actions'];
@@ -154,29 +156,32 @@ export class RoomComponent implements OnInit {
 
     setTimeout(() => {
       this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'KEKS', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'tank_green'},
-        {idOfUser: 2, username: 'HeliDsaum', email: 'tet@masl.ru', readyToPlay: 1, chosenTank: 'tank_sand'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'tank_blue'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 1, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'tank_sand'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 1, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 1, chosenTank: 'tank_red'},
+        {idOfUser: 1, username: 'KEKS', email: 'tet@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
+        {idOfUser: 2, username: 'HeliDsaum', email: 'tet@masl.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
         {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 1, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 1, chosenTank: 'tank_blue'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
         {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
-        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'tank_green'}
+        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 2, chosenTank: 'tank_green'}
       ]);
       // this.table.renderRows();
     }, 5000);
 
   }
+  ngOnDestroy(): void {
+    clearInterval(this.timerForUpdateBase);
+  }
 
   private refreshTable() {
-    // this.paginator._changePageSize(this.paginator.pageSize);
-    this.table.renderRows();
+    this.paginator._changePageSize(this.paginator.pageSize);
+    // this.table.renderRows();
   }
 
   addNew(username: string) {
@@ -198,7 +203,7 @@ export class RoomComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new DataRoomService(this.httpClient, this.alertService);
+    this.exampleDatabase = new DataRoomService(this.httpClient, this.alertService, this.userService);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
     // // .debounceTime(150)
@@ -209,7 +214,7 @@ export class RoomComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    // setInterval(() => {
+    // this.timerForUpdateBase = setInterval(() => {
     //   this.exampleDatabase.getAllUsers();
     // }, 6000)
     // ;

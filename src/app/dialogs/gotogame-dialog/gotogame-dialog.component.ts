@@ -18,7 +18,7 @@ export class GotogameDialogComponent implements OnInit {
   }
 
   confirmGame() {
-
+    console.log('Ok');
   }
 
   onNoClick() {

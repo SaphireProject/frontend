@@ -1,5 +1,5 @@
 export interface IAcceptInviteResponse {
-  idOfInvite: number;
+  idOfInvite: string;
   idOfRoom: number;
   nameOfRoom: string;
   idOfAdmin: number;

@@ -5,11 +5,13 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../_models';
 import {IGetNotificationNewResponse} from '../_models/game-rooms-models/response/IGetNotificationNewResponse';
 import {map} from 'rxjs/operators';
-import {IUserStatus} from '../_models/game-rooms-models/response/IGetUserStatusResponse';
-import {NotificationInfo} from '../_models/game-rooms-models/response/IGetAllNotificationsResponse';
-import {IDeletedInvutedUserResponse} from '../_models/game-rooms-models/response/IDeletedInvutedUserResponse';
+import {IGetUserStatusResponse, IUserStatus} from '../_models/game-rooms-models/response/IGetUserStatusResponse';
+import {IGetAllNotificationsResponse, NotificationInfo} from '../_models/game-rooms-models/response/IGetAllNotificationsResponse';
+import {IDeletedInvitedUserResponse} from '../_models/game-rooms-models/response/IDeletedInvutedUserResponse';
 import {UserService} from './user.service';
 import {AlertService} from './alert.service';
+import {IDeletedInvitedUserRequest} from '../_models/game-rooms-models/request/IDeletedInvitedUserRequest';
+import {IAcceptInviteResponse} from '../_models/game-rooms-models/response/IAcceptInviteResponse';
 
 @Injectable({providedIn: 'root'})
 export class NotificationService {
@@ -30,11 +32,11 @@ export class NotificationService {
     return this.dataChange.value;
   }
 
-  getAllUsers() {
+  getAllNotifications() {
     setTimeout(() => {
       let ELEMENT_DATA: NotificationInfo[] = [
         {
-          idOfInvite: 5,
+          idOfInvite: '5',
           idOfRoom: 3,
           nameOfRoom: 'fdsfs',
           idOfAdmin: 9,
@@ -48,6 +50,13 @@ export class NotificationService {
       ];
       this.dataChange.next(ELEMENT_DATA);
     }, 400);
+
+    // this.http.get<IGetAllNotificationsResponse>(`${environment.apiUrl}notification`).subscribe(data => {
+    //     this.dataChange.next(data.invite);
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.log (error.name + ' ' + error.message);
+    //   });
   }
 
 
@@ -92,15 +101,27 @@ export class NotificationService {
 
   }
 
-
-  deleteInvite(idOfInvite: number) {
+  acceptInvite(idOfRoom: string): Observable<IAcceptInviteResponse> {
     const usernameOfCurrentUser = this.userService.currentUserValue.username;
-    this.http.delete<IDeletedInvutedUserResponse>(`${environment.apiUrl}invite-user`, {params: new HttpParams().set('username', `${usernameOfCurrentUser}`).set('idOfInvite', `${idOfInvite}`)}).subscribe((data) => {
-      this.alertService.success('Notification was removed');
-    },
-        (err: HttpErrorResponse) => {
-          this.alertService.error('Notification was not removed. Details: ' + err.name + ' ' + err.message);
-        }
-    );
+    return this.http
+      .post<IAcceptInviteResponse>(`${environment.apiUrl}accept-invite`,
+        {username: usernameOfCurrentUser, idOfInvite: idOfRoom});
+  }
+
+
+  deleteInvite(idOfInvite: string) {
+    // const usernameOfCurrentUser = this.userService.currentUserValue.username;
+    // this.http.delete<IDeletedInvitedUserResponse>(`${environment.apiUrl}invite-user`,
+    //   {
+    //     params: new HttpParams()
+    //       .set('username', `${usernameOfCurrentUser}`)
+    //       .set('idOfInvite', `${idOfInvite}`)
+    //   }).subscribe((data) => {
+    //     this.alertService.success('Notification was removed');
+    //   },
+    //   (err: HttpErrorResponse) => {
+    //     this.alertService.error('Notification was not removed. Details: ' + err.name + ' ' + err.message);
+    //   }
+    // );
   }
 }

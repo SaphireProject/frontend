@@ -1,4 +1,4 @@
-export interface IDeletedInvutedUserResponse {
+export interface IDeletedInvitedUserResponse {
   status: boolean;
   idOfDeletedUser: number;
 }

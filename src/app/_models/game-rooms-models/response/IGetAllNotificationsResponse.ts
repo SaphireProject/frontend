@@ -3,7 +3,7 @@ export interface IGetAllNotificationsResponse {
 }
 
 export interface NotificationInfo {
-  idOfInvite: number;
+  idOfInvite: string;
   idOfRoom: number;
   nameOfRoom: string;
   idOfAdmin: number;

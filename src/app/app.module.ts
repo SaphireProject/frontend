@@ -47,10 +47,13 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSortModule} from '@angular/material';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { HighlightModule } from 'ngx-highlightjs';
+import java from 'highlight.js/lib/languages/java';
 import { CarouselComponent } from './carousel/carousel.component';
 import { RoomComponent } from './room/room.component';
 import { InviteDialogComponent } from './dialogs/invite-dialog/invite-dialog.component';
@@ -62,6 +65,8 @@ import { GotogameDialogComponent } from './dialogs/gotogame-dialog/gotogame-dial
 ;
 import { RefusegameDialogComponent } from './dialogs/refusegame-dialog/refusegame-dialog.component';
 import {NotificationService} from './_services/notification.service';
+import { ShowcodedialogComponent } from './dialogs/showcodedialog/showcodedialog.component';
+
 
 @NgModule({
   imports: [
@@ -70,6 +75,9 @@ import {NotificationService} from './_services/notification.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HighlightModule.forRoot({
+      languages: hljsLanguages
+    }),
     MatPasswordStrengthModule.forRoot(),
     BrowserAnimationsModule,
     MatIconModule,
@@ -90,6 +98,7 @@ import {NotificationService} from './_services/notification.service';
     MatSliderModule,
     MatDividerModule,
     MatButtonModule,
+    MatSelectModule,
     MatExpansionModule,
     MatProgressBarModule,
     MatToolbarModule,
@@ -124,12 +133,14 @@ import {NotificationService} from './_services/notification.service';
     InvitelistComponent,
     RefusegameDialogComponent,
     GotogameDialogComponent,
+    ShowcodedialogComponent,
     EndgameComponent],
   entryComponents: [
     InviteDialogComponent,
     DeleteDialogComponent,
     RefusegameDialogComponent,
-    GotogameDialogComponent
+    GotogameDialogComponent,
+    ShowcodedialogComponent,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
@@ -147,5 +158,11 @@ import {NotificationService} from './_services/notification.service';
   bootstrap: [AppComponent]
 })
 
+
 export class AppModule {
+}
+export function hljsLanguages() {
+  return [
+    {name: 'java', func: java},
+  ];
 }
