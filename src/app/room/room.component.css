@@ -23,3 +23,31 @@
 .mat-row:hover {
   background-color: #f9f9f9;
 }
+
+mat-header-cell, mat-cell {
+  display:flex;
+  justify-content:center;
+}
+mat-header-cell {
+  margin-left: 18px;
+}
+
+.spacer {
+  display: block;
+  width: 50%;
+}
+
+mat-progress-spinner {
+  margin-right: 10px;
+}
+
+mat-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.wrapper-for-toolbar {
+  display: flex;
+  flex-direction: row;
+}

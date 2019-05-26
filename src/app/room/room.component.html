@@ -1,11 +1,14 @@
 <mat-toolbar color="primary">
-  <span>Welcome to the Game Room. Prepare for the game <button *ngIf="checkPlayerRole()" mat-raised-button [disabled]="!readingForStartGame">Start The Game</button></span>
-  <span class="spacer"></span>
+  <span>Welcome to the Game Room. Prepare for the game </span>
+  <div class="wrapper-for-toolbar">
+  <mat-progress-spinner *ngIf="loadingRingStatus" mode="indeterminate" diameter="32" color="warn"></mat-progress-spinner>
+  <button *ngIf="checkPlayerRole()" mat-raised-button [disabled]="!readingForStartGame" (click)="startGame()">Start The Game</button>
+  </div>
   <!--Reload data:-->
 </mat-toolbar>
 <div class="room-main">
+    <app-setupforbattle [idOfRoom]="exampleDatabase.idOfRoomStorage" class="setup-battle"></app-setupforbattle>
   <div class="wrapper-for-room">
-
     <div class="container mat-elevation-z8">
       <mat-accordion>
         <mat-expansion-panel [expanded]="true">
@@ -65,14 +68,14 @@
               </mat-header-cell>
 
               <mat-cell *matCellDef="let row; let i=index;">
-                <button mat-icon-button color="accent"
+                <button *ngIf="row.username !== userService.currentUserValue.username" mat-icon-button color="accent"
                         (click)="deleteItem(i, row.id, row.email, row.username, row.readyToPlay, row.chosenTank)">
                   <mat-icon aria-label="Delete">delete</mat-icon>
                 </button>
               </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
 
@@ -97,5 +100,4 @@
       </mat-accordion>
     </div>
   </div>
-  <app-setupforbattle [idOfRoom]="exampleDatabase.idOfRoomStorage" class="setup-battle"></app-setupforbattle>
 </div>

@@ -209,6 +209,10 @@ export class DataRoomService {
       return data.users.find(x => x.idOfUser === idOfUser).readyToPlay;
     }));
   }
+
+  startTheGame() {
+    return this.httpClient.get(`${environment.apiUrl2}game/start`);
+  }
 }
 
 

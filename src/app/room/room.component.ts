@@ -62,6 +62,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   readingForStartGame = false;
   playerRole: PlayerRole;
   isLimitPlayers = false;
+  loadingRingStatus = false;
 
   constructor(public dialog: MatDialog,
               public dataRoomService: DataRoomService,
@@ -349,6 +350,23 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  startGame() {
+    this.readyToPlay$.unsubscribe();
+    this.loadingRingStatus = true;
+    this.readingForStartGame = false;
+    this.dataRoomService.startTheGame().subscribe(() => {
+      console.log('fsdf');
+      this.router.navigate(['/game']);
+    },
+      error => {
+      this.alertService.error('Oops, something wrong! Please, try later');
+      this.loadingRingStatus = false;
+      setTimeout(() => {
+      this.checkReadyToActivateTheGame();
+      }, 700);
+      } );
   }
 }
 
