@@ -1,7 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../_services';
+import {AlertService, UserService} from '../_services';
 import {MatStepper} from '@angular/material';
+import {DataRoomService} from '../_services/dataroom.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-roomcreator',
@@ -19,7 +21,10 @@ export class RoomcreatorComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private dataRoomService: DataRoomService,
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -92,5 +97,35 @@ export class RoomcreatorComponent implements OnInit {
 
   onReturnBack() {
     this.moveStepper('back');
+  }
+
+  startTheGame() {
+    const idOfAdmin = this.userService.currentUserValue.id;
+    const usernameOfAdmin = this.userService.currentUserValue.username;
+    const game = this.choosenGame;
+    const nameOfRoom = this.roomForm.value.nameOfRoom;
+    let countOfPlayers = Number(this.roomForm.value.countOfPlayers);
+    if (countOfPlayers < 2) {
+      countOfPlayers = 100;
+    }
+    const heightOfMapForGame = Number(this.roomForm.value.sizeOfMap);
+    const widthOfMapForGame = Number(this.roomForm.value.sizeOfMap);
+    this.dataRoomService.createGameRoom(
+      {
+        idOfAdmin: idOfAdmin,
+        usernameOfAdmin: usernameOfAdmin,
+        game: game,
+        nameOfRoom: nameOfRoom,
+        countOfPlayers: countOfPlayers,
+        heightOfMapForGame: heightOfMapForGame,
+        widthOfMapForGame: widthOfMapForGame
+      }
+    ).subscribe(data => {
+        this.dataRoomService.addRoomStorage(data.idOfRoom);
+        this.router.navigate(['/room', data.idOfRoom]);
+    },
+      error => {
+      this.alertService.error('Oops, something going wrong. Please, try later');
+      });
   }
 }

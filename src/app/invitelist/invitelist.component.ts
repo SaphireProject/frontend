@@ -45,6 +45,7 @@ export class InvitelistComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.paginator._intl.itemsPerPageLabel = 'Invites per page';
     this.loadData();
   }
 
@@ -70,6 +71,7 @@ export class InvitelistComponent implements OnInit, OnDestroy {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
     // this.timerForNotifications = setInterval(() => {
+    //   // >>>>>>>>>
     //   this.exampleDatabase.getAllNotifications();
     // }, 6000)
     // ;
@@ -86,8 +88,12 @@ export class InvitelistComponent implements OnInit, OnDestroy {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
+        console.log('idinv');
+        console.log(idOfInvite);
         this.notificationService.acceptInvite(idOfInvite).subscribe(data => {
-          // this.router.navigate([/room]);
+          console.log('route to accept');
+          console.log(data.idOfRoom);
+          this.router.navigate(['/room/', data.idOfRoom]);
         }, error => {
           this.alertService.error('Invite was not accept, please try later  ');
         } );
@@ -108,7 +114,6 @@ export class InvitelistComponent implements OnInit, OnDestroy {
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
-        this.paginator._changePageSize(this.paginator.pageSize);
       }
     });
   }
@@ -155,6 +160,7 @@ export class NotificationDataSource extends DataSource<NotificationInfo> {
         // Filter data
         console.log('etf');
         this.filteredData = this._exampleDatabase.data.slice().filter((invite: NotificationInfo) => {
+          console.log('vtf');
           const searchStr = (invite.nameOfRoom + invite.usernameOfAdmin + invite.countOfPlayers + invite.heightOfMapForGame).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });

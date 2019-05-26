@@ -18,6 +18,7 @@ import {CarouselComponent} from './carousel/carousel.component';
 import {RoomComponent} from './room/room.component';
 import {SetupforbattleComponent} from './setupforbattle/setupforbattle.component';
 import {InvitelistComponent} from './invitelist/invitelist.component';
+import {LobbyComponent} from './lobby/lobby.component';
 
 
 const appRoutes: Routes = [
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
   {path: 'carousel', component: CarouselComponent},
   {path: 'setup', component: SetupforbattleComponent, canActivate: [AuthGuard]},
   {path: 'notifications', component: InvitelistComponent, canActivate: [AuthGuard]},
-  {path: 'room', component: RoomComponent, canActivate: [AuthGuard]},
+  {path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard]},
+  {path: 'lobby', component: LobbyComponent, canActivate: [AuthGuard]},
   {
     path: 'game', component: GameComponent, canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard], resolve: {game: GameResolver}

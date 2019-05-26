@@ -1,5 +1,6 @@
 export interface ICreateRoomResponse {
   idOfRoom: number;
+  game: string;
   nameOfRoom: string;
   idOfAdmin: number;
   usernameOfAdmin: string;

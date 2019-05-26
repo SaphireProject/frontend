@@ -17,6 +17,7 @@ export class DeleteDialogComponent {
   }
 
   confirmDelete(): void {
+    console.log(this.data);
     this.dataService.deleteUser(this.data.id);
   }
 

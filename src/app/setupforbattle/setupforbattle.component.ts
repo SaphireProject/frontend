@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {MatDialog, ThemePalette} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DataRoomService} from '../_services/dataroom.service';
@@ -17,15 +17,16 @@ import {ShowcodedialogComponent} from '../dialogs/showcodedialog/showcodedialog.
 })
 export class SetupforbattleComponent implements OnInit {
   chosenTank: string;
-  // strategies = [];
-  strategies = [
-    {id: 1, name: 'Str'},
-    {id: 2, name: 'fdsfStr'},
-    {id: 3, name: 'fdgdfgsdfgdfggsdffgdfsStr'},
-    {id: 4, name: 'Fourth Strategy'},
-  ];
+  strategies = [];
+  // strategies = [
+  //   {id: 1, name: 'Str'},
+  //   {id: 2, name: 'fdsfStr'},
+  //   {id: 3, name: 'fdgdfgsdfgdfggsdffgdfsStr'},
+  //   {id: 4, name: 'Fourth Strategy'},
+  // ];
   idOfChosenStrategy: number;
   readyToPlay = false;
+  @Input() idOfRoom: number;
 
   constructor(public dialog: MatDialog,
               private dataRoomService: DataRoomService,
@@ -34,13 +35,21 @@ export class SetupforbattleComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.strategyService.getStrategiesByUserId().subscribe((data) => {
-    //     this.strategies = data.strategies;
-    //   },
-    //   (err: HttpErrorResponse) => {
-    //     this.alertService.error('Strategies not found. Please, try later');
-    //   }
-    // );
+    this.dataRoomService.getUserStatus(this.idOfRoom).subscribe(data => {
+      if (data === 2) {
+        this.readyToPlay = true;
+      }
+    });
+    this.strategyService.getStrategiesByUserId().subscribe((data) => {
+        if (data.strategies.length < 1) {
+          this.alertService.error('You have no saved strategies yet. Create a strategy and return to the game');
+        }
+        this.strategies = data.strategies;
+      },
+      (err: HttpErrorResponse) => {
+        this.alertService.error('Strategies not found. Please, try later');
+      }
+    );
   }
 
   choseArmy(chosenTank: string) {
@@ -76,7 +85,10 @@ export class SetupforbattleComponent implements OnInit {
 
   confirmData() {
     this.dataRoomService.confirmReadyToPlay(this.chosenTank, this.idOfChosenStrategy).subscribe(data => {
-        this.alertService.success('Now you ready to play. Please, wait other gamers');
+      console.log("READY TO PLAy");
+      console.log(data);
+      this.alertService.success('Now you ready to play. Please, wait other gamers');
+      this.readyToPlay = true;
       },
       error => {
         this.alertService.error('Please, try later');

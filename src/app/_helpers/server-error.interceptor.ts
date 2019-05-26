@@ -23,7 +23,10 @@ export class ServerErrorInterceptor implements HttpInterceptor {
         this.errorService.getServerErrorMessage(err);
         const error = err.error.message || err.statusText;
         console.log('Handled error from back-end server:');
-        console.log(error);
+        throwError(error);
+        console.log(error.name);
+        console.log(error.message);
+        console.log(error.error);
         return throwError(error);
       }));
   }

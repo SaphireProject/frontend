@@ -1,14 +1,15 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTable} from '@angular/material';
 import {InviteDialogComponent} from '../dialogs/invite-dialog/invite-dialog.component';
-import {DataRoomService} from '../_services/dataroom.service';
+import {DataRoomService, PlayerRole} from '../_services/dataroom.service';
 import {DeleteDialogComponent} from '../dialogs/delete-dialog/delete-dialog.component';
 import {DataSource} from '@angular/cdk/collections';
 import {IUserStatus} from '../_models/game-rooms-models/response/IGetUserStatusResponse';
-import {BehaviorSubject, fromEvent, merge, Observable, of} from 'rxjs';
+import {BehaviorSubject, fromEvent, merge, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {AlertService, UserService} from '../_services';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 //
@@ -33,7 +34,7 @@ import {AlertService, UserService} from '../_services';
 })
 export class RoomComponent implements OnInit, OnDestroy {
 
-  gameStatus: any[] = ['Invited', 'Preparing for game', 'Ready'];
+  gameStatus: any[] = ['Invited', 'Preparing', 'Ready'];
   // colorDescription = [
   //   {key: 'tank_green', descr: 'Green' },
   //   {key: 'tank_red', descr: 'Red' },
@@ -51,20 +52,39 @@ export class RoomComponent implements OnInit, OnDestroy {
   // dataSource = ELEMENT_DATA;
   dataSource: ExampleDataSource | null;
   exampleDatabase: DataRoomService | null;
+  playerRole$: Subscription;
+  readyToPlay$: Subscription;
   index: number;
   id: number;
   timerForUpdateBase;
+  sub: any;
+  idOfRoute: number;
+  readingForStartGame = false;
+  playerRole: PlayerRole;
+  isLimitPlayers = false;
 
   constructor(public dialog: MatDialog,
               public dataRoomService: DataRoomService,
               public httpClient: HttpClient,
               public alertService: AlertService,
-              public userService: UserService) {
+              public userService: UserService,
+              private route: ActivatedRoute,
+              private router: Router) {
+
   }
 
-  displayedColumns: string[] = ['avatar', 'username', 'email', 'readyToPlay', 'chosenTank', 'actions'];
+  displayedColumns: string[] = ['avatar', 'username', 'email', 'readyToPlay', 'chosenTank'];
 
   ngOnInit() {
+    this.paginator._intl.itemsPerPageLabel = 'Players per page';
+    this.sub = this.route.params.subscribe(params => {
+      this.idOfRoute = +params['id']; // (+) converts string 'id' to a number
+      // if (this.idOfRoute !== this.idOfRoute) {
+      //   this.router.navigate(['/error?type=404']);
+      // }
+      this.dataRoomService.addRoomStorage(this.idOfRoute);
+    });
+
     this.colorDescription = new Map([
       ['tank_green', 'Green'],
       ['tank_red', 'Red'],
@@ -75,108 +95,110 @@ export class RoomComponent implements OnInit, OnDestroy {
 
     this.loadData();
 
-    setTimeout(() => {
-      this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-      ]);
-      // this.table.renderRows();
-    }, 1000);
-
-
-    setTimeout(() => {
-      this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-      ]);
-      // this.table.renderRows();
-    }, 3000);
-
-    setTimeout(() => {
-      this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-      ]);
-      // this.table.renderRows();
-    }, 2000);
-
-    setTimeout(() => {
-      this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-      ]);
-      // this.table.renderRows();
-    }, 4000);
-
-    setTimeout(() => {
-      this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-      ]);
-      // this.table.renderRows();
-    }, 4000);
-
-    setTimeout(() => {
-      this.exampleDatabase.nextPackUsers([
-        {idOfUser: 1, username: 'KEKS', email: 'tet@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
-        {idOfUser: 2, username: 'HeliDsaum', email: 'tet@masl.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-        {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
-        {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 2, chosenTank: 'tank_green'}
-      ]);
-      // this.table.renderRows();
-    }, 5000);
+    // setTimeout(() => {
+    //   this.exampleDatabase.nextPackUsers([
+    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
+    //   ]);
+    //   // this.table.renderRows();
+    // }, 1000);
+    //
+    //
+    // setTimeout(() => {
+    //   this.exampleDatabase.nextPackUsers([
+    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //   ]);
+    //   // this.table.renderRows();
+    // }, 3000);
+    //
+    // setTimeout(() => {
+    //   this.exampleDatabase.nextPackUsers([
+    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
+    //   ]);
+    //   // this.table.renderRows();
+    // }, 2000);
+    //
+    // setTimeout(() => {
+    //   this.exampleDatabase.nextPackUsers([
+    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
+    //   ]);
+    //   // this.table.renderRows();
+    // }, 4000);
+    //
+    // setTimeout(() => {
+    //   this.exampleDatabase.nextPackUsers([
+    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
+    //   ]);
+    //   // this.table.renderRows();
+    // }, 4000);
+    //
+    // setTimeout(() => {
+    //   this.exampleDatabase.nextPackUsers([
+    //     {idOfUser: 1, username: 'KEKS', email: 'tet@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
+    //     {idOfUser: 2, username: 'HeliDsaum', email: 'tet@masl.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
+    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
+    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 2, chosenTank: 'tank_green'}
+    //   ]);
+    //   // this.table.renderRows();
+    // }, 5000);
 
   }
+
   ngOnDestroy(): void {
     clearInterval(this.timerForUpdateBase);
+    this.exampleDatabase.clearRoomStorage();
   }
 
   private refreshTable() {
@@ -193,17 +215,16 @@ export class RoomComponent implements OnInit, OnDestroy {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
-        console.log('gopa1');
         this.exampleDatabase.dataChange.value.push(this.dataRoomService.getDialogData());
-        console.log('gopa');
         this.refreshTable();
-        console.log(this.exampleDatabase.dataChange.value);
+        // console.log(this.exampleDatabase.dataChange.value);
       }
     });
   }
 
   public loadData() {
     this.exampleDatabase = new DataRoomService(this.httpClient, this.alertService, this.userService);
+    this.exampleDatabase.addRoomStorage(this.idOfRoute);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
     // // .debounceTime(150)
@@ -214,23 +235,44 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    // this.timerForUpdateBase = setInterval(() => {
-    //   this.exampleDatabase.getAllUsers();
-    // }, 6000)
-    // ;
+
+    this.playerRole$ = this.exampleDatabase.playerRole.subscribe(data => {
+      console.log('DATA FOR ROLE');
+      console.log(data);
+      switch (data) {
+        case PlayerRole.admin: {
+          this.playerRole = PlayerRole.admin;
+          this.displayedColumns = ['avatar', 'username', 'email', 'readyToPlay', 'chosenTank', 'actions'];
+          this.checkReadyToActivateTheGame();
+          break;
+        }
+        case (PlayerRole.deleted): {
+          this.alertService.error('Sorry, you were expelled from this game room by admin. Try your own game');
+          this.router.navigate(['/']);
+        }
+      }
+    });
+
+    this.timerForUpdateBase = setInterval(() => {
+      this.exampleDatabase.getAllUsers();
+      // this.refreshTable();
+    }, 6000)
+    ;
   }
 
 
   deleteItem(i: any, id: number, email: string, username: string, status: number, chosenTank: string) {
+    // this.index = i;
+    // this.id = id;
     this.index = i;
-    this.id = id;
+    id = this.exampleDatabase.dataChange.value.find(x => x.email === email).idOfUser;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {id: id, username: username, email: email, status: status, chosenTank: chosenTank}
+      data: {id: id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.idOfUser === this.id);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.idOfUser === id);
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
@@ -241,9 +283,9 @@ export class RoomComponent implements OnInit, OnDestroy {
   getColorForStatus(readyToPlay: any) {
     switch (readyToPlay) {
       case (0):
-        return '#ffd507';
-      case (1):
         return 'blue';
+      case (1):
+        return '#ffd507';
       case (2):
         return 'rgba(0, 167, 121, 0.81)';
     }
@@ -261,8 +303,51 @@ export class RoomComponent implements OnInit, OnDestroy {
         return 'assets/images/tanks_robo/tank_dark.png';
       case ('tank_sand'):
         return 'assets/images/tanks_robo/tank_sand.png';
+      case null:
+        return null;
       default:
         return 'not found';
+    }
+  }
+
+  private checkReadyToActivateTheGame() {
+    this.readyToPlay$ = this.exampleDatabase.readyToGame.subscribe(data => {
+      console.log('ready!');
+      if (data) {
+        this.readingForStartGame = true;
+        this.alertService.success('Everything is ready, start the game');
+      } else {
+        this.readingForStartGame = false;
+      }
+    });
+  }
+
+  checkPlayerRole() {
+    if (this.playerRole === PlayerRole.admin) {
+      return true;
+    }
+  }
+
+  getInfoAboutCountOfPlayers() {
+    if (this.exampleDatabase.dataChange.value.length < 2) {
+      this.isLimitPlayers = false;
+      return 'You are alone in this room now, please add your friends and fight with them';
+    } else {
+      const maximumLength = this.exampleDatabase.maxLengthOfRoomStorage;
+      const currentCount = this.exampleDatabase.dataChange.value.length;
+      const difference = maximumLength - currentCount;
+      if ((difference < 4) && (difference > 1)) {
+        this.isLimitPlayers = false;
+        return `You have ${maximumLength - currentCount} people left to fill the room, add more your friends or wait for those already invited and start the game`;
+      } else {
+        if (difference > 4) {
+          this.isLimitPlayers = false;
+          return 'Your room is still fairly free, add more your friends or wait for those already invited and start the game';
+        } else {
+          this.isLimitPlayers = true;
+          return 'Your room is full of players, wait for those already invited and start the game';
+        }
+      }
     }
   }
 }
@@ -287,7 +372,6 @@ export class ExampleDataSource extends DataSource<IUserStatus> {
               public _sort: MatSort) {
     super();
     // Reset to the first page when the user changes the filter.
-    console.log('nu che');
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }
 
@@ -306,7 +390,6 @@ export class ExampleDataSource extends DataSource<IUserStatus> {
 
     return merge(...displayDataChanges).pipe(map(() => {
         // Filter data
-        console.log('etf');
         this.filteredData = this._exampleDatabase.data.slice().filter((user: IUserStatus) => {
           const searchStr = (user.idOfUser + user.username + user.email + user.chosenTank + user.readyToPlay).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;

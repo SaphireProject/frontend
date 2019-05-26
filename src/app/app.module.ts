@@ -66,6 +66,7 @@ import { GotogameDialogComponent } from './dialogs/gotogame-dialog/gotogame-dial
 import { RefusegameDialogComponent } from './dialogs/refusegame-dialog/refusegame-dialog.component';
 import {NotificationService} from './_services/notification.service';
 import { ShowcodedialogComponent } from './dialogs/showcodedialog/showcodedialog.component';
+import { LobbyComponent } from './lobby/lobby.component';
 
 
 @NgModule({
@@ -134,6 +135,7 @@ import { ShowcodedialogComponent } from './dialogs/showcodedialog/showcodedialog
     RefusegameDialogComponent,
     GotogameDialogComponent,
     ShowcodedialogComponent,
+    LobbyComponent,
     EndgameComponent],
   entryComponents: [
     InviteDialogComponent,

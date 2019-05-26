@@ -1,6 +1,7 @@
 export interface ICreateRoomRequest {
   idOfAdmin: number;
   usernameOfAdmin: string;
+  game: string;
   nameOfRoom: string;
   countOfPlayers: number;
   heightOfMapForGame: number;

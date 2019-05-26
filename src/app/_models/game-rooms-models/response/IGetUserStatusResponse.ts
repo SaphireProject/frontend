@@ -1,6 +1,7 @@
 export interface IGetUserStatusResponse {
   users: [IUserStatus];
   idOfAdmin: number;
+  countOfUsers: number;
 }
 
 export interface IUserStatus {

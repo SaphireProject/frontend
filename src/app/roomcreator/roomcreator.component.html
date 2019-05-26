@@ -122,12 +122,11 @@
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <div class="wrapper-for-room">
-    <app-room></app-room>
-    <app-setupforbattle></app-setupforbattle>
+    Now you ready to play! Are you want to start invite your friends and choose your strategy?
     </div>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="moveStepper('back')">Back</button>
+      <button mat-button (click)="startTheGame()">Yes</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

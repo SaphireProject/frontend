@@ -1,78 +1,101 @@
 <mat-toolbar color="primary">
-  <span>Angular 6 MatTable CRUD Example</span>
+  <span>Welcome to the Game Room. Prepare for the game <button *ngIf="checkPlayerRole()" mat-raised-button [disabled]="!readingForStartGame">Start The Game</button></span>
   <span class="spacer"></span>
   <!--Reload data:-->
 </mat-toolbar>
+<div class="room-main">
+  <div class="wrapper-for-room">
 
-<div class="container mat-elevation-z8">
+    <div class="container mat-elevation-z8">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Add players in game
+            </mat-panel-title>
+            <mat-panel-description>
+              Find and add players to the room
+            </mat-panel-description>
+          </mat-expansion-panel-header>
 
-  <div class="form">
-    <mat-form-field floatPlaceholder="never" color="accent">
-      <input matInput #filter placeholder="Filter Users">
-    </mat-form-field>
+          <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+            <!-- ID Column -->
+            <ng-container matColumnDef="avatar">
+              <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+              <mat-cell *matCellDef="let row"><span *ngIf="row.email !== null; else loadRing"><img ngxGravatar [email]=row.email size=80 alt="avatar"></span></mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="username">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+              <mat-cell *matCellDef="let row"><span>{{row.username}}</span></mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+              <mat-cell *matCellDef="let row"><div *ngIf="row.email !== null; else loadRing">{{row.email}}</div></mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="readyToPlay">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+              <mat-cell *matCellDef="let row"
+                        [ngStyle]="{'color': getColorForStatus(row.readyToPlay), 'font-weight': 'bold'}"><span *ngIf="row.readyToPlay !== null; else loadRing">{{gameStatus[row.readyToPlay]}}</span></mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="chosenTank">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Chosen tank</mat-header-cell>
+              <mat-cell *matCellDef="let row"><span
+                *ngIf="((getColorOfTank(row.chosenTank)=== null)&&(row.email !== null)); else imagineTank">Not selected yet</span>
+                <ng-template #imagineTank><span *ngIf="row.chosenTank !== null; else loadRing"><img class="tank6" [src]="getColorOfTank(row.chosenTank)" alt="Tank"></span>
+                </ng-template>
+              </mat-cell>
+
+              <ng-template #loadRing><mat-progress-spinner mode="indeterminate" diameter="32"></mat-progress-spinner></ng-template>
+            </ng-container>
+
+
+            <!-- actions -->
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>
+                <button *ngIf="!isLimitPlayers" [disabled]="isLimitPlayers" mat-icon-button color="primary" (click)="addNew()">
+                  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                </button>
+              </mat-header-cell>
+
+              <mat-cell *matCellDef="let row; let i=index;">
+                <button mat-icon-button color="accent"
+                        (click)="deleteItem(i, row.id, row.email, row.username, row.readyToPlay, row.chosenTank)">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+
+
+          <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+            No one in this room
+          </div>
+          <div class="form">
+            <mat-form-field floatPlaceholder="never" color="accent">
+              <input matInput #filter placeholder="Filter Players">
+            </mat-form-field>
+            <span *ngIf="checkPlayerRole()">{{getInfoAboutCountOfPlayers()}}</span>
+          </div>
+
+          <mat-paginator #paginator
+                         [length]="dataSource.filteredData.length"
+                         [pageIndex]="0"
+                         [pageSize]="10"
+                         [pageSizeOptions]="[5, 10, 25, 100]">
+          </mat-paginator>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
   </div>
-
-  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-    <!-- ID Column -->
-    <ng-container matColumnDef="avatar">
-      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell *matCellDef="let row"><img ngxGravatar [email]=row.email size=80 alt="avatar"></mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="username">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="readyToPlay">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-      <mat-cell *matCellDef="let row" [ngStyle]="{'color': getColorForStatus(row.readyToPlay), 'font-weight': 'bold'}" > {{gameStatus[row.readyToPlay]}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="chosenTank">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Chosen tank</mat-header-cell>
-      <mat-cell *matCellDef="let row"><span *ngIf="getColorOfTank(row.chosenTank)==='not found'; else imagineTank">Not selected</span> <ng-template #imagineTank><img class="tank6" [src]="getColorOfTank(row.chosenTank)" alt="Tank" ></ng-template></mat-cell>
-
-    </ng-container>
-
-
-    <!-- actions -->
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="addNew()">
-          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-        </button>
-      </mat-header-cell>
-
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.email, row.username, row.readyToPlay, row.chosenTank)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-
-
-  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
-    No results
-  </div>
-
-
-  <mat-paginator #paginator
-                 [length]="dataSource.filteredData.length"
-                 [pageIndex]="0"
-                 [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
+  <app-setupforbattle [idOfRoom]="exampleDatabase.idOfRoomStorage" class="setup-battle"></app-setupforbattle>
 </div>

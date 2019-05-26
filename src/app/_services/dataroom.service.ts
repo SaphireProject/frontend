@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {AlertService} from './alert.service';
 import {environment} from '../../environments/environment';
@@ -10,15 +10,28 @@ import {IGetUserStatusResponse, IUserStatus} from '../_models/game-rooms-models/
 import {IConfirmUserIsReadyToGameRequest} from '../_models/game-rooms-models/request/IConfirmUserIsReadyToGameRequest';
 import {IConfirmUserIsReadyToGameResponse} from '../_models/game-rooms-models/response/IConfirmUserIsReadyToGameResponse';
 import {UserService} from './user.service';
+import {ICreateRoomRequest} from '../_models/game-rooms-models/request/ICreateRoomRequest';
+import {ICreateRoomResponse} from '../_models/game-rooms-models/response/ICreateRoomResponse';
+import {map} from 'rxjs/operators';
+import {conditionallyCreateMapObjectLiteral} from '@angular/compiler/src/render3/view/util';
 
+export const enum PlayerRole {
+  player,
+  admin,
+  deleted
+}
 
 @Injectable()
 export class DataRoomService {
 
 
   dataChange: BehaviorSubject<IUserStatus[]> = new BehaviorSubject<IUserStatus[]>([]);
-  readyToGame: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  readyToGameSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  readyToGame = this.readyToGameSubject.asObservable();
+  playerRoleSubject: BehaviorSubject<PlayerRole> = new BehaviorSubject<PlayerRole>(PlayerRole.player);
+  playerRole = this.playerRoleSubject.asObservable();
+  maxLengthOfRoomStorage: number;
+  idOfRoomStorage: number;
   dialogData: IUserStatus;
 
   constructor(private httpClient: HttpClient,
@@ -31,22 +44,27 @@ export class DataRoomService {
   }
 
   getDialogData() {
-    console.log('wtf');
-    console.log(this.dialogData);
     return this.dialogData;
   }
 
   addUser(user: string): void {
-    this.dialogData = {idOfUser: 99, username: user, email: 'test@m', readyToPlay: 0, chosenTank: null};
-    console.log(this.dataChange.getValue());
-    console.log(this.dialogData);
-    // this.httpClient.post<IInviteUserInGameResponse>(`${environment.apiUrl}invite-user`, user).subscribe(data => {
-    //     this.dialogData = {idOfUser: data.id, username: data.username, email: data.email, readyToPlay: 0, chosenTank: null};
-    //     this.alertService.success('User was successfully added');
-    //   },
-    //   (err: HttpErrorResponse) => {
-    //     this.alertService.error('User has not been added. Details: ' + err.name + ' ' + err.message);
-    //   });
+    // this.dialogData = {idOfUser: 99, username: user, email: 'test@m', readyToPlay: 0, chosenTank: null};
+    // console.log(this.dataChange.getValue());
+    // console.log(this.dialogData);
+    const idOfRoom = this.idOfRoomStorage;
+    this.dialogData = {idOfUser: null, username: user, email: null, readyToPlay: 0, chosenTank: null};
+    this.httpClient
+      .post<IInviteUserInGameResponse>(`${environment.apiUrl2}invite-user`,
+        {
+          username: user,
+          idOfRoom: idOfRoom
+        })
+      .subscribe(data => {
+          this.alertService.success('User was successfully added');
+        },
+        (err: HttpErrorResponse) => {
+          this.alertService.error('User has not been added. Details: ' + err.name + ' ' + err.message);
+        });
   }
 
   updateUser(user): void {
@@ -54,15 +72,20 @@ export class DataRoomService {
   }
 
   deleteUser(idOfUser: number): void {
-    this.httpClient.delete<IDeletedInvitedUserResponse>(`${environment.apiUrl}invite-admin`, {params: new HttpParams().set('idOfUser', `${idOfUser}`)}).subscribe(data => {
-        console.log(data['']);
-        this.alertService.success('User was deleted');
-      },
-      (err: HttpErrorResponse) => {
-        this.alertService.error('User has not been deleted');
-        console.log(err.name + ' ' + err.message);
-      }
-    );
+    // todo undefied id's
+    const idOfRoom = this.idOfRoomStorage;
+    this.httpClient.delete<IDeletedInvitedUserResponse>(`${environment.apiUrl2}invite-admin`, {
+      params: new HttpParams()
+        .set('idOfUser', `${idOfUser}`)
+        .set('idOfRoom', `${idOfRoom}`)
+    })
+      .subscribe(data => {
+          this.alertService.success('User was deleted');
+        },
+        (err: HttpErrorResponse) => {
+          this.alertService.error('User has not been deleted');
+        }
+      );
   }
 
   getAllUsers() {
@@ -86,24 +109,57 @@ export class DataRoomService {
     // console.log('in element data');
     // console.log(this.dataChange.value);
 
-    this.httpClient.get<IGetUserStatusResponse>(`${environment.apiUrl}game-status`).subscribe(data => {
+    this.httpClient.get<IGetUserStatusResponse>(`${environment.apiUrl2}game-status`, {
+      params: new HttpParams()
+        .set('idOfRoom', `${this.idOfRoomStorage}`)
+    }).subscribe(data => {
+        const idOfUser = this.userService.currentUserValue.id;
+        // if ((data.idOfAdmin === idOfUser) && (this.playerRole.value !== PlayerRole.admin)) {
+        //   console.log("adminchik");
+        //   this.playerRole.next(PlayerRole.admin);
+        // }
+        this.maxLengthOfRoomStorage = data.countOfUsers;
+        console.log('COUTN OF USERS');
+        console.log(this.maxLengthOfRoomStorage);
+        this.getPlayerStatus(data);
+        // this.checkForAcceptInLoby(data.users);
         this.checkForReadyToGame(data.users);
+        console.log(data);
         this.dataChange.next(data.users);
       },
       (error: HttpErrorResponse) => {
-        console.log (error.name + ' ' + error.message);
+        this.alertService.error('Oops, something wrong! Please, try later');
       });
+  }
+
+  getPlayerStatus(gameStatus: IGetUserStatusResponse) {
+    const idOfUser = this.userService.currentUserValue.id;
+    if ((gameStatus.idOfAdmin === idOfUser) && (this.playerRoleSubject.value !== PlayerRole.admin)) {
+      this.playerRoleSubject.next(PlayerRole.admin);
+    } else {
+      if (gameStatus.users.findIndex((x) => x.idOfUser === idOfUser) < 0) {
+        this.playerRoleSubject.next(PlayerRole.deleted);
+      }
+    }
 
   }
 
   private checkForReadyToGame(users: IUserStatus[]) {
-    console.log('check for game:');
-    console.log(users.every(x => x.readyToPlay === 2));
     if (users.every(x => x.readyToPlay === 2)) {
-      this.readyToGame.next(true);
-      this.readyToGame.complete();
+      if (users.length > 1) {
+        if (this.readyToGameSubject.value !== true) {
+        console.log('NEXT TRUE');
+        this.readyToGameSubject.next(true);
+        }
+      } else {
+        this.readyToGameSubject.next(false);
+      }
+    } else {
+      console.log('NEXT FALSE')
+        this.readyToGameSubject.next(false);
     }
   }
+
 
   nextPackUsers(test: IUserStatus[]) {
     this.checkForReadyToGame(test);
@@ -114,14 +170,44 @@ export class DataRoomService {
 
   confirmReadyToPlay(chosenTank: string, idOfChosenStrategy: number) {
     // todo
-    const idOfRoom = 1;
+
+    const idOfRoom = this.idOfRoomStorage;
     const username = this.userService.currentUserValue.username;
-    return this.httpClient.post<IConfirmUserIsReadyToGameResponse>(`${environment.apiUrl}user-ready`, {
-        username: username,
-        idOfChosenStrategy: idOfChosenStrategy,
-        idOfRoom: idOfRoom,
-        chosenTank: chosenTank,
+    return this.httpClient.post<IConfirmUserIsReadyToGameResponse>(`${environment.apiUrl2}user-ready`, {
+      username: username,
+      idOfChosenStrategy: idOfChosenStrategy,
+      idOfRoom: idOfRoom,
+      chosenTank: chosenTank,
     });
+  }
+
+  createGameRoom(roomDescription: ICreateRoomRequest) {
+    return this.httpClient.post<ICreateRoomResponse>(`${environment.apiUrl2}room`, roomDescription);
+  }
+
+  addRoomStorage(idOfRoom: number) {
+    this.idOfRoomStorage = idOfRoom;
+  }
+
+  clearRoomStorage() {
+    this.idOfRoomStorage = null;
+  }
+
+  private checkForAcceptInLoby(users: [IUserStatus]) {
+    const idOfUser = this.userService.currentUserValue.id;
+    if (users.findIndex((x) => x.idOfUser === idOfUser) < 0) {
+      this.playerRoleSubject.next(PlayerRole.deleted);
+    }
+  }
+
+  getUserStatus(idOfRoom: number) {
+    const idOfUser = this.userService.currentUserValue.id;
+    return this.httpClient.get<IGetUserStatusResponse>(`${environment.apiUrl2}game-status`, {
+      params: new HttpParams()
+        .set('idOfRoom', `${idOfRoom}`)
+    }).pipe(map(data => {
+      return data.users.find(x => x.idOfUser === idOfUser).readyToPlay;
+    }));
   }
 }
 
