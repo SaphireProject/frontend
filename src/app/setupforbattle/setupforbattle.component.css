@@ -44,3 +44,7 @@ mat-chip {
 .image-of-tank {
   /*padding-left: 10px;*/
 }
+
+mat-accordion :hover {
+  background-color: #f9f9f9;
+}

@@ -10,6 +10,7 @@ import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {AlertService, UserService} from '../_services';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LeaveDialogComponent} from '../dialogs/leave-dialog/leave-dialog.component';
 
 
 //
@@ -248,7 +249,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           break;
         }
         case (PlayerRole.deleted): {
-          this.alertService.error('Sorry, you were expelled from this game room by admin. Try your own game');
+          this.alertService.error('Sorry, you were expelled from this game. Try your own game');
           this.router.navigate(['/']);
         }
       }
@@ -357,17 +358,34 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.loadingRingStatus = true;
     this.readingForStartGame = false;
     this.dataRoomService.startTheGame().subscribe(() => {
-      console.log('fsdf');
-      this.router.navigate(['/game']);
-    },
+        console.log('fsdf');
+        this.router.navigate(['/game']);
+      },
       error => {
-      this.alertService.error('Oops, something wrong! Please, try later');
-      this.loadingRingStatus = false;
-      setTimeout(() => {
-      this.checkReadyToActivateTheGame();
-      }, 700);
-      } );
+        this.alertService.error('Oops, something wrong! Please, try later');
+        this.loadingRingStatus = false;
+        setTimeout(() => {
+          this.checkReadyToActivateTheGame();
+        }, 700);
+      });
   }
+
+  goOut() {
+    const idOfRoom = this.exampleDatabase.idOfRoomStorage;
+    console.log('check');
+    console.log(idOfRoom);
+    const dialogRef = this.dialog.open(LeaveDialogComponent, {
+      data: {idOfRoom}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.exampleDatabase.leaveFromRoom(idOfRoom);
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+
 }
 
 export class ExampleDataSource extends DataSource<IUserStatus> {

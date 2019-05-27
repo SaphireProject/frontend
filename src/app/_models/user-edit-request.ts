@@ -3,4 +3,5 @@ export class UserEditRequest {
   username: string;
   password: string;
   oldPassword: string;
+  bio: string;
 }

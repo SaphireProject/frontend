@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { UserService} from '../_services';
 
 @Injectable()
-export class ProfileResolver implements Resolve<Profile> {
+export class ProfileSettingsResolver implements Resolve<Profile> {
   constructor(private userService: UserService) {}
 
   // resolve(
@@ -23,13 +23,7 @@ export class ProfileResolver implements Resolve<Profile> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    console.log('in ProfileResolver');
-    let idOfUser;
-    if ((route.params['id']) === 'me') {
-      idOfUser = this.userService.currentUserValue.id;
-    } else {
-      idOfUser = (route.params['id']);
-    }
+    const idOfUser = this.userService.currentUserValue.id;
     return this.userService.getUserProfile(idOfUser)
     // return this.userService.getUserProfile()
       .pipe(catchError((err) => {

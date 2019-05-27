@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {sha256} from 'js-sha256';
 import {environment} from '../../environments/environment';
-import {User, UserRegisterRequest, UserEditRequest, QuestionRequest} from '../_models';
+import {User, UserRegisterRequest, UserEditRequest, QuestionRequest, Profile} from '../_models';
 import {IEndOfGame} from '../game/ISnapshotResponse';
 import {ICurrentWinner} from '../_helpers/ICurrentWinner';
 
@@ -80,14 +80,15 @@ export class UserService {
   }
   */
 
-  editProfile(user: UserEditRequest, passwordEdit: boolean) {
+  editProfile(user: any, passwordEdit: boolean) {
     if (passwordEdit === true) {
-      user.oldPassword = sha256(user.oldPassword);
-      user.password = sha256(user.password);
+      user.passwordOld = sha256(user.passwordOld);
+      user.passwordNew = sha256(user.passwordNew);
     } else {
-      user.oldPassword = null;
-      user.password = null;
+      user.passwordOld = 'null';
+      user.passwordNew = 'null';
     }
+    console.log(user);
     return this.http.put<any>(`${environment.apiUrl}user/edit`, user)
       .pipe(map(newUser => {
         console.log('login successful if there\'s a jwt token in the response');
@@ -100,20 +101,20 @@ export class UserService {
       }));
   }
 
-  getUserProfile() {
-    return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
-      return user;
-    }))
-      ;
-  }
+  // getUserProfile() {
+  //   return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {
+  //     return user;
+  //   }))
+  //     ;
+  // }
 
 //   past after user management will be done
 //
-//  get(username: string): Observable<Profile> {
-//    return this.http.get<any>(`${environment.apiUrl}user/${username}`).pipe(map(
-//      (data: {profile: Profile}) => data.profile))
-//      ;
-//  }
+ getUserProfile(id: number): Observable<any> {
+   return this.http.get<any>(`${environment.apiUrl}user/${id}`).pipe(map(
+     (data: {profile: Profile}) =>  { console.log(data); return data; }))
+     ;
+ }
 
   // updateGlobalProfileData() {
   //   return this.http.get<any>(`${environment.apiUrl}user/me`).pipe(map(user => {

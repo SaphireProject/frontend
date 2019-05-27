@@ -1,7 +1,7 @@
 
 .carousel {
   padding-top: 30px;
-  width: 60%;
+  width: 55%;
   position: absolute;
 }
 
@@ -16,10 +16,6 @@ h1 {
   text-align: center;
   font-weight: bold;
   font-size: 30px;
-}
-
-p {
-  padding-top: 10px;
 }
 
 .wrapper-for-button {
@@ -38,7 +34,7 @@ button {
 }
 
 .select-game {
-  margin-top: 7%;
+  margin-top: 4%;
   margin-bottom: 10%;
 }
 
@@ -66,3 +62,42 @@ mat-slider {
   justify-content: center;
   align-items: center;
 }
+
+.accordion :hover {
+  background-color: #f9f9f9;
+}
+
+h1 {
+  padding-top: 20px;
+  font-weight: bold;
+  font-size: 70px;
+}
+
+h2 {
+  font-size: 90px;
+  font-weight: bold;
+  height: 52%;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h4 {
+  font-style: italic;
+}
+
+.space {
+  height: 100px;
+}
+
+.space-for-buttons {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.description-game {
+  margin-top: 30px;
+}
+
+

@@ -38,7 +38,7 @@
     <!--<input matInput placeholder="Address" formControlName="secondCtrl" required>-->
     <!--</mat-form-field>-->
     <!--<div>-->
-    <mat-accordion>
+    <mat-accordion class="accordion">
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -54,7 +54,7 @@
         </mat-form-field>
       </mat-expansion-panel>
     </mat-accordion>
-    <mat-accordion>
+    <mat-accordion class="accordion">
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -122,10 +122,26 @@
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <div class="wrapper-for-room">
-    Now you ready to play! Are you want to start invite your friends and choose your strategy?
+      <div class="wrapper">
+        <img src="assets/images/readytogame.svg" height="480px" width="480px">
+        <div class="informaton">
+          <div class="space"></div>
+          <h2>Are you ready?</h2>
+          <h3>Are you ready to create a room? Move on or go back to change room settings</h3>
+          <div class="description-game">
+          <h4>Selected game: Code Of Tanks</h4>
+          <h4>Room name: {{roomForm.value.nameOfRoom}}</h4>
+          <h4>Size of map: {{roomForm.value.sizeOfMap}}</h4>
+            <h4>Number of players: <span *ngIf="roomForm.value.countOfPlayers !== ''; else maxNumbOfPlayers">{{roomForm.value.countOfPlayers}}</span></h4>
+            <ng-template #maxNumbOfPlayers>Not limited</ng-template>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div>
       <button mat-button (click)="moveStepper('back')">Back</button>
+      <span class="space-for-buttons"></span>
       <button mat-button (click)="startTheGame()">Yes</button>
     </div>
   </mat-step>

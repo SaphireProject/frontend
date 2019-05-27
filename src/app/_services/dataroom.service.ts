@@ -60,6 +60,7 @@ export class DataRoomService {
           idOfRoom: idOfRoom
         })
       .subscribe(data => {
+          this.getAllUsers();
           this.alertService.success('User was successfully added');
         },
         (err: HttpErrorResponse) => {
@@ -80,6 +81,7 @@ export class DataRoomService {
         .set('idOfRoom', `${idOfRoom}`)
     })
       .subscribe(data => {
+          this.getAllUsers();
           this.alertService.success('User was deleted');
         },
         (err: HttpErrorResponse) => {
@@ -148,15 +150,15 @@ export class DataRoomService {
     if (users.every(x => x.readyToPlay === 2)) {
       if (users.length > 1) {
         if (this.readyToGameSubject.value !== true) {
-        console.log('NEXT TRUE');
-        this.readyToGameSubject.next(true);
+          console.log('NEXT TRUE');
+          this.readyToGameSubject.next(true);
         }
       } else {
         this.readyToGameSubject.next(false);
       }
     } else {
-      console.log('NEXT FALSE')
-        this.readyToGameSubject.next(false);
+      console.log('NEXT FALSE');
+      this.readyToGameSubject.next(false);
     }
   }
 
@@ -212,6 +214,19 @@ export class DataRoomService {
 
   startTheGame() {
     return this.httpClient.get(`${environment.apiUrl2}game/start`);
+  }
+
+  leaveFromRoom(idOfRoom: number) {
+    const username = this.userService.currentUserValue.username;
+    const idOfUser = this.userService.currentUserValue.id;
+    console.log({idOfUser, username, idOfRoom});
+    this.httpClient.post<IDeletedInvitedUserResponse>(`${environment.apiUrl2}game/exit`, {
+      idOfUser: idOfUser,
+      idOfRoom: idOfRoom,
+      username: username,
+    }).subscribe(() => {
+      console.log('user deleted');
+    }, error1 => this.alertService.error('You are not leaved from room'));
   }
 }
 

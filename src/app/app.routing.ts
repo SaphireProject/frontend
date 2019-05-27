@@ -19,6 +19,7 @@ import {RoomComponent} from './room/room.component';
 import {SetupforbattleComponent} from './setupforbattle/setupforbattle.component';
 import {InvitelistComponent} from './invitelist/invitelist.component';
 import {LobbyComponent} from './lobby/lobby.component';
+import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';
 
 
 const appRoutes: Routes = [
@@ -39,8 +40,8 @@ const appRoutes: Routes = [
   },
   {path: 'endgame', component: EndgameComponent, canActivate: [AuthGuard]},
   {path: 'create-room', component: RoomcreatorComponent, canActivate: [AuthGuard]},
-  {path: 'me', component: ProfileComponent, resolve: {profile: ProfileResolver}, canActivate: [AuthGuard]},
-  {path: 'me/edit', component: ProfileSettingsComponent, resolve: {profile: ProfileResolver}, canActivate: [AuthGuard]},
+  {path: 'profile/:id', component: ProfileComponent, resolve: {profile: ProfileResolver}, canActivate: [AuthGuard]},
+  {path: 'me/edit', component: ProfileSettingsComponent, resolve: {profile: ProfileSettingsResolver}, canActivate: [AuthGuard]},
 
 // otherwise redirect to home
   {path: '**', redirectTo: '/error?type=404'}

@@ -117,15 +117,21 @@ export class ProfileSettingsComponent implements OnInit {
 
     this.loading = true;
 
+    const requestToEdit = {bio: this.userForm.value.bio,
+      email: this.userForm.value.email,
+      passwordNew: this.userForm.value.password,
+      passwordOld: this.userForm.value.oldPassword,
+      username: this.userForm.value.username};
+    console.log("requsettoedit");
+    console.log(requestToEdit);
 
-
-    this.userService.editProfile(this.userForm.value, this.passwordEdit)
+    this.userService.editProfile(requestToEdit, this.passwordEdit)
       .pipe(first())
       .subscribe(
         () => {
           console.log('data');
           this.alertService.success('Profile was saved', true);
-          this.router.navigate(['/me']);
+          this.router.navigate(['profile/me']);
         },
         () => {
           this.loading = false;

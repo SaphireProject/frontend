@@ -66,7 +66,9 @@ import { GotogameDialogComponent } from './dialogs/gotogame-dialog/gotogame-dial
 import { RefusegameDialogComponent } from './dialogs/refusegame-dialog/refusegame-dialog.component';
 import {NotificationService} from './_services/notification.service';
 import { ShowcodedialogComponent } from './dialogs/showcodedialog/showcodedialog.component';
-import { LobbyComponent } from './lobby/lobby.component';
+import { LobbyComponent } from './lobby/lobby.component';;
+import { LeaveDialogComponent } from './dialogs/leave-dialog/leave-dialog.component'
+import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';
 
 
 @NgModule({
@@ -130,6 +132,7 @@ import { LobbyComponent } from './lobby/lobby.component';
     RoomComponent,
     InviteDialogComponent,
     DeleteDialogComponent,
+    LeaveDialogComponent,
     SetupforbattleComponent,
     InvitelistComponent,
     RefusegameDialogComponent,
@@ -143,12 +146,14 @@ import { LobbyComponent } from './lobby/lobby.component';
     RefusegameDialogComponent,
     GotogameDialogComponent,
     ShowcodedialogComponent,
+    LeaveDialogComponent,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     ProfileResolver,
+    ProfileSettingsResolver,
     GameResolver,
     ConfirmDeactivateGuard,
     DataRoomService,
