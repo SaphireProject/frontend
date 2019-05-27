@@ -254,7 +254,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     });
-
+    this.checkForBufferInvites();
     this.timerForUpdateBase = setInterval(() => {
       this.exampleDatabase.getAllUsers();
       // this.refreshTable();
@@ -386,6 +386,15 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
 
+  private checkForBufferInvites() {
+    const bufferInvite = JSON.parse(localStorage.getItem('bufferInvite'));
+    console.log('invite');
+    console.log(bufferInvite);
+    if (bufferInvite !== null) {
+      this.dataRoomService.addUser(bufferInvite);
+      localStorage.removeItem('bufferInvite');
+    }
+  }
 }
 
 export class ExampleDataSource extends DataSource<IUserStatus> {

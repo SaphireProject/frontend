@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   templateUrl: './roomcreator.component.html',
   styleUrls: ['./roomcreator.component.css']
 })
-export class RoomcreatorComponent implements OnInit {
+export class RoomcreatorComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') stepper: MatStepper;
   roomForm: FormGroup;
   choosenGame: string;
@@ -18,6 +18,7 @@ export class RoomcreatorComponent implements OnInit {
   value = 'Clear me';
   isLinear = true;
   isCompletedFirstPage = false;
+  acceptToClearInvite = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,12 @@ export class RoomcreatorComponent implements OnInit {
       sizeOfMap: ['50', [Validators.required, Validators.max(1000), Validators.min(10), Validators.nullValidator], ],
       countOfPlayers: ['', [Validators.min(2), Validators.max(100), Validators.pattern('^[0-9]*$')], ]}
       );
+  }
+
+  ngOnDestroy(): void {
+    if (this.acceptToClearInvite === true) {
+      localStorage.removeItem('bufferInvite');
+    }
   }
 
   getNameOfRoomErrorMessage() {
@@ -122,6 +129,7 @@ export class RoomcreatorComponent implements OnInit {
       }
     ).subscribe(data => {
         this.dataRoomService.addRoomStorage(data.idOfRoom);
+        this.acceptToClearInvite = false;
         this.router.navigate(['/room', data.idOfRoom]);
     },
       error => {

@@ -2,6 +2,7 @@
 import { Subscription } from 'rxjs';
 import { User } from '../_models';
 import { UserService } from '../_services';
+import test from 'src/assets/images/tanks_robo/test.json';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -16,6 +17,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
     ngOnInit() {
+
+      let keks: string;
+      keks = JSON.stringify(test);
+      console.log(keks);
+      console.log(test);
+
+      // let test = '{"keys": 12}';
+      // let test2 = JSON.parse(test);
+      // console.log(test2.keys);
     }
 
     ngOnDestroy() {

@@ -112,7 +112,14 @@ export class UserService {
 //
  getUserProfile(id: number): Observable<any> {
    return this.http.get<any>(`${environment.apiUrl}user/${id}`).pipe(map(
-     (data: {profile: Profile}) =>  { console.log(data); return data; }))
+     data =>  {
+       console.log(data);
+       return {idOfUser: id,
+         username: data.username,
+         email: data.email,
+         bio: data.bio
+       };
+     }))
      ;
  }
 

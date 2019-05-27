@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {AlertService} from './alert.service';
 import {environment} from '../../environments/environment';
@@ -30,6 +30,9 @@ export class DataRoomService {
   readyToGame = this.readyToGameSubject.asObservable();
   playerRoleSubject: BehaviorSubject<PlayerRole> = new BehaviorSubject<PlayerRole>(PlayerRole.player);
   playerRole = this.playerRoleSubject.asObservable();
+  inviteBufferSubject: ReplaySubject<number> = new ReplaySubject<number>(1);
+  inviteBuffer = this.inviteBufferSubject.asObservable();
+
   maxLengthOfRoomStorage: number;
   idOfRoomStorage: number;
   dialogData: IUserStatus;
@@ -53,6 +56,8 @@ export class DataRoomService {
     // console.log(this.dialogData);
     const idOfRoom = this.idOfRoomStorage;
     this.dialogData = {idOfUser: null, username: user, email: null, readyToPlay: 0, chosenTank: null};
+    console.log('wer');
+    console.log(user);
     this.httpClient
       .post<IInviteUserInGameResponse>(`${environment.apiUrl2}invite-user`,
         {
@@ -227,6 +232,11 @@ export class DataRoomService {
     }).subscribe(() => {
       console.log('user deleted');
     }, error1 => this.alertService.error('You are not leaved from room'));
+  }
+
+  addToInviteBuffer(idOfUser: number, username: string) {
+    const bufferInvite = username;
+    localStorage.setItem('bufferInvite', JSON.stringify(username));
   }
 }
 

@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Profile, User} from '../_models/';
 import {UserService} from '../_services';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {concatMap, tap} from 'rxjs/operators';
+import {DataRoomService} from '../_services/dataroom.service';
 
 
 @Component({
@@ -15,17 +16,21 @@ export class ProfileComponent implements OnInit {
   currentUser: User;
   // toggle = false;
   isUser: boolean;
+  idOfUser: number;
 
   constructor(private  userService: UserService,
-              private  route: ActivatedRoute) {
+              private  route: ActivatedRoute,
+              private dataRoomService: DataRoomService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.route.data.pipe(
-      concatMap((data: { profile: Profile }) => {
+      concatMap(data => {
         console.log('in concat Map');
         console.log(data);
         this.profile = data.profile;
+        this.idOfUser = data.profile.idOfUser;
         return this.userService.currentUser.pipe(tap(
           (userData: User) => {
             console.log('in currentUser');
@@ -42,4 +47,9 @@ export class ProfileComponent implements OnInit {
   // }
 
 
+  inviteToPlay() {
+    console.log(this.idOfUser);
+    this.dataRoomService.addToInviteBuffer(this.idOfUser, this.profile.username);
+    this.router.navigate(['/create-room']);
+  }
 }
