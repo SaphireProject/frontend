@@ -13,10 +13,11 @@ export class SnapshotService {
   page: number;
   private countOfRequestingSnapshots = 10;
 
+
   constructor(private http: HttpClient) {
   }
 
-  public getSnapshots(numberOfSnapshot?: number): Observable<ISnapshotResponse> {
+  public getSnapshots(idOfRoom: number, numberOfSnapshot?: number): Observable<ISnapshotResponse> {
     // check to having info about current state in localStorage
     switch (numberOfSnapshot) {
       case undefined:
@@ -30,7 +31,7 @@ export class SnapshotService {
     }
     // request to snapshot
     return this.http.get<ISnapshotResponse>(`${environment.apiUrl}game`, {
-      params: {page: `${numberOfSnapshot}`, size: `${this.countOfRequestingSnapshots}`}
+      params: {idOfRoom: `${idOfRoom}`, page: `${numberOfSnapshot}`, size: `${this.countOfRequestingSnapshots}`}
     });
   }
 

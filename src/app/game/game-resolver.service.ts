@@ -12,7 +12,8 @@ export class GameResolver implements Resolve<ISnapshotResponse> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISnapshotResponse> |
     Promise<ISnapshotResponse> | ISnapshotResponse {
-    return this.snapshotService.getSnapshots().pipe(catchError((err) => {
+    const idOfRoom = route.params['id'];
+    return this.snapshotService.getSnapshots(idOfRoom).pipe(catchError((err) => {
       console.log('WRNG');
       return throwError(err);
     }));

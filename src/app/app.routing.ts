@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   {path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard]},
   {path: 'lobby', component: LobbyComponent, canActivate: [AuthGuard]},
   {
-    path: 'game', component: GameComponent, canActivate: [AuthGuard],
+    path: 'game/:idOfRoom', component: GameComponent, canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard], resolve: {game: GameResolver}
   },
   {path: 'endgame', component: EndgameComponent, canActivate: [AuthGuard]},

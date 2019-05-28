@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTable} from '@angular/material';
 import {InviteDialogComponent} from '../dialogs/invite-dialog/invite-dialog.component';
 import {DataRoomService, PlayerRole} from '../_services/dataroom.service';
@@ -11,6 +11,8 @@ import {HttpClient} from '@angular/common/http';
 import {AlertService, UserService} from '../_services';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LeaveDialogComponent} from '../dialogs/leave-dialog/leave-dialog.component';
+import {IGetGameIsStartedResponse} from '../_models/game-rooms-models/response/IGetGameIsStartedResponse';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 
 //
@@ -64,6 +66,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   playerRole: PlayerRole;
   isLimitPlayers = false;
   loadingRingStatus = false;
+  gameIsReadyInterval;
 
   constructor(public dialog: MatDialog,
               public dataRoomService: DataRoomService,
@@ -96,132 +99,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     ]);
 
     this.loadData();
-
-    // setTimeout(() => {
-    //   this.exampleDatabase.nextPackUsers([
-    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-    //   ]);
-    //   // this.table.renderRows();
-    // }, 1000);
-    //
-    //
-    // setTimeout(() => {
-    //   this.exampleDatabase.nextPackUsers([
-    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //   ]);
-    //   // this.table.renderRows();
-    // }, 3000);
-    //
-    // setTimeout(() => {
-    //   this.exampleDatabase.nextPackUsers([
-    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-    //   ]);
-    //   // this.table.renderRows();
-    // }, 2000);
-    //
-    // setTimeout(() => {
-    //   this.exampleDatabase.nextPackUsers([
-    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-    //   ]);
-    //   // this.table.renderRows();
-    // }, 4000);
-    //
-    // setTimeout(() => {
-    //   this.exampleDatabase.nextPackUsers([
-    //     {idOfUser: 1, username: 'Hydrogen', email: 'tet@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 2, username: 'Helium', email: 'tet@masl.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 0, chosenTank: 'sdfsf'}
-    //   ]);
-    //   // this.table.renderRows();
-    // }, 4000);
-    //
-    // setTimeout(() => {
-    //   this.exampleDatabase.nextPackUsers([
-    //     {idOfUser: 1, username: 'KEKS', email: 'tet@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
-    //     {idOfUser: 2, username: 'HeliDsaum', email: 'tet@masl.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_sand'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_red'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_blue'},
-    //     {idOfUser: 3, username: 'Lithium', email: 'tetd@mal.ru', readyToPlay: 2, chosenTank: 'tank_green'},
-    //     {idOfUser: 4, username: 'Beryllium', email: 'tet@mal.com', readyToPlay: 2, chosenTank: 'tank_green'}
-    //   ]);
-    //   // this.table.renderRows();
-    // }, 5000);
-
-  }
-
-  ngOnDestroy(): void {
-    clearInterval(this.timerForUpdateBase);
-    this.exampleDatabase.clearRoomStorage();
-  }
-
-  private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
-    // this.table.renderRows();
-  }
-
-  addNew(username: string) {
-    const dialogRef = this.dialog.open(InviteDialogComponent, {
-      data: {username: username}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataService
-        this.exampleDatabase.dataChange.value.push(this.dataRoomService.getDialogData());
-        this.refreshTable();
-        // console.log(this.exampleDatabase.dataChange.value);
-      }
-    });
   }
 
   public loadData() {
@@ -242,16 +119,19 @@ export class RoomComponent implements OnInit, OnDestroy {
       console.log('DATA FOR ROLE');
       console.log(data);
       switch (data) {
-        case PlayerRole.admin: {
+        case PlayerRole.admin:
           this.playerRole = PlayerRole.admin;
           this.displayedColumns = ['avatar', 'username', 'email', 'readyToPlay', 'chosenTank', 'actions'];
           this.checkReadyToActivateTheGame();
           break;
-        }
-        case (PlayerRole.deleted): {
+        case PlayerRole.deleted:
           this.alertService.error('Sorry, you were expelled from this game. Try your own game');
           this.router.navigate(['/']);
-        }
+          break;
+        default:
+          console.log('just user');
+          this.checkForGameIsReady();
+          break;
       }
     });
     this.checkForBufferInvites();
@@ -262,6 +142,52 @@ export class RoomComponent implements OnInit, OnDestroy {
     ;
   }
 
+  private checkReadyToActivateTheGame() {
+    this.readyToPlay$ = this.exampleDatabase.readyToGame.subscribe(data => {
+      console.log('ready!');
+      if (data) {
+        this.readingForStartGame = true;
+          this.alertService.success('Everyone is ready, start the game');
+      } else {
+        this.readingForStartGame = false;
+      }
+    });
+  }
+
+  private checkForGameIsReady() {
+    this.gameIsReadyInterval = setInterval(() => {
+      this.exampleDatabase.checkForGameIsReady().subscribe((data: IGetGameIsStartedResponse) => {
+          if (data.status === true) {
+            this.router.navigate(['/game']);
+          } else {
+            console.log(data.status);
+          }
+        },
+        error => {
+          console.log('error for checking status');
+          console.log(error);
+          this.alertService.error('Oops, something happened. Please try later');
+        });
+    }, 3000)
+
+    console.log('check for game');
+  }
+
+  addNew(username: string) {
+    const dialogRef = this.dialog.open(InviteDialogComponent, {
+      data: {username: username}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // After dialog is closed we're doing frontend updates
+        // For add we're just pushing a new row inside DataService
+        this.exampleDatabase.dataChange.value.push(this.dataRoomService.getDialogData());
+        this.refreshTable();
+        // console.log(this.exampleDatabase.dataChange.value);
+      }
+    });
+  }
 
   deleteItem(i: any, id: number, email: string, username: string, status: number, chosenTank: string) {
     // this.index = i;
@@ -280,54 +206,6 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.refreshTable();
       }
     });
-  }
-
-  getColorForStatus(readyToPlay: any) {
-    switch (readyToPlay) {
-      case (0):
-        return 'blue';
-      case (1):
-        return '#ffd507';
-      case (2):
-        return 'rgba(0, 167, 121, 0.81)';
-    }
-  }
-
-  getColorOfTank(chosenTank: string) {
-    switch (chosenTank) {
-      case ('tank_green'):
-        return 'assets/images/tanks_robo/tank_green.png';
-      case ('tank_red'):
-        return 'assets/images/tanks_robo/tank_red.png';
-      case ('tank_blue'):
-        return 'assets/images/tanks_robo/tank_blue.png';
-      case ('tank_dark'):
-        return 'assets/images/tanks_robo/tank_dark.png';
-      case ('tank_sand'):
-        return 'assets/images/tanks_robo/tank_sand.png';
-      case null:
-        return null;
-      default:
-        return 'not found';
-    }
-  }
-
-  private checkReadyToActivateTheGame() {
-    this.readyToPlay$ = this.exampleDatabase.readyToGame.subscribe(data => {
-      console.log('ready!');
-      if (data) {
-        this.readingForStartGame = true;
-        this.alertService.success('Everything is ready, start the game');
-      } else {
-        this.readingForStartGame = false;
-      }
-    });
-  }
-
-  checkPlayerRole() {
-    if (this.playerRole === PlayerRole.admin) {
-      return true;
-    }
   }
 
   getInfoAboutCountOfPlayers() {
@@ -366,7 +244,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.loadingRingStatus = false;
         setTimeout(() => {
           this.checkReadyToActivateTheGame();
-        }, 700);
+        }, 2000);
       });
   }
 
@@ -385,6 +263,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     });
   }
 
+  private refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+    // this.table.renderRows();
+  }
 
   private checkForBufferInvites() {
     const bufferInvite = JSON.parse(localStorage.getItem('bufferInvite'));
@@ -394,6 +276,48 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.dataRoomService.addUser(bufferInvite);
       localStorage.removeItem('bufferInvite');
     }
+  }
+
+  getColorForStatus(readyToPlay: any) {
+    switch (readyToPlay) {
+      case (0):
+        return 'blue';
+      case (1):
+        return '#ffd507';
+      case (2):
+        return 'rgba(0, 167, 121, 0.81)';
+    }
+  }
+
+  getColorOfTank(chosenTank: string) {
+    switch (chosenTank) {
+      case ('tank_green'):
+        return 'assets/images/tanks_robo/tank_green.png';
+      case ('tank_red'):
+        return 'assets/images/tanks_robo/tank_red.png';
+      case ('tank_blue'):
+        return 'assets/images/tanks_robo/tank_blue.png';
+      case ('tank_dark'):
+        return 'assets/images/tanks_robo/tank_dark.png';
+      case ('tank_sand'):
+        return 'assets/images/tanks_robo/tank_sand.png';
+      case null:
+        return null;
+      default:
+        return 'not found';
+    }
+  }
+
+  checkPlayerRole() {
+    if (this.playerRole === PlayerRole.admin) {
+      return true;
+    }
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timerForUpdateBase);
+    clearInterval(this.gameIsReadyInterval);
+    this.exampleDatabase.clearRoomStorage();
   }
 }
 

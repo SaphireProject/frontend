@@ -14,6 +14,7 @@ import {ICreateRoomRequest} from '../_models/game-rooms-models/request/ICreateRo
 import {ICreateRoomResponse} from '../_models/game-rooms-models/response/ICreateRoomResponse';
 import {map} from 'rxjs/operators';
 import {conditionallyCreateMapObjectLiteral} from '@angular/compiler/src/render3/view/util';
+import {IGetGameIsStartedResponse} from '../_models/game-rooms-models/response/IGetGameIsStartedResponse';
 
 export const enum PlayerRole {
   player,
@@ -237,6 +238,12 @@ export class DataRoomService {
   addToInviteBuffer(idOfUser: number, username: string) {
     const bufferInvite = username;
     localStorage.setItem('bufferInvite', JSON.stringify(username));
+  }
+
+  checkForGameIsReady() {
+    return this.httpClient.get<IGetGameIsStartedResponse>(`${environment.apiUrl2}game/is-started`,
+      {params: new HttpParams()
+          .set('idOfRoom', String(this.idOfRoomStorage))});
   }
 }
 

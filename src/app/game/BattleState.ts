@@ -42,12 +42,14 @@ export class BattleState extends Phaser.State {
   acceptToReroutePage = false;
   numberOfCurrentGetSnapshot: number;
   countOfGettedSnapshot: number;
+  idOfRoom: number;
 
-  constructor(snapshotService: SnapshotService, router: Router, userService: UserService, firstPullOfSnapshots: ISnapshotResponse) {
+  constructor(snapshotService: SnapshotService, router: Router, userService: UserService, firstPullOfSnapshots: ISnapshotResponse, idOfRoom: number) {
     super();
     this.snapshotService = snapshotService;
     this.router = router;
     this.userService = userService;
+    this.idOfRoom = idOfRoom;
     this.initInfo = firstPullOfSnapshots.preload;
     this.numberOfCurrentGetSnapshot = firstPullOfSnapshots.frames.length;
     this.countOfGettedSnapshot = this.snapshotService.getCountOfRequestingSnapshots();
@@ -195,7 +197,7 @@ export class BattleState extends Phaser.State {
 
   private checkNewSnapshotsFromServer() {
     this.intervalForRequestingData = setTimeout(() => {
-      this.snapshotService.getSnapshots(this.numberOfCurrentGetSnapshot)
+      this.snapshotService.getSnapshots(this.idOfRoom, this.numberOfCurrentGetSnapshot)
         .pipe(first())
         .subscribe(requestData => {
           this.addSnapshotsInStorage(requestData);
@@ -204,6 +206,7 @@ export class BattleState extends Phaser.State {
             // this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
           } else {
             this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
+            // TODO what?
             this.checkNewSnapshotsFromServer();
           }
         });

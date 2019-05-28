@@ -1,108 +1,33 @@
-
-.wrapper {
-	margin: 0 auto;
-	height: inherit;
-    width: 1440px;
-    background-color: white;
+.example-header-image {
+  /*background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');*/
+  background-size: cover;
 }
 
-.userbar {
-    height: 394px;
+.flex-for-header {
+  /*display: flex;*/
+  /*justify-content: space-around;*/
 }
 
-.modeselector {
-    height: 684px;
-    background-color: #2f66a9;
+span {
+  width: 60%;
 }
 
-.userbarcontent {
-  padding: 137px 347px 84px 164px;
-  display:flex;
-    align-items: center;
-    /*display: flex;*/
+.avatar {
+  margin-bottom: 10px;
 }
 
-.avatar{
-    width: 168px; height: 168px;
-    border-radius: 168px;
-    float: left;
+p {
+  margin-right: 40px;
 }
 
-a {
-  text-decoration: none;
-  color: #00a779;
+.wrapper-for-text-header, .invites {
+  margin-top: 20px;
 }
 
-a:hover {
-    color: #7ad4bb;
+.example-card {
+  width: 700px;
 }
 
-.username{
-  font-size: 40px;
-  font-weight: 900;
-  font-style: italic;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #659ad9;
-  vertical-align: middle;
-  margin-right: auto;
-  padding-left: 36px;
-}
-
-.username:hover {
-    color: #95bff3;
-}
-
-.profile-features {
-    float: right;
-    align-self: flex-start;
-}
-
-
-.userbarcontent li {
-    font-size: 30px;
-    font-weight: 900;
-    font-style: italic;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    margin: 17px;
-}
-
-li:hover {
-    color: red;
-}
-
-.items {
-    padding: 96px 154px 95px 130px;
-}
-
-.leftitem {
-    float: left;
-}
-
-h2:hover {
-    color: #f3f3f3;
-}
-
-
-.rightitem {
-    float: right;
-}
-
-h2 {
-  font-size: 32px;
-  font-weight: 900;
-  font-style: italic;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
-  padding-top: 49px;
-  color: #ffffff;
-}
-
-img{
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+.example-card :hover {
+  background-color: #f9f9f9;
 }

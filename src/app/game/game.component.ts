@@ -29,6 +29,7 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   waiterForWinner: Subscription;
   acceptToSkipGame = false;
   firstPullOfSnapshots: ISnapshotResponse;
+  idOfRoom: number;
 
   constructor(private route: ActivatedRoute,
               private snapshotService: SnapshotService,
@@ -40,8 +41,12 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.idOfRoom = +params['id']; // (+) converts string 'id' to a number
+      console.log('idOfRoom' + this.idOfRoom);
+    });
     this.firstPullOfSnapshots = this.route.snapshot.data.game;
-    this.battleState = new BattleState(this.snapshotService, this.router, this.userService, this.firstPullOfSnapshots);
+    this.battleState = new BattleState(this.snapshotService, this.router, this.userService, this.firstPullOfSnapshots, this.idOfRoom);
     this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
     this.game.state.add('BattleState', this.battleState);
     this.game.state.start('BattleState');
