@@ -21,6 +21,7 @@
               Find and add players to the room
             </mat-panel-description>
           </mat-expansion-panel-header>
+          <div class="table-container">
 
           <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
 
@@ -76,9 +77,10 @@
               </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
+          </div>
 
 
           <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">

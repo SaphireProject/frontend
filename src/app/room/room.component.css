@@ -9,7 +9,13 @@
 
 .wrapper-for-room {
   width: 75%;
+  height: 100%;
+}
+
+.table-container {
+  margin-top: 10px;
   height: 300px;
+  overflow: auto;
 }
 
 .setup-battle {
