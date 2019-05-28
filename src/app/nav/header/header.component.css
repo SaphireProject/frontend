@@ -62,3 +62,7 @@ a:hover, .contact, .element:hover {
   align-items: center;
   justify-content: center;
 }
+
+.sidenav {
+  overflow-y: hidden;
+}

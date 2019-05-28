@@ -16,7 +16,7 @@
 .wrapper {
   margin: 0 auto;
   height: inherit;
-  width: 1440px;
+  /*width: 1440px;*/
   background-color: white;
 }
 
@@ -31,16 +31,18 @@ h1 {
   margin-bottom: 34px;
 }
 
-.login-page {
-  width: 681px;
-  padding-top: 198px;
-  margin: 0px 529px 100px 530px;
-}
+/*.login-page {*/
+  /*width: 681px;*/
+  /*padding-top: 198px;*/
+  /*margin: 0px 529px 100px 530px;*/
+/*}*/
+
 .form {
+  margin-top: 10%;
   width: 381px;
   /*position: relative;
   z-index: 1;*/
-  background: #FFFFFF;
+  background: white;
   text-align: center;
 }
 
@@ -102,20 +104,24 @@ div.invalid-feedback {
   font-weight: bold;
 }
 
-div.sign-in {
+.sign-in {
   padding-top: 26px;
 }
 
 .loading-ring {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 .form-control-password {
   color: #4a4a4a;
 }
 
+.passwordChange {
+  margin-top: 5%;
+}
+
 .load-ring {
-  padding-top: 25px;
+  padding-top: 15px;
 }
 
 .valid-icon {
@@ -178,4 +184,16 @@ p {
 a:hover {
   color: #00e521;
   /*text-weight: bold;*/
+}
+
+.all {
+  height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.ask {
+  margin-top: 15px;
 }

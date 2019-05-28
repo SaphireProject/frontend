@@ -11,7 +11,7 @@
       <input matInput #filter placeholder="Search People">
     </mat-form-field>
   </div>
-
+<div class="wrapper-for-table">
   <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
 
     <!--- Note that these columns can be defined in any order.
@@ -74,7 +74,7 @@
     No results
   </div>
 
-
+</div>
   <mat-paginator #paginator
                  [length]="dataSource.filteredData.length"
                  [pageIndex]="0"

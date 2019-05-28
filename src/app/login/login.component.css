@@ -1,3 +1,6 @@
+
+
+
 .ng-invalid:not(form), .is-invalid.ng-untouched:not(form)  {
   border: 1px solid #ff463f;
 }
@@ -7,10 +10,10 @@
 }
 
 .wrapper {
-  margin: 0 auto;
-  height: inherit;
-  width: 1440px;
-  background-color: white;
+  /*margin: 0 auto;*/
+  /*height: inherit;*/
+  /*width: 1440px;*/
+  /*background-color: white;*/
 }
 
 h1 {
@@ -25,12 +28,14 @@ h1 {
 }
 
 .login-page {
-  width: 381px;
-  padding-top: 198px;
-  margin: 0px 529px 332px 530px;
+  /*width: 381px;*/
+  /*padding-top: 198px;*/
+  /*margin: 0px 529px 332px 530px;*/
 }
 .form {
-  width: 381px;
+  /*backup*/
+  /*width: 381px;*/
+
   /*position: relative;
   z-index: 1;*/
   background: #FFFFFF;
@@ -40,7 +45,7 @@ h1 {
 .form input {
   outline: 0;
   background: #f2f2f2;
-  width: 100%;
+  width: 381px;
   margin: 0 0 28px;
   padding: 15px;
   box-sizing: border-box;
@@ -57,7 +62,7 @@ h1 {
 .form button {
   outline: 0;
   background-color: rgba(111, 160, 218, 0.65);
-  width: 100%;
+  width: 381px;
   border: 0;
   margin-top: 20px;
   padding: 15px;
@@ -78,11 +83,11 @@ h1 {
   background-color: rgba(0, 167, 121, 0.81);
 }
 
-.form .message {
-  margin: 15px 0 0;
-  color: #b3b3b3;
-  font-size: 12px;
-}
+/*.form .message {*/
+  /*margin: 15px 0 0;*/
+  /*color: #b3b3b3;*/
+  /*font-size: 12px;*/
+/*}*/
 
 .alert {
   color: red;
@@ -127,7 +132,9 @@ a:hover {
 }
 
 .alert-wrapper {
+  margin-left: 36%;
   position: relative;
+  /*text-align: center;*/
 }
 
 .alert-info {
@@ -137,3 +144,10 @@ a:hover {
   font-size: 14px;
   color: red;
 }
+
+.space {
+  height: 160px;
+  background: white;
+}
+
+

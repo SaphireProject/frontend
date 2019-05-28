@@ -1,7 +1,6 @@
-﻿<div class="menu">
-  <div class="wrapper">
-    <div class="login-page">
-      <div class="form">
+﻿<div class="login">
+<div class="space"></div>
+<div class="form">
         <h1>Login</h1>
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
              <input type="text" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
@@ -18,7 +17,6 @@
             </div>
             <div class="load-ring"><mat-progress-spinner ng *ngIf="loading" mode="indeterminate" diameter="32" style="margin:0 auto;"></mat-progress-spinner></div>
         </form>
-      </div>
-    </div>
-  </div>
+</div>
+<div class="space"></div>
 </div>

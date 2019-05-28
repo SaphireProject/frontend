@@ -14,3 +14,7 @@
 a:hover, a:active {
   color: lightgray;
 }
+
+.menu-link {
+  overflow-y: hidden;
+}

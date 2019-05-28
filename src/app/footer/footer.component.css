@@ -2,21 +2,22 @@
   background-color: rgba(0, 167, 121, 0.81);
   display: flex;
   justify-content: space-between;
+  bottom: 0;
 }
 
 a {
-  text-decoration: none;
-  font-size: 20px;
-  color: #ffffff;
+text-decoration: none;
+font-size: 20px;
+color: #ffffff;
 }
 
 a:hover {
-  color: #f3f3f3;
+color: #f3f3f3;
 }
 /*
 .footcontainer {
-  color: #ffffff;
-  padding: 32px 0px 35px 0px;
+color: #ffffff;
+padding: 32px 0px 35px 0px;
 }
 */
 
@@ -66,4 +67,5 @@ a:hover {
   justify-content: center;
   align-items: center;
 }
+
 
