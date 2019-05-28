@@ -68,8 +68,10 @@ import {NotificationService} from './_services/notification.service';
 import { ShowcodedialogComponent } from './dialogs/showcodedialog/showcodedialog.component';
 import { LobbyComponent } from './lobby/lobby.component';;
 import { LeaveDialogComponent } from './dialogs/leave-dialog/leave-dialog.component'
-import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';
-
+import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';;
+import { ComponentComponent } from './dialogs/component/component.component'
+;
+import { PeopleComponent } from './dialogs/people/people.component';
 
 @NgModule({
   imports: [
@@ -139,6 +141,8 @@ import {ProfileSettingsResolver} from './profile-settings/profile-settings-resol
     GotogameDialogComponent,
     ShowcodedialogComponent,
     LobbyComponent,
+    ComponentComponent,
+    PeopleComponent,
     EndgameComponent],
   entryComponents: [
     InviteDialogComponent,

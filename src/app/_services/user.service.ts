@@ -7,6 +7,8 @@ import {environment} from '../../environments/environment';
 import {User, UserRegisterRequest, UserEditRequest, QuestionRequest, Profile} from '../_models';
 import {IEndOfGame} from '../game/ISnapshotResponse';
 import {ICurrentWinner} from '../_helpers/ICurrentWinner';
+import {NotificationInfo} from '../_models/game-rooms-models/response/IGetAllNotificationsResponse';
+import {UserTable} from '../dialogs/people/people.component';
 
 
 @Injectable({providedIn: 'root'})
@@ -18,6 +20,7 @@ export class UserService {
   public currentWinner: Observable<ICurrentWinner>;
   private bufferWinnerSubject: ReplaySubject<Object>;
   public bufferWinner: Observable<Object>;
+  dataChange: BehaviorSubject<UserTable[]> = new BehaviorSubject<UserTable[]>([]);
 
   private passwordWithoutHash: string;
 
@@ -121,6 +124,15 @@ export class UserService {
        };
      }))
      ;
+ }
+
+ getAllUsers() {
+   this.http.get<any>(`${environment.apiUrl}user/list`).pipe(map(
+     data =>  {
+       console.log(data);
+       console.log(data.result);
+       this.dataChange.next(data.result);
+     })).subscribe();
  }
 
   // updateGlobalProfileData() {

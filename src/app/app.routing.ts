@@ -20,6 +20,7 @@ import {SetupforbattleComponent} from './setupforbattle/setupforbattle.component
 import {InvitelistComponent} from './invitelist/invitelist.component';
 import {LobbyComponent} from './lobby/lobby.component';
 import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';
+import {PeopleComponent} from './dialogs/people/people.component';
 
 
 const appRoutes: Routes = [
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
   {path: 'setup', component: SetupforbattleComponent, canActivate: [AuthGuard]},
   {path: 'notifications', component: InvitelistComponent, canActivate: [AuthGuard]},
   {path: 'room/:id', component: RoomComponent, canActivate: [AuthGuard]},
+  {path: 'people', component: PeopleComponent, canActivate: [AuthGuard]},
   {path: 'lobby', component: LobbyComponent, canActivate: [AuthGuard]},
   {
     path: 'game/:idOfRoom', component: GameComponent, canActivate: [AuthGuard],

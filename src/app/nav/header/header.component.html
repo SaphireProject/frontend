@@ -25,7 +25,7 @@
     </button>
     <button mat-button routerLink="/friends" (click)="sidenav.close()">
       <mat-icon class="home">people</mat-icon>
-      <span class="navigationbar-button-name">Friends</span>
+      <span class="navigationbar-button-name">People</span>
     </button>
     <button mat-button routerLink="/contact" (click)="sidenav.close()">
       <mat-icon class="contact">email</mat-icon>
@@ -50,10 +50,10 @@
     </button>
     <div class="menu-item-left" fxFlex fxLayout fxHide.xs>
     <img src="assets/images/logorobo.png" alt="logo.png" width="34" height="35">
-    <span><a href="/" class="logo">crazyRobots</a></span>
+    <span><a routerLink="/" class="logo">crazyRobots</a></span>
       <span><a routerLink="/" class="element">Home</a></span>
       <span><a routerLink="/strategies" class="element">Strategies</a></span>
-      <span><a routerLink="/friends" class="element">Friends</a></span>
+      <span><a routerLink="/people" class="element">People</a></span>
   </div>
   </div>
   <div class="second-part">
@@ -67,7 +67,7 @@
     </button>
     <mat-menu #menu="matMenu">
       <a mat-menu-item
-         routerLink="/me"  class="profile-item">
+         routerLink="/profile/me"  class="profile-item">
         <mat-icon>face</mat-icon>
         <span>My Profile</span>
       </a>
@@ -77,9 +77,9 @@
         <span>Strategies</span>
       </a>
       <a mat-menu-item
-         routerLink="/me" class="profile-item">
+         routerLink="/people" class="profile-item">
         <mat-icon>people_outline</mat-icon>
-        <span>Friends</span>
+        <span>People</span>
       </a>
       <a mat-menu-item
              routerLink="/me/edit" class="profile-item">
@@ -87,7 +87,7 @@
         <span>Account Settings</span>
       </a>
       <a mat-menu-item
-             routerLink="/me" class="profile-item">
+             routerLink="/contact" class="profile-item">
       <mat-icon>help_outline</mat-icon>
         <span>Help</span>
       </a>
