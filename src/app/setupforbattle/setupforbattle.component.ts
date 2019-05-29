@@ -56,6 +56,12 @@ export class SetupforbattleComponent implements OnInit {
     this.chosenTank = chosenTank;
   }
 
+  checkForStrategy() {
+    if (this.idOfChosenStrategy != null) {
+      return false;
+    }
+  }
+
   searchValueOfStrategy() {
     return this.strategies.find(x => x.id === this.idOfChosenStrategy).name;
   }

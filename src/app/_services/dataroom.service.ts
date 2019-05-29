@@ -129,6 +129,8 @@ export class DataRoomService {
         this.maxLengthOfRoomStorage = data.countOfUsers;
         console.log('COUTN OF USERS');
         console.log(this.maxLengthOfRoomStorage);
+        console.log('response');
+        console.log(data);
         this.getPlayerStatus(data);
         // this.checkForAcceptInLoby(data.users);
         this.checkForReadyToGame(data.users);
@@ -153,7 +155,10 @@ export class DataRoomService {
   }
 
   private checkForReadyToGame(users: IUserStatus[]) {
+    console.log('checkForReadt');
+    console.log(users);
     if (users.every(x => x.readyToPlay === 2)) {
+      console.log('all ready');
       if (users.length > 1) {
         if (this.readyToGameSubject.value !== true) {
           console.log('NEXT TRUE');

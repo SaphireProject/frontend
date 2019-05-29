@@ -48,3 +48,8 @@ mat-chip {
 mat-accordion :hover {
   background-color: #f9f9f9;
 }
+
+
+.second {
+  height: 230px;
+}

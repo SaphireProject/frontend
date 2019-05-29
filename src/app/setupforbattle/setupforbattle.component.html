@@ -1,3 +1,4 @@
+<div class="strategy">
 <mat-accordion>
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
@@ -15,6 +16,7 @@
         <mat-chip class="tank-blue" (click)="choseArmy('tank_blue')">Blue</mat-chip>
         <mat-chip class="tank-dark" (click)="choseArmy('tank_dark')">Dark</mat-chip>
         <mat-chip class="tank-sand" (click)="choseArmy('tank_sand')">Sand</mat-chip>
+        <span class="spaced"></span>
       </mat-chip-list>
        <div class="tank-descr" *ngIf="chosenTank!==undefined">
       <div>Chosen army of tanks:</div>
@@ -24,7 +26,7 @@
   </mat-expansion-panel>
 </mat-accordion>
 <mat-accordion>
-  <mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel class="second" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Choose your strategy for fight
@@ -35,13 +37,16 @@
     </mat-expansion-panel-header>
     <mat-form-field>
       <mat-label>Your Strategies</mat-label>
+      <div class="select-wrapper">
       <mat-select>
         <mat-option *ngFor="let strategy of strategies" (click)="test(strategy.id)" [value]="strategy.id">
           {{strategy.name}}
         </mat-option>
       </mat-select>
+      </div>
     </mat-form-field>
     <div *ngIf="idOfChosenStrategy !== undefined">Your strategy is {{searchValueOfStrategy()}} <button mat-button (click)="showStrategy()">Look at</button></div>
     <div><button mat-raised-button [disabled]="checkForDisablingConfirm()" (click)="confirmData()">Confirm</button></div>
   </mat-expansion-panel>
 </mat-accordion>
+</div>

@@ -35,6 +35,6 @@
   /*width: 100%;*/
 /*}*/
 
-/*/deep/ .mat-sidenav-content {*/
-  /*overflow-y: hidden !important;*/
-/*}*/
+/deep/ .mat-sidenav-content {
+  overflow-y: hidden !important;
+}
