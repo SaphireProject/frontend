@@ -6,7 +6,7 @@ import TilemapLayer = Phaser.TilemapLayer;
 import {MapDrawer} from './MapDrawer';
 import {SnapshotService} from './snapshot.service';
 import {UserService} from '../_services';
-import { Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {ISnapshotResponse, IPreload, IBullets, ITanks, IFrames, IEndOfGame} from './ISnapshotResponse';
 import {Router} from '@angular/router';
@@ -44,7 +44,10 @@ export class BattleState extends Phaser.State {
   countOfGettedSnapshot: number;
   idOfRoom: number;
 
-  constructor(snapshotService: SnapshotService, router: Router, userService: UserService, firstPullOfSnapshots: ISnapshotResponse, idOfRoom: number) {
+  constructor(snapshotService: SnapshotService,
+              router: Router, userService: UserService,
+              firstPullOfSnapshots: ISnapshotResponse,
+              idOfRoom: number) {
     super();
     this.snapshotService = snapshotService;
     this.router = router;

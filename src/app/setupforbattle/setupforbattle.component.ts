@@ -1,11 +1,9 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
-import {MatDialog, ThemePalette} from '@angular/material';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {DataRoomService} from '../_services/dataroom.service';
 import {AlertService} from '../_services';
 import {StrategyService} from '../_services/strategy.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {InviteDialogComponent} from '../dialogs/invite-dialog/invite-dialog.component';
 import {ShowcodedialogComponent} from '../dialogs/showcodedialog/showcodedialog.component';
 
 
@@ -91,7 +89,7 @@ export class SetupforbattleComponent implements OnInit {
 
   confirmData() {
     this.dataRoomService.confirmReadyToPlay(this.chosenTank, this.idOfChosenStrategy).subscribe(data => {
-      console.log("READY TO PLAy");
+      console.log('READY TO PLAy');
       console.log(data);
       this.alertService.success('Now you ready to play. Please, wait other gamers');
       this.readyToPlay = true;

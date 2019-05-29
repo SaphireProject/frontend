@@ -122,7 +122,7 @@ export class ProfileSettingsComponent implements OnInit {
       passwordNew: this.userForm.value.password,
       passwordOld: this.userForm.value.oldPassword,
       username: this.userForm.value.username};
-    console.log("requsettoedit");
+    console.log('requsettoedit');
     console.log(requestToEdit);
 
     this.userService.editProfile(requestToEdit, this.passwordEdit)

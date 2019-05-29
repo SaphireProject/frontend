@@ -61,16 +61,14 @@ import {DataRoomService} from './_services/dataroom.service';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { SetupforbattleComponent } from './setupforbattle/setupforbattle.component';
 import { InvitelistComponent } from './invitelist/invitelist.component';
-import { GotogameDialogComponent } from './dialogs/gotogame-dialog/gotogame-dialog.component'
-;
+import { GotogameDialogComponent } from './dialogs/gotogame-dialog/gotogame-dialog.component';
 import { RefusegameDialogComponent } from './dialogs/refusegame-dialog/refusegame-dialog.component';
 import {NotificationService} from './_services/notification.service';
 import { ShowcodedialogComponent } from './dialogs/showcodedialog/showcodedialog.component';
-import { LobbyComponent } from './lobby/lobby.component';;
-import { LeaveDialogComponent } from './dialogs/leave-dialog/leave-dialog.component'
-import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';;
-import { ComponentComponent } from './dialogs/component/component.component'
-;
+import { LobbyComponent } from './lobby/lobby.component';
+import { LeaveDialogComponent } from './dialogs/leave-dialog/leave-dialog.component';
+import {ProfileSettingsResolver} from './profile-settings/profile-settings-resolver.service';
+import { ComponentComponent } from './dialogs/component/component.component';
 import { PeopleComponent } from './dialogs/people/people.component';
 
 @NgModule({

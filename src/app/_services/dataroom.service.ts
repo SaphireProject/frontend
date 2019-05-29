@@ -106,8 +106,14 @@ export class DataRoomService {
     //     {idOfUser: 5, username: 'Boron', email: 'tet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
     //     {idOfUser: 6, username: 'Carbon', email: 'twqet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
     //     {idOfUser: 7, username: 'Nitrogen', email: 'dftet@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 8, username: 'Oxygen', email: 'tets@emal.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
-    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},      {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 8, username: 'Oxygen', email: 'tets@emal.ru',
+    //     readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
+    //     {idOfUser: 9, username: 'Fluorine', email: 'fd@asm.ru', readyToPlay: 0, chosenTank: 'sdfsf'},
     //     {idOfUser: 10, username: 'Neon', email: 'dsfs@.ru', readyToPlay: 0, chosenTank: 'sdfsf'}
     //   ];
     // this.dataChange.next(ELEMENT_DATA);
@@ -247,8 +253,10 @@ export class DataRoomService {
 
   checkForGameIsReady() {
     return this.httpClient.get<IGetGameIsStartedResponse>(`${environment.apiUrl2}game/is-started`,
-      {params: new HttpParams()
-          .set('idOfRoom', String(this.idOfRoomStorage))});
+      {
+        params: new HttpParams()
+          .set('idOfRoom', String(this.idOfRoomStorage))
+      });
   }
 }
 

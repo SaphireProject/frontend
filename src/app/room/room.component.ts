@@ -147,7 +147,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       console.log('ready!');
       if (data) {
         this.readingForStartGame = true;
-          this.alertService.success('Everyone is ready, start the game');
+        this.alertService.success('Everyone is ready, start the game');
       } else {
         this.readingForStartGame = false;
       }
@@ -168,8 +168,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           console.log(error);
           this.alertService.error('Oops, something happened. Please try later');
         });
-    }, 3000)
-
+    }, 3000);
     console.log('check for game');
   }
 
@@ -218,7 +217,8 @@ export class RoomComponent implements OnInit, OnDestroy {
       const difference = maximumLength - currentCount;
       if ((difference < 4) && (difference > 1)) {
         this.isLimitPlayers = false;
-        return `You have ${maximumLength - currentCount} people left to fill the room, add more your friends or wait for those already invited and start the game`;
+        return `You have ${maximumLength - currentCount} people left to fill the room,` +
+          `add more your friends or wait for those already invited and start the game`;
       } else {
         if (difference > 4) {
           this.isLimitPlayers = false;

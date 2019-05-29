@@ -82,7 +82,7 @@ export class RoomcreatorComponent implements OnInit, OnDestroy {
     this.moveStepper('next');
   }
 
-  private moveStepper(direction: string) {
+  moveStepper(direction: string) {
     switch (direction) {
       case 'back': {
         this.isLinear = false;
