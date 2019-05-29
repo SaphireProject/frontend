@@ -4,6 +4,7 @@
 
 a {
 	text-decoration: none;
+  color: white;
 }
 
 a:hover, .contact, .element:hover {
@@ -54,8 +55,8 @@ a:hover, .contact, .element:hover {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  color: black;
 }
-
 
 .first-part {
   display: flex;

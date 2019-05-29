@@ -43,7 +43,7 @@
   </div>
 </mat-sidenav>
 
-<mat-toolbar>
+<mat-toolbar color="primary">
   <div class="first-part">
     <button type="button" mat-icon-button onclick="this.blur()" (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
@@ -60,7 +60,7 @@
     <span></span>
   </div>
   <div class="third-part">
-    <span class="element" (click)="goToNotificationPage()"><mat-icon matBadge="{{currentCountOfNotification}}" [matBadgeHidden]="hideOfNotification" matBadgeColor="warn">notifications_none</mat-icon></span>
+    <span class="element" (click)="goToNotificationPage()"><mat-icon matBadge="{{currentCountOfNotification}}" [matBadgeHidden]="hideOfNotification" >notifications_none</mat-icon></span>
     <button mat-button class="profile-button" [matMenuTriggerFor]="menu">
       <span>{{ currentUser?.username }}</span>
       <img ngxGravatar [email]=currentUser?.email size=40 class="header-avatar" alt="avatar">

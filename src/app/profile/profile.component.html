@@ -15,7 +15,7 @@
     </mat-card-header>
     <mat-card-subtitle class="bio" >{{ profile?.bio != null ? profile?.bio : "\n" + profile?.username +" hasn't yet told about himself"}}</mat-card-subtitle>
     <mat-card-actions class="button">
-      <button *ngIf="isUser" mat-raised-button class="primary" routerLink="/me/edit">Edit profile</button>
+      <button *ngIf="isUser" mat-raised-button class="primary" color="primary" routerLink="/me/edit">Edit profile</button>
       <button *ngIf="!isUser" mat-raised-button class="primary" (click)="inviteToPlay()">Invite to play</button>
     </mat-card-actions>
 

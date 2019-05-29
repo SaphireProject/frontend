@@ -281,7 +281,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   getColorForStatus(readyToPlay: any) {
     switch (readyToPlay) {
       case (0):
-        return 'blue';
+        return '#2a98ef';
       case (1):
         return '#ffd507';
       case (2):

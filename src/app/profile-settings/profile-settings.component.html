@@ -21,7 +21,7 @@
         <mat-error *ngIf="f.bio.invalid">Wow, too much rows! Maximum rows is 2</mat-error>
       </mat-form-field>
 
-      <button mat-raised-button class="edit-button" type="button" (click)="editPassword()">Edit Password</button>
+      <button mat-raised-button color="complementary" class="edit-button" type="button" (click)="editPassword()">Edit Password</button>
       <div *ngIf="passwordEdit">
         <mat-form-field class="form-group">
           <input matInput type="password" placeholder="Old Password" formControlName="oldPassword" id="oldPassword" name="password">
@@ -58,8 +58,8 @@
 
       <div class="buttons">
       <mat-card-actions>
-        <button mat-raised-button class="close-button" routerLink="/profile/me/" type="button">Back</button>
-        <button mat-raised-button class="save-button" type="submit">Save</button>
+        <button mat-raised-button class="close-button" routerLink="/profile/me/" color="primary" type="button">Back</button>
+        <button mat-raised-button class="save-button" color="primary" type="submit">Save</button>
       </mat-card-actions>
       </div>
     </form>

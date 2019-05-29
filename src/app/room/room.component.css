@@ -58,3 +58,6 @@ mat-toolbar {
   flex-direction: row;
 }
 
+.header-game {
+  color: #2a98ef;
+}
