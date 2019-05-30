@@ -230,7 +230,10 @@ export class DataRoomService {
   }
 
   startTheGame() {
-    return this.httpClient.get(`${environment.apiUrl2}game/start`);
+    return this.httpClient.get(`${environment.apiUrl2}game/start`, {
+      params: new HttpParams()
+        .set('idOfRoom', String(this.idOfRoomStorage))
+    });
   }
 
   leaveFromRoom(idOfRoom: number) {

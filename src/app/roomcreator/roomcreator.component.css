@@ -11,8 +11,8 @@ img {
 }
 
 h1 {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
   text-align: center;
   font-weight: bold;
   font-size: 30px;
@@ -34,7 +34,7 @@ button {
 }
 
 .select-game {
-  margin-top: 4%;
+  margin-top: 2%;
   margin-bottom: 10%;
 }
 
@@ -105,5 +105,5 @@ h4 {
 }
 
 .room-setting-button {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }

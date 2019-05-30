@@ -232,9 +232,10 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   startGame() {
-    this.readyToPlay$.unsubscribe();
+    // this.readyToPlay$.unsubscribe();
     this.loadingRingStatus = true;
     this.readingForStartGame = false;
+    const idOfRoom = this.exampleDatabase.idOfRoomStorage;
     this.dataRoomService.startTheGame().subscribe(() => {
         console.log('fsdf');
         this.router.navigate(['/game']);

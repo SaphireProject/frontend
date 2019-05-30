@@ -6,3 +6,10 @@ $my-app-accent:  mat-palette($mat-green, A700);
 $my-app-warn:    mat-palette($mat-deep-orange);
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 @include angular-material-theme($my-app-theme);
+
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+  $font-family: 'Nunito'
+);
+
+@include angular-material-typography($custom-typography);
