@@ -32,6 +32,7 @@ export interface IBullets {
   bulletDirection: string;
   isFirstSnapshot: boolean;
   isLastSnapshot: boolean;
+  id: number;
 }
 
 export interface IEndOfGame {

@@ -242,6 +242,25 @@ export class BattleState extends Phaser.State {
     }, 500);
   }
 
+
+  // private makeFrameAnimation() {
+  //   let numberOfCurrentSnapshot = 0;
+  //   // actions, that do every frame
+  //   this.intervalForAnimation = setInterval(() => {
+  //     if (typeof this.snapshots !== 'undefined' && this.snapshots.length > 0) {
+  //       // making movement for every unit in one snapshot
+  //       this.processAllItemsInSnapshot(this.snapshots.shift(), this.snapshots[0]);
+  //       // clear destroyed units from array of units
+  //       this.clearEmptyData();
+  //       numberOfCurrentSnapshot++;
+  //     } else {
+  //       // end SetInterval after all snapshots
+  //       console.log('Nothing elements for painting');
+  //     }
+  //   }, 500);
+  // }
+
+
   private processAllItemsInSnapshot(snapshot: IFrames) {
     localStorage.setItem('currentSnapshotNumber', snapshot.snapshotNumber.toString());
     let numberOfUnit = 0;
@@ -257,6 +276,22 @@ export class BattleState extends Phaser.State {
       }
     }
   }
+
+  // private processAllItemsInSnapshot(snapshot: IFrames, snapshotNext: IFrames) {
+  //   localStorage.setItem('currentSnapshotNumber', snapshot.snapshotNumber.toString());
+  //   let numberOfUnit = 0;
+  //   for (const unitSpecifications of snapshot.animations.tanks) {
+  //     this.makeUnitMovement(unitSpecifications, numberOfUnit);
+  //     numberOfUnit++;
+  //   }
+  //   if (typeof snapshot.animations.bullets !== 'undefined' && snapshot.animations.bullets.length > 0) {
+  //     let numberOfBullet = 0;
+  //     for (const bulletSpecifications of snapshot.animations.bullets) {
+  //       this.makeBulletMovement(bulletSpecifications, numberOfBullet, snapshotNext);
+  //       numberOfBullet++;
+  //     }
+  //   }
+  // }
 
   private makeUnitMovement(unitSpecifications: ITanks, index: number) {
     const positionX = unitSpecifications.positionX;
@@ -294,6 +329,33 @@ export class BattleState extends Phaser.State {
       }
     }
   }
+
+  // private makeBulletMovement(unitSpecifications: IBullets, index: number, snapshotNext: IFrames) {
+  //   const positionX = unitSpecifications.positionX;
+  //   const positionY = unitSpecifications.positionY;
+  //   const colorBullet = 'green_bullet';
+  //   // check unit is alive and making move,ent
+  //   if (unitSpecifications.isFirstSnapshot) {
+  //     this.bullets.push(new BulletTweenSubject({
+  //       id: undefined,
+  //       positionX: positionX,
+  //       positionY: positionY,
+  //       type: colorBullet,
+  //       game: this.game
+  //     }, unitSpecifications.bulletDirection));
+  //   } else {
+  //     this.snapshots
+  //     this.bullets[index + 1].
+  //     unitSpecifications.id
+  //     if (unitSpecifications.isLastSnapshot) {
+  //       this.bullets[index].destroy(positionX, positionY, unitSpecifications.bulletDirection);
+  //       this.bullets[index] = null;
+  //     } else {
+  //       this.bullets[index].moveTo(positionX, positionY);
+  //     }
+  //   }
+  // }
+
 
   private clearEmptyData() {
     this.units = this.units.filter((unitSpecifications: UnitTweenSubject) => {
