@@ -62,7 +62,8 @@ export class LoginComponent implements OnInit {
           this.alertService.success('Hello, ' + this.f.username.value + '!');
           this.router.navigate([this.returnUrl]);
         },
-        () => {
+        error => {
+          this.alertService.error(error);
           this.loading = false;
         });
   }

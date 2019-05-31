@@ -13,8 +13,8 @@
     </div>
 
     <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="this.inviteForm.controls.formControl.invalid" [mat-dialog-close]="1" (click)="confirmAdd()">Invite</button>
-      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+      <button mat-raised-button [type]="submit" [disabled]="this.inviteForm.controls.formControl.invalid" [mat-dialog-close]="1" (click)="confirmAdd()" color="primary">Invite</button>
+      <button mat-raised-button (click)="onNoClick()" tabindex="-1" color="primary">Cancel</button>
     </div>
   </form>
 </div>

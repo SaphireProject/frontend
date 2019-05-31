@@ -40,6 +40,8 @@ export class SetupforbattleComponent implements OnInit {
     });
     this.strategyService.getStrategiesByUserId().subscribe((data) => {
         if (data.strategies.length < 1) {
+          console.log('DATA');
+          console.log(data.strategies);
           this.alertService.error('You have no saved strategies yet. Create a strategy and return to the game');
         }
         this.strategies = data.strategies;

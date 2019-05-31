@@ -67,3 +67,7 @@ a:hover, .contact, .element:hover {
 .sidenav {
   overflow-y: hidden;
 }
+
+.bell {
+  cursor:pointer;
+}

@@ -2,7 +2,7 @@
   <h3 mat-dialog-title>Are You want to start the game?</h3>
 
     <div mat-dialog-actions>
-      <button mat-button [mat-dialog-close]="1" (click)="confirmGame()">Yes</button>
-      <button mat-button (click)="onNoClick()" tabindex="-1">No</button>
+      <button mat-raised-button [mat-dialog-close]="1" (click)="confirmGame()" color="primary">Yes</button>
+      <button mat-raised-button button (click)="onNoClick()" tabindex="-1" color="primary">No</button>
     </div>
 </div>

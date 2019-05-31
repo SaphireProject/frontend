@@ -184,6 +184,14 @@ export class BattleState extends Phaser.State {
     }
   }
 
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
   // private checkNewSnapshotsFromServer() {
   //   this.intervalForRequestingData = setInterval(() => {
   //     this.snapshotService.getSnapshots()

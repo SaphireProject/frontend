@@ -1,9 +1,9 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <span class="header-game">Welcome to the Game Room. Prepare for the game</span>
   <div class="wrapper-for-toolbar">
   <mat-progress-spinner *ngIf="loadingRingStatus" mode="indeterminate" diameter="32" color="warn"></mat-progress-spinner>
-  <button *ngIf="checkPlayerRole()" mat-raised-button [disabled]="!readingForStartGame" (click)="startGame()">Start The Game</button>
-  <button *ngIf="!checkPlayerRole()" mat-raised-button (click)="goOut()">Leave The Room</button>
+  <button *ngIf="checkPlayerRole()" mat-raised-button [disabled]="!readingForStartGame" (click)="startGame()" color="primary">Start The Game</button>
+  <button *ngIf="!checkPlayerRole()" mat-raised-button (click)="goOut()" color="primary">Leave The Room</button>
   </div>
   <!--Reload data:-->
 </mat-toolbar>
