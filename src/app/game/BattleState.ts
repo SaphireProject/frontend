@@ -49,15 +49,18 @@ export class BattleState extends Phaser.State {
               firstPullOfSnapshots: ISnapshotResponse,
               idOfRoom: number) {
     super();
+    console.log('In Battle State');
     this.snapshotService = snapshotService;
     this.router = router;
     this.userService = userService;
     this.idOfRoom = idOfRoom;
+    console.log('id of room in battle state' + this.idOfRoom);
     this.initInfo = firstPullOfSnapshots.preload;
     this.numberOfCurrentGetSnapshot = firstPullOfSnapshots.frames.length;
+    console.log('saving current snap' + this.numberOfCurrentGetSnapshot);
     this.countOfGettedSnapshot = this.snapshotService.getCountOfRequestingSnapshots();
     this.addSnapshotsInStorage(firstPullOfSnapshots);
-    if (firstPullOfSnapshots.endOfGame !== undefined) {
+    if (firstPullOfSnapshots.endOfGame !== null) {
       this.toEndGame(firstPullOfSnapshots.endOfGame);
     }
     this.checkNewSnapshotsFromServer();
@@ -111,6 +114,7 @@ export class BattleState extends Phaser.State {
   }
 
   create() {
+    console.log('in create');
     document.getElementById('fullScreenTurn');
     this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.input.onDown.add(this.gofull, this);
@@ -145,14 +149,17 @@ export class BattleState extends Phaser.State {
   }
 
   private initMap(initInfo: IPreload) {
+    console.log('init map');
     const mapDrawer = new MapDrawer(this.game, initInfo.blocks);
     this.mapDrawer = mapDrawer;
     mapDrawer.generateMap();
   }
 
   private initUnits() {
+    console.log('init units');
     // check whether there is a bullets in a first snapshot
     if (typeof this.snapshots[0].animations.tanks !== 'undefined' && this.snapshots[0].animations.tanks.length > 0) {
+      console.log('generating units');
       // generating units
       for (const unit of this.snapshots[0].animations.tanks) {
         const unitId = unit.id,
@@ -163,12 +170,15 @@ export class BattleState extends Phaser.State {
         this.units.push(new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, game: this.game}));
       }
     }
+    console.log('check whether there is a bullets in a first snapshot');
     // check whether there is a bullets in a first snapshot
     if (typeof this.snapshots[0].animations.bullets !== 'undefined' && this.snapshots[0].animations.bullets.length > 0) {
+      console.log('generatuing bullets');
       // generating bullets
       for (const bullet of this.snapshots[0].animations.bullets) {
+        console.log('work with last snap?');
         // works with lastshot?
-        if ((bullet.isFirstSnapshot) && (bullet.isLastSnapshot)) {
+        if ((bullet.firstSnapshot) && (bullet.lastSnapshot)) {
           const positionX = bullet.positionX,
             positionY = bullet.positionY,
             colorBullet = 'green_bullet';
@@ -207,34 +217,50 @@ export class BattleState extends Phaser.State {
   // }
 
   private checkNewSnapshotsFromServer() {
+    console.log('Checking new snaps from serv');
     this.intervalForRequestingData = setTimeout(() => {
       this.snapshotService.getSnapshots(this.idOfRoom, this.numberOfCurrentGetSnapshot)
         .pipe(first())
         .subscribe(requestData => {
+          console.log('REQU DATA');
+          console.log(requestData);
+          if (requestData !== undefined) {
+            // TO DO
+            // if (requestData.frames !== null) {
           this.addSnapshotsInStorage(requestData);
-          if (requestData.endOfGame !== undefined) {
+          console.log('requestData');
+          console.log(requestData);
+          if (requestData.endOfGame !== null) {
             this.toEndGame(requestData.endOfGame);
             // this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
           } else {
+            console.log('number of cur snap?' + this.numberOfCurrentGetSnapshot);
             this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
+            console.log('number of cur snap?' + this.numberOfCurrentGetSnapshot);
+          }
             // TODO what?
             this.checkNewSnapshotsFromServer();
           }
         });
-    }, 60000);
+    }, 6000);
   }
 
 
   private makeFrameAnimation() {
+    console.log('Timeout for makeFrameAnimation');
     let numberOfCurrentSnapshot = 0;
     // actions, that do every frame
     this.intervalForAnimation = setInterval(() => {
       if (typeof this.snapshots !== 'undefined' && this.snapshots.length > 0) {
+        console.log('this.snapshots');
+        console.log(this.snapshots);
         // making movement for every unit in one snapshot
         this.processAllItemsInSnapshot(this.snapshots.shift());
         // clear destroyed units from array of units
         this.clearEmptyData();
         numberOfCurrentSnapshot++;
+        console.log('numberOfCurrentSnapshot');
+        console.log(numberOfCurrentSnapshot);
       } else {
         // end SetInterval after all snapshots
         console.log('Nothing elements for painting');
@@ -263,6 +289,8 @@ export class BattleState extends Phaser.State {
 
   private processAllItemsInSnapshot(snapshot: IFrames) {
     localStorage.setItem('currentSnapshotNumber', snapshot.snapshotNumber.toString());
+    console.log('process all items in snapshot');
+    console.log(snapshot);
     let numberOfUnit = 0;
     for (const unitSpecifications of snapshot.animations.tanks) {
       this.makeUnitMovement(unitSpecifications, numberOfUnit);
@@ -297,7 +325,7 @@ export class BattleState extends Phaser.State {
     const positionX = unitSpecifications.positionX;
     const positionY = unitSpecifications.positionY;
     // check unit is alive and making move,ent
-    if (unitSpecifications.isAlive) {
+    if (unitSpecifications.alive) {
       this.units[index].moveTo(positionX, positionY);
     } else {
       // destroy sprite, play animation and clear element of array
@@ -308,11 +336,13 @@ export class BattleState extends Phaser.State {
   }
 
   private makeBulletMovement(unitSpecifications: IBullets, index: number) {
+    console.log('unitSpecifications');
+    console.log(unitSpecifications);
     const positionX = unitSpecifications.positionX;
     const positionY = unitSpecifications.positionY;
     const colorBullet = 'green_bullet';
     // check unit is alive and making move,ent
-    if (unitSpecifications.isFirstSnapshot) {
+    if (unitSpecifications.firstSnapshot) {
       this.bullets.push(new BulletTweenSubject({
         id: undefined,
         positionX: positionX,
@@ -321,7 +351,7 @@ export class BattleState extends Phaser.State {
         game: this.game
       }, unitSpecifications.bulletDirection));
     } else {
-      if (unitSpecifications.isLastSnapshot) {
+      if (unitSpecifications.lastSnapshot) {
         this.bullets[index].destroy(positionX, positionY, unitSpecifications.bulletDirection);
         this.bullets[index] = null;
       } else {
@@ -335,7 +365,7 @@ export class BattleState extends Phaser.State {
   //   const positionY = unitSpecifications.positionY;
   //   const colorBullet = 'green_bullet';
   //   // check unit is alive and making move,ent
-  //   if (unitSpecifications.isFirstSnapshot) {
+  //   if (unitSpecifications.firstSnapshot) {
   //     this.bullets.push(new BulletTweenSubject({
   //       id: undefined,
   //       positionX: positionX,
@@ -344,14 +374,11 @@ export class BattleState extends Phaser.State {
   //       game: this.game
   //     }, unitSpecifications.bulletDirection));
   //   } else {
-  //     this.snapshots
-  //     this.bullets[index + 1].
-  //     unitSpecifications.id
-  //     if (unitSpecifications.isLastSnapshot) {
+  //     if ((snapshotNext.animations.bullets.findIndex(x => x.id === unitSpecifications.id)) !== -1) {
+  //       this.bullets[index].moveTo(positionX, positionY);
+  //     } else {
   //       this.bullets[index].destroy(positionX, positionY, unitSpecifications.bulletDirection);
   //       this.bullets[index] = null;
-  //     } else {
-  //       this.bullets[index].moveTo(positionX, positionY);
   //     }
   //   }
   // }
@@ -371,7 +398,7 @@ export class BattleState extends Phaser.State {
 
 
   public addSnapshotsInStorage(snapshots: ISnapshotResponse) {
-    console.log(snapshots);
+    console.log('add snapsho in storage');
     snapshots.frames.forEach(frame => {
         this.snapshots.push(frame);
       }

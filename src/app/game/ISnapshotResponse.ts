@@ -23,15 +23,15 @@ export interface ITanks {
   positionX: number;
   positionY: number;
   color: string;
-  isAlive: boolean;
+  alive: boolean;
 }
 
 export interface IBullets {
   positionX: number;
   positionY: number;
   bulletDirection: string;
-  isFirstSnapshot: boolean;
-  isLastSnapshot: boolean;
+  firstSnapshot: boolean;
+  lastSnapshot: boolean;
   id: number;
 }
 

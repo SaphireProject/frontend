@@ -37,15 +37,20 @@ export class GameComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               private userService: UserService) {
     this.waiterForWinner = this.userService.currentWinner.subscribe(() => {
       this.acceptToSkipGame = true;
+      console.log('constructor game comp');
     });
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.idOfRoom = +params['id']; // (+) converts string 'id' to a number
-      console.log('idOfRoom' + this.idOfRoom);
+      console.log('params');
+      console.log(params);
+      this.idOfRoom = +params['idOfRoom']; // (+) converts string 'id' to a number ???
+      console.log('idOfRoom in game' + this.idOfRoom);
     });
     this.firstPullOfSnapshots = this.route.snapshot.data.game;
+    console.log('FirstPullOfSnapshots');
+    console.log(this.firstPullOfSnapshots);
     this.battleState = new BattleState(this.snapshotService, this.router, this.userService, this.firstPullOfSnapshots, this.idOfRoom);
     this.game = new Game(this.widthOfTheScreen, this.heightOfTheScreen, AUTO, 'gameDIV');
     this.game.state.add('BattleState', this.battleState);

@@ -13,6 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LeaveDialogComponent} from '../dialogs/leave-dialog/leave-dialog.component';
 import {IGetGameIsStartedResponse} from '../_models/game-rooms-models/response/IGetGameIsStartedResponse';
 import {el} from '@angular/platform-browser/testing/src/browser_util';
+import {SnapshotService} from '../game/snapshot.service';
 
 
 //
@@ -74,7 +75,8 @@ export class RoomComponent implements OnInit, OnDestroy {
               public alertService: AlertService,
               public userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private snapshotService: SnapshotService) {
 
   }
 
@@ -158,8 +160,11 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.gameIsReadyInterval = setInterval(() => {
       this.exampleDatabase.checkForGameIsReady().subscribe((data: IGetGameIsStartedResponse) => {
           if (data.status === true) {
-            this.router.navigate(['/game']);
+            console.log('BEFORE NAVIGATE IN CHECK GAME IS READY');
+            this.snapshotService.setIdOfRoom(this.exampleDatabase.idOfRoomStorage);
+            this.router.navigate(['/game', this.exampleDatabase.idOfRoomStorage]);
           } else {
+            console.log('status of data for checking game is ready');
             console.log(data.status);
           }
         },
@@ -238,7 +243,11 @@ export class RoomComponent implements OnInit, OnDestroy {
     const idOfRoom = this.exampleDatabase.idOfRoomStorage;
     this.dataRoomService.startTheGame().subscribe(() => {
         console.log('fsdf');
-        this.router.navigate(['/game']);
+        console.log('this.exampleDatabase.idOfRoomStorage');
+        console.log(this.exampleDatabase.idOfRoomStorage);
+        this.snapshotService.setIdOfRoom(this.exampleDatabase.idOfRoomStorage);
+        console.log('before turn on startGame redirect');
+        // this.router.navigate(['/game/', this.exampleDatabase.idOfRoomStorage]);
       },
       error => {
         this.alertService.error('Oops, something wrong! Please, try later');

@@ -46,7 +46,6 @@ const appRoutes: Routes = [
   {path: 'me/edit', component: ProfileSettingsComponent, resolve: {profile: ProfileSettingsResolver}, canActivate: [AuthGuard]},
 
 // otherwise redirect to home
-  {path: '**', redirectTo: '/error?type=404'}
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

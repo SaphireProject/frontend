@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: ' http://85.119.150.240:8084/',
-  apiUrl2: 'http://85.119.150.163:8085/',
+  apiUrl2: 'http://85.119.150.240:8085/',
   oauthRedirectUrl: 'http://localhost:4200/oauth2/redirect/'
 };
 

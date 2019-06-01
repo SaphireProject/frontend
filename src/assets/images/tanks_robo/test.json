@@ -1,553 +1,1104 @@
 {
-  "preload": {
-    "blocks": [
-      "100011001109300",
-      "000000000009300",
-      "100101100109300",
-      "000110000009300",
-      "000000001009300",
-      "001000101009300",
-      "000010101009300",
-      "000010101009300",
-      "000011101009300",
-      "001000101009300",
-      "001000101009300",
-      "001000101009300",
-      "001000101009300",
-      "001000101009300",
-      "001000101009300",
-      "001000101009300"
-    ]
+  "game": [
+  {
+      "idRoom": 10,
+      "preload": {
+        "blocks": [
+          "100011001109300",
+          "000000000009300",
+          "100101100109300",
+          "000110000009300",
+          "000000001009300",
+          "001000101009300",
+          "000010101009300",
+          "000010101009300",
+          "000011101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300"
+        ]
+      },
+      "frames": [
+        {
+          "snapshotNumber": 0,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 0,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 7,
+                "positionY": 5,
+                "color": "tank_red",
+                "isAlive": true
+              },
+              {
+                "id": "3",
+                "positionX": 3,
+                "positionY": 1,
+                "color": "tank_sand",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+              {
+                "positionX": 0,
+                "positionY": 1,
+                "bulletDirection": "down",
+                "isFirstSnapshot": true,
+                "isLastSnapshot": false
+              }
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 1,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 1,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 7,
+                "positionY": 6,
+                "color": "tank_red",
+                "isAlive": true
+              },
+              {
+                "id": "3",
+                "positionX": 4,
+                "positionY": 1,
+                "color": "tank_sand",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+              {
+                "positionX": 0,
+                "positionY": 3,
+                "bulletDirection": "down",
+                "isFirstSnapshot": false,
+                "isLastSnapshot": false
+              },
+              {
+                "positionX": 5,
+                "positionY": 9,
+                "bulletDirection": "down",
+                "isFirstSnapshot": true,
+                "isLastSnapshot": false
+              }
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 2,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 7,
+                "positionY": 7,
+                "color": "tank_red",
+                "isAlive": true
+              },
+              {
+                "id": "3",
+                "positionX": 5,
+                "positionY": 1,
+                "color": "tank_sand",
+                "isAlive": false
+              }
+            ],
+            "bullets": [
+              {
+                "positionX": 0,
+                "positionY": 5,
+                "bulletDirection": "down",
+                "isFirstSnapshot": false,
+                "isLastSnapshot": true
+              },
+              {
+                "positionX": 7,
+                "positionY": 1,
+                "bulletDirection": "down",
+                "isFirstSnapshot": false,
+                "isLastSnapshot": false
+              }
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 3,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 6,
+                "positionY": 7,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+              {
+                "positionX": 9,
+                "positionY": 1,
+                "bulletDirection": "down",
+                "isFirstSnapshot": false,
+                "isLastSnapshot": true
+              }
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 4,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 5,
+                "positionY": 7,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 5,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 5,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 4,
+                "positionY": 7,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 6,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 0,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 7,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 7,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 1,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 6,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 8,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 2,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 5,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 9,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 4,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        }
+      ],
+      "endOfGame": null,
+    "page": 0,
+    "size": 10
   },
-  "frames": [
-    {
-      "snapshotNumber": 0,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 0,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 7,
-            "positionY": 5,
-            "color": "tank_red",
-            "isAlive": true
-          },
-          {
-            "id": "3",
-            "positionX": 3,
-            "positionY": 1,
-            "color": "tank_sand",
-            "isAlive": true
+  {
+      "preload": {
+        "blocks": [
+          "100011001109300",
+          "000000000009300",
+          "100101100109300",
+          "000110000009300",
+          "000000001009300",
+          "001000101009300",
+          "000010101009300",
+          "000010101009300",
+          "000011101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300"
+        ]
+      },
+      "frames": [
+        {
+          "snapshotNumber": 10,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 4,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 3,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
           }
-        ],
-        "bullets": [
+        },
+        {
+          "snapshotNumber": 11,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 2,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 12,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 5,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 1,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 13,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 14,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 2,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 15,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 1,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 16,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 4,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 17,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 1,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 18,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 2,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 19,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 3,
+                "color": "tank_red",
+                "isAlive": false
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        }
+      ],
+      "endOfGame": null,
+    "idRoom": 10,
+    "page": 10,
+    "size": 10
+  },
+  {
+    "idRoom": 10,
+      "preload": {
+        "blocks": [
+          "100011001109300",
+          "000000000009300",
+          "100101100109300",
+          "000110000009300",
+          "000000001009300",
+          "001000101009300",
+          "000010101009300",
+          "000010101009300",
+          "000011101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300"
+        ]
+      },
+      "frames": [
+        {
+          "snapshotNumber": 20,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 4,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 3,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 21,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 2,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 22,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 5,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 1,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 23,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 24,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 2,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 25,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 1,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 26,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 4,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 27,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 1,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 28,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 2,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 29,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 3,
+                "color": "tank_red",
+                "isAlive": false
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        }
+      ],
+      "endOfGame": null,
+    "page": 20,
+    "size": 10
+  },
+  {
+      "idRoom": 10,
+      "preload": {
+        "blocks": [
+          "100011001109300",
+          "000000000009300",
+          "100101100109300",
+          "000110000009300",
+          "000000001009300",
+          "001000101009300",
+          "000010101009300",
+          "000010101009300",
+          "000011101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300",
+          "001000101009300"
+        ]
+      },
+      "frames": [
+        {
+          "snapshotNumber": 30,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 4,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 3,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 31,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 6,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 2,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 32,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 5,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 1,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 33,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 3,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 34,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 2,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 35,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 5,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 1,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 36,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 4,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 0,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 37,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 2,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 1,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 38,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 3,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 2,
+                "color": "tank_red",
+                "isAlive": true
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        },
+        {
+          "snapshotNumber": 39,
+          "animations": {
+            "tanks": [
+              {
+                "id": "1",
+                "positionX": 3,
+                "positionY": 4,
+                "color": "tank_green",
+                "isAlive": true
+              },
+              {
+                "id": "2",
+                "positionX": 0,
+                "positionY": 3,
+                "color": "tank_red",
+                "isAlive": false
+              }
+            ],
+            "bullets": [
+            ]
+          }
+        }
+      ],
+      "endOfGame": {
+        "typeOfEnding": "win",
+        "idOfWinner": [
           {
-            "positionX": 0,
-            "positionY": 1,
-            "bulletDirection": "down",
-            "isFirstSnapshot": true,
-            "isLastSnapshot": false
+            "id": 1
           }
         ]
-      }
-    },
-    {
-      "snapshotNumber": 1,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 1,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 7,
-            "positionY": 6,
-            "color": "tank_red",
-            "isAlive": true
-          },
-          {
-            "id": "3",
-            "positionX": 4,
-            "positionY": 1,
-            "color": "tank_sand",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-          {
-            "positionX": 0,
-            "positionY": 3,
-            "bulletDirection": "down",
-            "isFirstSnapshot": false,
-            "isLastSnapshot": false
-          },
-          {
-            "positionX": 5,
-            "positionY": 9,
-            "bulletDirection": "down",
-            "isFirstSnapshot": true,
-            "isLastSnapshot": false
-          }
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 2,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 2,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 7,
-            "positionY": 7,
-            "color": "tank_red",
-            "isAlive": true
-          },
-          {
-            "id": "3",
-            "positionX": 5,
-            "positionY": 1,
-            "color": "tank_sand",
-            "isAlive": false
-          }
-        ],
-        "bullets": [
-          {
-            "positionX": 0,
-            "positionY": 5,
-            "bulletDirection": "down",
-            "isFirstSnapshot": false,
-            "isLastSnapshot": true
-          },
-          {
-            "positionX": 7,
-            "positionY": 1,
-            "bulletDirection": "down",
-            "isFirstSnapshot": false,
-            "isLastSnapshot": false
-          }
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 3,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 3,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 6,
-            "positionY": 7,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-          {
-            "positionX": 9,
-            "positionY": 1,
-            "bulletDirection": "down",
-            "isFirstSnapshot": false,
-            "isLastSnapshot": true
-          }
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 4,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 4,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 5,
-            "positionY": 7,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 5,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 5,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 4,
-            "positionY": 7,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 6,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 0,
-            "positionY": 6,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 7,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 7,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 1,
-            "positionY": 6,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 6,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 8,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 2,
-            "positionY": 6,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 5,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 9,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 3,
-            "positionY": 6,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 4,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 10,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 4,
-            "positionY": 6,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 3,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 11,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 5,
-            "positionY": 6,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 2,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 12,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 5,
-            "positionY": 5,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 1,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 13,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 5,
-            "positionY": 4,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 3,
-            "positionY": 0,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 14,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 5,
-            "positionY": 3,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 2,
-            "positionY": 0,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 15,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 5,
-            "positionY": 2,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 1,
-            "positionY": 0,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 16,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 4,
-            "positionY": 2,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 0,
-            "positionY": 0,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 17,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 3,
-            "positionY": 2,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 0,
-            "positionY": 1,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 18,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 3,
-            "positionY": 3,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 0,
-            "positionY": 2,
-            "color": "tank_red",
-            "isAlive": true
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    },
-    {
-      "snapshotNumber": 19,
-      "animations": {
-        "tanks": [
-          {
-            "id": "1",
-            "positionX": 3,
-            "positionY": 4,
-            "color": "tank_green",
-            "isAlive": true
-          },
-          {
-            "id": "2",
-            "positionX": 0,
-            "positionY": 3,
-            "color": "tank_red",
-            "isAlive": false
-          }
-        ],
-        "bullets": [
-        ]
-      }
-    }
-  ],
-  "endOfGame": {
-    "typeOfEnding": "win",
-    "idOfWinner": [
-      {
-        "id": 2
-      }
-    ]
+      },
+    "page": 30,
+    "size": 10
   }
+  ]
 }
