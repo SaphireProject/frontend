@@ -3,15 +3,21 @@
     {
       "idRoom": 10,
       "preload": {
-        "blocks": ["00000000000000", "00000000000000", "00000000000000", "00000000000000", "00000000000010", "00000000000000", "00000000000100", "00000000000000", "00000000000000", "00000000000000", "00000000000000", "00000000000000", "00000000000000", "00000000000000"]
+        "blocks": ["000000000000000", "000000000000010", "000000000000000", "000001000000000", "000000000001000", "000000000000000", "000000000000010", "000000000000010", "000000001100000", "000010000000000", "000000000000010", "000000000000000", "010000000000000", "000000001000000", "000000000000000"]
       },
       "frames": [{
         "snapshotNumber" : 0,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 5,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
@@ -21,186 +27,253 @@
         "snapshotNumber" : 1,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 5,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 9,
-            "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "positionX" : 1,
+            "positionY" : 2,
+            "bulletDirection" : "LEFT",
+            "id" : 1,
+            "firstSnapshot" : true,
+            "lastSnapshot" : false
+          }, {
+            "positionX" : 6,
+            "positionY" : 4,
+            "bulletDirection" : "RIGHT",
+            "id" : 0,
+            "firstSnapshot" : true,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 2,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 3,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 5,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 4,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
             "positionX" : 0,
-            "positionY" : 12,
-            "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "positionY" : 2,
+            "bulletDirection" : "LEFT",
+            "id" : 1,
+            "firstSnapshot" : false,
+            "lastSnapshot" : true
+          }, {
+            "positionX" : 5,
+            "positionY" : 0,
+            "bulletDirection" : "DOWN",
+            "id" : 8,
+            "firstSnapshot" : true,
+            "lastSnapshot" : true
+          }, {
+            "positionX" : 9,
+            "positionY" : 4,
+            "bulletDirection" : "RIGHT",
+            "id" : 0,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 3,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 3,
+            "positionY" : 3,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 5,
+            "positionY" : 3,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 7,
-            "positionY" : 5,
+            "positionX" : 10,
+            "positionY" : 4,
             "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 0,
+            "firstSnapshot" : false,
+            "lastSnapshot" : true
           } ]
         }
       },{
         "snapshotNumber" : 4,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 3,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 6,
+            "positionY" : 3,
             "color" : "tank_green",
             "alive" : true
           } ],
-          "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 1,
-            "bulletDirection" : "DOWN",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 10,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
+          "bullets" : [ ]
         }
       },{
         "snapshotNumber" : 5,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 6,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
-          "bullets" : [ {
-            "positionX" : 13,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
+          "bullets" : [ ]
         }
       },{
         "snapshotNumber" : 6,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 6,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 9,
+            "positionX" : 6,
+            "positionY" : 6,
             "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 16,
+            "firstSnapshot" : true,
+            "lastSnapshot" : false
+          }, {
+            "positionX" : 6,
+            "positionY" : 4,
+            "bulletDirection" : "RIGHT",
+            "id" : 15,
+            "firstSnapshot" : true,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 7,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 3,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 6,
+            "positionY" : 1,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 4,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 0,
-            "positionY" : 12,
+            "positionX" : 6,
+            "positionY" : 9,
             "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 16,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
+          }, {
+            "positionX" : 9,
+            "positionY" : 4,
+            "bulletDirection" : "RIGHT",
+            "id" : 15,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 8,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 3,
+            "positionY" : 3,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 6,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 7,
-            "positionY" : 5,
+            "positionX" : 10,
+            "positionY" : 4,
             "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 15,
+            "firstSnapshot" : false,
+            "lastSnapshot" : true
+          }, {
+            "positionX" : 6,
+            "positionY" : 12,
+            "bulletDirection" : "UP",
+            "id" : 16,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 9,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 3,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 7,
+            "positionY" : 2,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 1,
-            "bulletDirection" : "DOWN",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 10,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "positionX" : 6,
+            "positionY" : 14,
+            "bulletDirection" : "UP",
+            "id" : 16,
+            "firstSnapshot" : false,
+            "lastSnapshot" : true
           } ]
         }
       }],
@@ -233,267 +306,174 @@
         "snapshotNumber" : 10,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 7,
+            "positionY" : 1,
             "color" : "tank_green",
             "alive" : true
           } ],
-          "bullets" : [ {
-            "positionX" : 13,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
+          "bullets" : [ ]
         }
       },{
         "snapshotNumber" : 11,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 7,
+            "positionY" : 1,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 9,
+            "positionX" : 6,
+            "positionY" : 4,
+            "bulletDirection" : "RIGHT",
+            "id" : 35,
+            "firstSnapshot" : true,
+            "lastSnapshot" : false
+          }, {
+            "positionX" : 7,
+            "positionY" : 5,
             "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 36,
+            "firstSnapshot" : true,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 12,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 3,
+            "positionY" : 4,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 7,
+            "positionY" : 0,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 4,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 0,
-            "positionY" : 12,
+            "positionX" : 7,
+            "positionY" : 8,
             "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 36,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
+          }, {
+            "positionX" : 9,
+            "positionY" : 4,
+            "bulletDirection" : "RIGHT",
+            "id" : 35,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 13,
         "animations" : {
           "tanks" : [ {
+            "id" : "2",
+            "positionX" : 3,
+            "positionY" : 3,
+            "color" : "tank_red",
+            "alive" : true
+          }, {
             "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
+            "positionX" : 7,
+            "positionY" : 1,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
-            "positionX" : 7,
-            "positionY" : 5,
+            "positionX" : 10,
+            "positionY" : 4,
             "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "id" : 35,
+            "firstSnapshot" : false,
+            "lastSnapshot" : true
+          }, {
+            "positionX" : 7,
+            "positionY" : 11,
+            "bulletDirection" : "UP",
+            "id" : 36,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
           } ]
         }
       },{
         "snapshotNumber" : 14,
         "animations" : {
           "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
-            "color" : "tank_green",
+            "id" : "2",
+            "positionX" : 2,
+            "positionY" : 3,
+            "color" : "tank_red",
             "alive" : true
-          } ],
-          "bullets" : [ {
-            "positionX" : 0,
+          }, {
+            "id" : "1",
+            "positionX" : 8,
             "positionY" : 1,
-            "bulletDirection" : "DOWN",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 10,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
-        }
-      },{
-        "snapshotNumber" : 15,
-        "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
-            "color" : "tank_green",
-            "alive" : true
-          } ],
-          "bullets" : [ {
-            "positionX" : 13,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
-        }
-      },{
-        "snapshotNumber" : 16,
-        "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
-            "color" : "tank_green",
-            "alive" : true
-          } ],
-          "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 9,
-            "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
-        }
-      },{
-        "snapshotNumber" : 17,
-        "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
-            "color" : "tank_green",
-            "alive" : true
-          } ],
-          "bullets" : [ {
-            "positionX" : 4,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 0,
-            "positionY" : 12,
-            "bulletDirection" : "UP",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
-        }
-      },{
-        "snapshotNumber" : 18,
-        "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
             "color" : "tank_green",
             "alive" : true
           } ],
           "bullets" : [ {
             "positionX" : 7,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
+            "positionY" : 14,
+            "bulletDirection" : "UP",
+            "id" : 36,
+            "firstSnapshot" : false,
+            "lastSnapshot" : false
           } ]
         }
       },{
-        "snapshotNumber" : 19,
+        "snapshotNumber" : 15,
         "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 5,
-            "color" : "tank_green",
-            "alive" : true
-          } ],
-          "bullets" : [ {
-            "positionX" : 0,
-            "positionY" : 1,
-            "bulletDirection" : "DOWN",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          }, {
-            "positionX" : 10,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
-        }
-      }],
+          "tanks": [
+            {
+              "id": "2",
+              "positionX": 2,
+              "positionY": 4,
+              "color": "tank_red",
+              "alive": true
+            },
+            {
+              "id": "1",
+              "positionX": 8,
+              "positionY": 0,
+              "color": "tank_green",
+              "alive": true
+            }
+          ],
+          "bullets": [
+            {
+              "positionX": 7,
+              "positionY": 14,
+              "bulletDirection": "UP",
+              "id": 36,
+              "firstSnapshot": false,
+              "lastSnapshot": true
+            }
+          ]
+        }}],
       "endOfGame": null,
       "idRoom": 10,
       "page": 10,
       "size": 10
-    },
-    {
-      "idRoom": 10,
-      "preload": {
-        "blocks": [
-          "100011001109300",
-          "000000000009300",
-          "100101100109300",
-          "000110000009300",
-          "000000001009300",
-          "001000101009300",
-          "000010101009300",
-          "000010101009300",
-          "000011101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300"
-        ]
-      },
-      "frames": [{
-        "snapshotNumber" : 20,
-        "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 0,
-            "positionY" : 6,
-            "color" : "tank_green",
-            "alive" : true
-          } ],
-          "bullets" : [ {
-            "positionX" : 13,
-            "positionY" : 5,
-            "bulletDirection" : "RIGHT",
-            "lastSnapshot" : false,
-            "firstSnapshot" : false
-          } ]
-        }
-      },{
-        "snapshotNumber" : 21,
-        "animations" : {
-          "tanks" : [ {
-            "id" : "1",
-            "positionX" : 1,
-            "positionY" : 6,
-            "color" : "tank_green",
-            "alive" : true
-          } ],
-          "bullets" : [ ]
-        }}],
-      "endOfGame": null,
-      "page": 20,
-      "size": 10
-  }
-  ]
-}
+    }
+    }

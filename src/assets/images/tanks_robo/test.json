@@ -4,22 +4,22 @@
       "idRoom": 10,
       "preload": {
         "blocks": [
-          "100011001109300",
-          "000000000009300",
-          "100101100109300",
-          "000110000009300",
-          "000000001009300",
-          "001000101009300",
-          "000010101009300",
-          "000010101009300",
-          "000011101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300",
-          "001000101009300"
+          "100011001100000",
+          "000000000000000",
+          "100101100100000",
+          "000110000000000",
+          "000000001000000",
+          "001000101000000",
+          "000010101000000",
+          "000010101000000",
+          "000011101000000",
+          "001000101000000",
+          "001000101000000",
+          "001000101000000",
+          "001000101000000",
+          "001000101000000",
+          "001000101000000",
+          "001000101000000"
         ]
       },
       "frames": [
@@ -32,21 +32,21 @@
                 "positionX": 0,
                 "positionY": 0,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 7,
                 "positionY": 5,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "3",
                 "positionX": 3,
                 "positionY": 1,
                 "color": "tank_sand",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -69,21 +69,21 @@
                 "positionX": 0,
                 "positionY": 1,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 7,
                 "positionY": 6,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "3",
                 "positionX": 4,
                 "positionY": 1,
                 "color": "tank_sand",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -113,21 +113,21 @@
                 "positionX": 0,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 7,
                 "positionY": 7,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "3",
                 "positionX": 5,
                 "positionY": 1,
                 "color": "tank_sand",
-                "isAlive": false
+                "alive": false
               }
             ],
             "bullets": [
@@ -157,14 +157,14 @@
                 "positionX": 0,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 6,
                 "positionY": 7,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -187,14 +187,14 @@
                 "positionX": 0,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 5,
                 "positionY": 7,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ]
           }
@@ -208,14 +208,14 @@
                 "positionX": 0,
                 "positionY": 5,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 4,
                 "positionY": 7,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -231,14 +231,14 @@
                 "positionX": 0,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 7,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -254,14 +254,14 @@
                 "positionX": 1,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 6,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -277,14 +277,14 @@
                 "positionX": 2,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 5,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -300,14 +300,14 @@
                 "positionX": 3,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 4,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -350,14 +350,14 @@
                 "positionX": 4,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 3,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -373,14 +373,14 @@
                 "positionX": 5,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 2,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -396,14 +396,14 @@
                 "positionX": 5,
                 "positionY": 5,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 1,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -419,14 +419,14 @@
                 "positionX": 5,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -442,14 +442,14 @@
                 "positionX": 5,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 2,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -465,14 +465,14 @@
                 "positionX": 5,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 1,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -488,14 +488,14 @@
                 "positionX": 4,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -511,14 +511,14 @@
                 "positionX": 3,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 1,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -534,14 +534,14 @@
                 "positionX": 3,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 2,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -557,14 +557,14 @@
                 "positionX": 3,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 3,
                 "color": "tank_red",
-                "isAlive": false
+                "alive": true
               }
             ],
             "bullets": [
@@ -609,14 +609,14 @@
                 "positionX": 4,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 3,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -632,14 +632,14 @@
                 "positionX": 5,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 2,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -655,14 +655,14 @@
                 "positionX": 5,
                 "positionY": 5,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 1,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -678,14 +678,14 @@
                 "positionX": 5,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -701,14 +701,14 @@
                 "positionX": 5,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 2,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -724,14 +724,14 @@
                 "positionX": 5,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 1,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -747,14 +747,14 @@
                 "positionX": 4,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -770,14 +770,14 @@
                 "positionX": 3,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 1,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -793,14 +793,14 @@
                 "positionX": 3,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 2,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -816,14 +816,14 @@
                 "positionX": 3,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 3,
                 "color": "tank_red",
-                "isAlive": false
+                "alive": false
               }
             ],
             "bullets": [
@@ -867,14 +867,14 @@
                 "positionX": 4,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 3,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -890,14 +890,14 @@
                 "positionX": 5,
                 "positionY": 6,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 2,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -913,14 +913,14 @@
                 "positionX": 5,
                 "positionY": 5,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 1,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -936,14 +936,14 @@
                 "positionX": 5,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 3,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -959,14 +959,14 @@
                 "positionX": 5,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 2,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -982,14 +982,14 @@
                 "positionX": 5,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 1,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -1005,14 +1005,14 @@
                 "positionX": 4,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 0,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -1028,14 +1028,14 @@
                 "positionX": 3,
                 "positionY": 2,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 1,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -1051,14 +1051,14 @@
                 "positionX": 3,
                 "positionY": 3,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 2,
                 "color": "tank_red",
-                "isAlive": true
+                "alive": true
               }
             ],
             "bullets": [
@@ -1074,14 +1074,14 @@
                 "positionX": 3,
                 "positionY": 4,
                 "color": "tank_green",
-                "isAlive": true
+                "alive": true
               },
               {
                 "id": "2",
                 "positionX": 0,
                 "positionY": 3,
                 "color": "tank_red",
-                "isAlive": false
+                "alive": false
               }
             ],
             "bullets": [

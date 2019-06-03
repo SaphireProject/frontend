@@ -6,7 +6,7 @@ import TilemapLayer = Phaser.TilemapLayer;
 import {MapDrawer} from './MapDrawer';
 import {SnapshotService} from './snapshot.service';
 import {UserService} from '../_services';
-import {Subscription} from 'rxjs';
+import {from, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {ISnapshotResponse, IPreload, IBullets, ITanks, IFrames, IEndOfGame} from './ISnapshotResponse';
 import {Router} from '@angular/router';
@@ -16,10 +16,13 @@ export class BattleState extends Phaser.State {
   // tween: TweenManager;
   units: UnitTweenSubject[] = [];
   bullets: BulletTweenSubject[] = [];
+  collisionArray: any[][];
   // tank: Sprite;
   explosion: Sprite;
   map: Tilemap;
   layer: TilemapLayer;
+  testedSprite: Phaser.Sprite;
+  spritesOfWalls: Phaser.Sprite[];
   // heightOfBackgroundTilest: number;
   // widthOfBackgroundTileset: number;
   // widthOfTheScreen = 1000;
@@ -43,6 +46,8 @@ export class BattleState extends Phaser.State {
   numberOfCurrentGetSnapshot: number;
   countOfGettedSnapshot: number;
   idOfRoom: number;
+  wallGroup: Phaser.Group;
+  tankGroup: Phaser.Group;
 
   constructor(snapshotService: SnapshotService,
               router: Router, userService: UserService,
@@ -106,6 +111,7 @@ export class BattleState extends Phaser.State {
     this.game.load.image('tileSand1', 'assets/images/tanks_robo/tileSand1.png');
     this.game.load.image('tileSand2', 'assets/images/tanks_robo/tileSand2.png');
     this.game.load.image('tileSand3', 'assets/images/tanks_robo/tileSand3.png');
+    this.game.load.image('transp', 'assets/images/tanks_robo/transp.png');
     this.game.load.spritesheet('explosion', 'assets/images/tanks_robo/piskel.png', 65, 65);
     this.game.load.spritesheet('fireFromBullet', 'assets/images/tanks_robo/bullet_fire.png', 21, 38);
     this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -114,12 +120,51 @@ export class BattleState extends Phaser.State {
   }
 
   create() {
-    console.log('in create');
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+
     document.getElementById('fullScreenTurn');
     this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.input.onDown.add(this.gofull, this);
     this.initMap(this.initInfo);
+    let ind = 0;
+    this.collisionArray = this.initInfo.blocks.map((line) => line.split(''));
+    this.collisionArray.forEach(elem => {
+      for (let i = 0; i < elem.length; i++) {
+        elem[i] = Number(elem[i]);
+      }
+    });
+    console.log('this.collisionArray');
+    console.log(this.collisionArray);
     this.initUnits();
+    // const weapon = this.game.add.weapon(400, 'green_bullet');
+    // //  The bullet will be automatically killed when it leaves the world bounds
+    // weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    // //  Because our bullet is drawn facing up, we need to offset its rotation:
+    // weapon.bulletAngleOffset = 90;
+    // //  The speed at which the bullet is fired
+    // weapon.bulletSpeed = 90;
+    //
+    // //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+    // weapon.fireRate = 60;
+    //
+    // const sprite = this.add.sprite(5*64+32, 3*64+32, 'tank_green');
+    // sprite.anchor.setTo(0.5, 0.5);
+    // sprite.angle = 0;
+    // this.game.physics.arcade.enable(sprite);
+    //
+    // //  Tell the Weapon to track the 'player' Sprite, offset by 14px horizontally, 0 vertically
+    // weapon.trackSprite(sprite, 0, 0, true);
+    //
+    // weapon.fire();
+    // setTimeout(() => {
+    //   weapon.fire();
+    // }, 300);
+    //
+    // weapon.onFire.add(function() {
+    //   console.log('FIRE');
+    // });
+
     this.makeFrameAnimation();
 
     // this.tank = this.game.add.sprite(mapDrawer.game.world.centerX, mapDrawer.game.world.centerY, 'tank_green');
@@ -152,7 +197,13 @@ export class BattleState extends Phaser.State {
     console.log('init map');
     const mapDrawer = new MapDrawer(this.game, initInfo.blocks);
     this.mapDrawer = mapDrawer;
-    mapDrawer.generateMap();
+    this.spritesOfWalls = mapDrawer.generateMap();
+    console.log('spritesOfWalls in main');
+    this.wallGroup = this.game.add.group();
+    console.log(this.spritesOfWalls);
+    this.spritesOfWalls.forEach(wall => {
+      this.wallGroup.add(wall);
+    });
   }
 
   private initUnits() {
@@ -167,7 +218,9 @@ export class BattleState extends Phaser.State {
           positionX = unit.positionX,
           positionY = unit.positionY;
         console.log('Test Units: ' + unit.id + ' ' + unit.positionX + ' ' + unit.positionY);
-        this.units.push(new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, game: this.game}));
+        const tweenSubj = new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, walls: this.wallGroup, game: this.game});
+        this.units.push(tweenSubj);
+        // this.tankGroup.add(tweenSubj.spriteLink);
       }
     }
     console.log('check whether there is a bullets in a first snapshot');
@@ -187,6 +240,7 @@ export class BattleState extends Phaser.State {
             positionX: positionX,
             positionY: positionY,
             type: colorBullet,
+            walls: this.spritesOfWalls,
             game: this.game
           }, bullet.bulletDirection));
         }
@@ -242,7 +296,7 @@ export class BattleState extends Phaser.State {
             this.checkNewSnapshotsFromServer();
           }
         });
-    }, 6000);
+    }, 5000);
   }
 
 
@@ -305,6 +359,8 @@ export class BattleState extends Phaser.State {
     }
   }
 
+
+
   // private processAllItemsInSnapshot(snapshot: IFrames, snapshotNext: IFrames) {
   //   localStorage.setItem('currentSnapshotNumber', snapshot.snapshotNumber.toString());
   //   let numberOfUnit = 0;
@@ -324,14 +380,19 @@ export class BattleState extends Phaser.State {
   private makeUnitMovement(unitSpecifications: ITanks, index: number) {
     const positionX = unitSpecifications.positionX;
     const positionY = unitSpecifications.positionY;
+    const idOfTank = unitSpecifications.id;
     // check unit is alive and making move,ent
+    const unit = this.units.find(x => x.id === idOfTank);
     if (unitSpecifications.alive) {
-      this.units[index].moveTo(positionX, positionY);
+      console.log('before moving');
+      console.log(unit);
+      unit.moveTo(positionX, positionY);
     } else {
       // destroy sprite, play animation and clear element of array
       console.log('LOOOSER');
-      this.units[index].destroy();
-      this.units[index] = null;
+      const foundIndex = this.units.findIndex(x => x.id === idOfTank);
+      this.units.splice(foundIndex, 1);
+      unit.destroy();
     }
   }
 
@@ -344,18 +405,22 @@ export class BattleState extends Phaser.State {
     // check unit is alive and making move,ent
     if (unitSpecifications.firstSnapshot) {
       this.bullets.push(new BulletTweenSubject({
-        id: undefined,
+        id: unitSpecifications.id,
         positionX: positionX,
         positionY: positionY,
         type: colorBullet,
+        walls: this.wallGroup,
         game: this.game
       }, unitSpecifications.bulletDirection));
     } else {
+      const bullet = this.bullets.find(x => x.id === unitSpecifications.id);
       if (unitSpecifications.lastSnapshot) {
-        this.bullets[index].destroy(positionX, positionY, unitSpecifications.bulletDirection);
-        this.bullets[index] = null;
+        bullet.destroy(positionX, positionY, unitSpecifications.bulletDirection);
+        const foundIndex = this.bullets.findIndex(x => x.id === unitSpecifications.id);
+        this.bullets.splice(foundIndex, 1);
+        // this.bullets[index] = null;
       } else {
-        this.bullets[index].moveTo(positionX, positionY);
+        bullet.moveTo(positionX, positionY);
       }
     }
   }
@@ -460,6 +525,42 @@ export class BattleState extends Phaser.State {
   }
 
   update() {
+
+
+    // if (this.units[1].getSprite().overlap()) {
+    //   console.log('SUQQQQQA');
+    //   this.units[1].spriteLink.alpha = 0;
+    // }
+
+     // if (this.units[1].getSprite().overlap()) {
+     //   console.log('SUQQQQQA');
+     //   this.units[1].spriteLink.alpha = 0;
+     // }
+
+    // this.collisionArray.forEach((elem, index) => {
+    //   for (let i = 0; i < elem.length; i++) {
+    //     if (this.units[1].getSprite().overlap(this.mapDrawer.map.getTile(9, 10))) {
+    //
+    //     }
+    //   }
+    // // });
+    // this.units.forEach(unit => {
+    //   this.spritesOfWalls.forEach(wall => {
+    //     if (unit.getSprite().overlap(wall)) {
+    //       console.log('OPA');
+    //       unit.spriteLink.alpha = 0;
+    //     }
+    //   });
+    // });
+
+    // this.spritesOfWalls.forEach(wall => {
+    //   this.units.forEach(obj => {
+    //     if (obj.getSprite().overlap(wall)) {
+    //       console.log('OPA');
+    //       obj.spriteLink.alpha = 0;
+    //     }
+    //   });
+    // }});
   }
 
   render() {
@@ -467,5 +568,8 @@ export class BattleState extends Phaser.State {
     this.game.renderer.resize(renderSizes.get('sizeOfX'), renderSizes.get('sizeOfY'));
   }
 
+  getWalls() {
+    return this.spritesOfWalls;
+  }
 
 }/**/

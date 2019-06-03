@@ -6,4 +6,5 @@ export interface ITweenSubjectConfig {
   positionY: number;
   type: string;
   game: Game;
+  walls: any;
 }

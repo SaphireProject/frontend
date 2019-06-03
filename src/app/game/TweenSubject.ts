@@ -15,6 +15,7 @@ export class TweenSubject {
   type: string;
   spriteLink: Sprite;
   tweenAction: Tween;
+  walls: any[];
   tweenCoordinatesQueue: Array<Array<number>>;
 
   constructor(config: ITweenSubjectConfig) {
@@ -24,11 +25,13 @@ export class TweenSubject {
     this.positionY = this.convertCellToPixels(config.positionY);
     this.type = config.type;
     this.game = config.game;
+    this.walls = config.walls;
     this.spriteLink = this.generateSprite();
     this.tweenAction = this.game.add.tween(this.spriteLink);
     this.spriteLink.anchor.setTo(0.5, 0.5);
     console.log('center in Tween ' + this.game.world.centerX);
     console.log('center in Tween ' + this.game.world.centerY);
+    this.game.physics.enable(this.spriteLink, Phaser.Physics.ARCADE);
   }
 
   private generateSprite(): Sprite {
@@ -56,6 +59,8 @@ export class TweenSubject {
   // }
 
   public moveTo(newPositionX: number, newPositionY: number): Tween {
+    console.log('wall');
+    console.log(this.walls);
     newPositionX = this.convertCellToPixels(newPositionX);
     newPositionY = this.convertCellToPixels(newPositionY);
     this.countTweenSubjectAngle(newPositionX, newPositionY);
@@ -66,6 +71,21 @@ export class TweenSubject {
       this.tweenAction = this.game.add.tween(this.spriteLink)
         .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
         .start();
+      this.tweenAction.onUpdateCallback(() => {
+        if (this.game.physics.arcade.collide(this.spriteLink, this.walls)) {
+          console.log('boom');
+        }
+      })
+      // this.tweenAction.onUpdateCallback(() => {
+      //     this.walls.forEach(wall => {
+      //       if (this.spriteLink.overlap(wall)) {
+      //         console.log('SUQQQQQA');
+      //         // this.spriteLink.alpha = 0;
+      //       }
+      //     });
+      // }
+      // );
+
         this.positionX = newPositionX;
         this.positionY = newPositionY;
         return this.tweenAction;
@@ -99,6 +119,10 @@ export class TweenSubject {
 
    convertCellToPixels(cellPosition: number): number {
     return cellPosition * 64 + 32;
+  }
+
+  getSprite() {
+    return this.spriteLink;
   }
 
 
