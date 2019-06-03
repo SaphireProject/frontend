@@ -49,7 +49,7 @@ export class MapDrawer {
       this.countOfYBlocks * 64, this.storageOfGround[Math.round(0 - 0.5 + Math.random() * (this.storageOfGround.length))]);
     this.map2 = '';
     this.blocks.forEach(elem => {
-      for (var i = 0; i < elem.length; i++) {
+      for (let i = 0; i < elem.length; i++) {
         if (i === elem.length - 1) {
           this.map2 += elem.charAt(i) + '\n';
         } else {
@@ -81,7 +81,8 @@ export class MapDrawer {
       // Если символ соответствует `X`, нарисуем вместо него звезду.
       // 24 - ширина изображения.
       // 22 - высота.
-      const newSpite = this.game.add.sprite(x * 64, y * 64, this.storageOfBlocks[Math.round(0 - 0.5 + Math.random() * (this.storageOfBlocks.length))]);
+      const newSpite = this.game
+        .add.sprite(x * 64, y * 64, this.storageOfBlocks[Math.round(0 - 0.5 + Math.random() * (this.storageOfBlocks.length))]);
       this.game.physics.enable(newSpite, Phaser.Physics.ARCADE);
       this.spritesOfWalls.push(newSpite);
     }));
@@ -90,8 +91,11 @@ export class MapDrawer {
 
     //  Create our map (the 16x16 is the tile size)
     const mapa = this.game.add.tilemap('dynamicMap', this.countOfXBlocks, this.countOfYBlocks);
-    console.log("this.spritesOfWalls");
+    console.log('this.spritesOfWalls');
     console.log(this.spritesOfWalls);
+    console.log('COUNT OF WALL');
+    console.log(this.countOfYBlocks);
+
     return this.spritesOfWalls;
   }
 

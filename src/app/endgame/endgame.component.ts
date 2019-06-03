@@ -32,7 +32,8 @@ export class EndgameComponent implements OnInit, OnDestroy {
             this.email = data.user.email;
           }
         } else {
-          router.navigate(['/error?type=404']);
+          this.pageInfo = endgameMap.get('drawn');
+          // router.navigate(['/error?type=404']);
         }
       }
     );

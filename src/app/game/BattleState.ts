@@ -48,6 +48,8 @@ export class BattleState extends Phaser.State {
   idOfRoom: number;
   wallGroup: Phaser.Group;
   tankGroup: Phaser.Group;
+  sizeOfXMap: number;
+  sizeOfYMap: number;
 
   constructor(snapshotService: SnapshotService,
               router: Router, userService: UserService,
@@ -93,7 +95,7 @@ export class BattleState extends Phaser.State {
     this.game.load.tilemap('mapa',
       'assets/images/tanks_robo/location.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles', 'assets/images/tanks_robo/allSprites_default.png');
-    this.game.load.image('green_bullet', 'assets/images/tanks_robo/bulletGreen2.png');
+    this.game.load.image('green_bullet', 'assets/images/tanks_robo/circle-cropped.png');
     this.game.load.image('tank_green', 'assets/images/tanks_robo/tank_green2.png');
     this.game.load.image('tank_red', 'assets/images/tanks_robo/tank_red.png');
     this.game.load.image('tank_blue', 'assets/images/tanks_robo/tank_blue.png');
@@ -120,14 +122,13 @@ export class BattleState extends Phaser.State {
   }
 
   create() {
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    // this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 
     document.getElementById('fullScreenTurn');
     this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.input.onDown.add(this.gofull, this);
     this.initMap(this.initInfo);
-    let ind = 0;
     this.collisionArray = this.initInfo.blocks.map((line) => line.split(''));
     this.collisionArray.forEach(elem => {
       for (let i = 0; i < elem.length; i++) {
@@ -136,6 +137,19 @@ export class BattleState extends Phaser.State {
     });
     console.log('this.collisionArray');
     console.log(this.collisionArray);
+    setTimeout(() => {
+      console.log('исполняем таймер на директ');
+      this.acceptToReroutePage = true;
+      clearInterval(this.intervalForAnimation);
+      localStorage.removeItem('currentSnapshotNumber');
+      if (this.game.scale.isFullScreen) {
+        this.game.scale.stopFullScreen();
+      }
+      if (this.subscribingForWinner$) {
+        this.subscribingForWinner$.unsubscribe();
+      }
+      this.router.navigate(['/endgame']);
+    }, 50000);
     this.initUnits();
     // const weapon = this.game.add.weapon(400, 'green_bullet');
     // //  The bullet will be automatically killed when it leaves the world bounds
@@ -199,6 +213,7 @@ export class BattleState extends Phaser.State {
     this.mapDrawer = mapDrawer;
     this.spritesOfWalls = mapDrawer.generateMap();
     console.log('spritesOfWalls in main');
+    this.sizeOfYMap = this.mapDrawer.countOfYBlocks;
     this.wallGroup = this.game.add.group();
     console.log(this.spritesOfWalls);
     this.spritesOfWalls.forEach(wall => {
@@ -216,9 +231,14 @@ export class BattleState extends Phaser.State {
         const unitId = unit.id,
           color = unit.color,
           positionX = unit.positionX,
-          positionY = unit.positionY;
+          positionY = this.sizeOfYMap - unit.positionY - 1;
         console.log('Test Units: ' + unit.id + ' ' + unit.positionX + ' ' + unit.positionY);
-        const tweenSubj = new UnitTweenSubject({id: unitId, positionX: positionX, positionY: positionY, type: color, walls: this.wallGroup, game: this.game});
+        const tweenSubj = new UnitTweenSubject(
+          {
+            id: unitId,
+            positionX: positionX,
+            positionY: positionY, type: color, walls: this.wallGroup, game: this.game, yWorld: this.mapDrawer.countOfYBlocks
+          });
         this.units.push(tweenSubj);
         // this.tankGroup.add(tweenSubj.spriteLink);
       }
@@ -233,7 +253,7 @@ export class BattleState extends Phaser.State {
         // works with lastshot?
         if ((bullet.firstSnapshot) && (bullet.lastSnapshot)) {
           const positionX = bullet.positionX,
-            positionY = bullet.positionY,
+            positionY = this.sizeOfYMap - bullet.positionY - 1,
             colorBullet = 'green_bullet';
           this.bullets.push(new BulletTweenSubject({
             id: undefined,
@@ -241,7 +261,8 @@ export class BattleState extends Phaser.State {
             positionY: positionY,
             type: colorBullet,
             walls: this.spritesOfWalls,
-            game: this.game
+            game: this.game,
+            yWorld: this.mapDrawer.countOfYBlocks
           }, bullet.bulletDirection));
         }
       }
@@ -281,17 +302,17 @@ export class BattleState extends Phaser.State {
           if (requestData !== undefined) {
             // TO DO
             // if (requestData.frames !== null) {
-          this.addSnapshotsInStorage(requestData);
-          console.log('requestData');
-          console.log(requestData);
-          if (requestData.endOfGame !== null) {
-            this.toEndGame(requestData.endOfGame);
-            // this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
-          } else {
-            console.log('number of cur snap?' + this.numberOfCurrentGetSnapshot);
-            this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
-            console.log('number of cur snap?' + this.numberOfCurrentGetSnapshot);
-          }
+            this.addSnapshotsInStorage(requestData);
+            console.log('requestData');
+            console.log(requestData);
+            if (requestData.endOfGame !== null) {
+              this.toEndGame(requestData.endOfGame);
+              // this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
+            } else {
+              console.log('number of cur snap?' + this.numberOfCurrentGetSnapshot);
+              this.numberOfCurrentGetSnapshot += this.countOfGettedSnapshot;
+              console.log('number of cur snap?' + this.numberOfCurrentGetSnapshot);
+            }
             // TODO what?
             this.checkNewSnapshotsFromServer();
           }
@@ -360,7 +381,6 @@ export class BattleState extends Phaser.State {
   }
 
 
-
   // private processAllItemsInSnapshot(snapshot: IFrames, snapshotNext: IFrames) {
   //   localStorage.setItem('currentSnapshotNumber', snapshot.snapshotNumber.toString());
   //   let numberOfUnit = 0;
@@ -379,14 +399,14 @@ export class BattleState extends Phaser.State {
 
   private makeUnitMovement(unitSpecifications: ITanks, index: number) {
     const positionX = unitSpecifications.positionX;
-    const positionY = unitSpecifications.positionY;
+    const positionY = this.sizeOfYMap - unitSpecifications.positionY - 1;
     const idOfTank = unitSpecifications.id;
     // check unit is alive and making move,ent
     const unit = this.units.find(x => x.id === idOfTank);
     if (unitSpecifications.alive) {
       console.log('before moving');
       console.log(unit);
-      unit.moveTo(positionX, positionY);
+      unit.moveTo(positionX, positionY, unitSpecifications.unitDirection);
     } else {
       // destroy sprite, play animation and clear element of array
       console.log('LOOOSER');
@@ -400,27 +420,46 @@ export class BattleState extends Phaser.State {
     console.log('unitSpecifications');
     console.log(unitSpecifications);
     const positionX = unitSpecifications.positionX;
-    const positionY = unitSpecifications.positionY;
+    const positionY = this.sizeOfYMap - unitSpecifications.positionY - 1;
     const colorBullet = 'green_bullet';
     // check unit is alive and making move,ent
-    if (unitSpecifications.firstSnapshot) {
-      this.bullets.push(new BulletTweenSubject({
+    if (unitSpecifications.firstSnapshot && unitSpecifications.lastSnapshot) {
+      const bullet = new BulletTweenSubject({
         id: unitSpecifications.id,
         positionX: positionX,
         positionY: positionY,
         type: colorBullet,
         walls: this.wallGroup,
-        game: this.game
-      }, unitSpecifications.bulletDirection));
+        game: this.game,
+        yWorld: this.mapDrawer.countOfYBlocks
+      }, unitSpecifications.bulletDirection);
+      bullet.makeSmoke(positionX, positionY, unitSpecifications.bulletDirection);
+      bullet.destroy(positionX, positionY, unitSpecifications.bulletDirection);
     } else {
-      const bullet = this.bullets.find(x => x.id === unitSpecifications.id);
-      if (unitSpecifications.lastSnapshot) {
-        bullet.destroy(positionX, positionY, unitSpecifications.bulletDirection);
-        const foundIndex = this.bullets.findIndex(x => x.id === unitSpecifications.id);
-        this.bullets.splice(foundIndex, 1);
-        // this.bullets[index] = null;
+      if (unitSpecifications.firstSnapshot) {
+        this.bullets.push(new BulletTweenSubject({
+          id: unitSpecifications.id,
+          positionX: positionX,
+          positionY: positionY,
+          type: colorBullet,
+          walls: this.wallGroup,
+          game: this.game,
+          yWorld: this.mapDrawer.countOfYBlocks
+        }, unitSpecifications.bulletDirection));
       } else {
-        bullet.moveTo(positionX, positionY);
+        const bullet = this.bullets.find(x => x.id === unitSpecifications.id);
+        if ((this.bullets.find(x => x.id === unitSpecifications.id)) === undefined) {
+          bullet.destroy(positionX, positionY, unitSpecifications.bulletDirection);
+        } else {
+          if (unitSpecifications.lastSnapshot) {
+            bullet.destroy(positionX, positionY, unitSpecifications.bulletDirection);
+            const foundIndex = this.bullets.findIndex(x => x.id === unitSpecifications.id);
+            this.bullets.splice(foundIndex, 1);
+            // this.bullets[index] = null;
+          } else {
+            bullet.moveTo(positionX, positionY, unitSpecifications.bulletDirection);
+          }
+        }
       }
     }
   }
@@ -532,10 +571,10 @@ export class BattleState extends Phaser.State {
     //   this.units[1].spriteLink.alpha = 0;
     // }
 
-     // if (this.units[1].getSprite().overlap()) {
-     //   console.log('SUQQQQQA');
-     //   this.units[1].spriteLink.alpha = 0;
-     // }
+    // if (this.units[1].getSprite().overlap()) {
+    //   console.log('SUQQQQQA');
+    //   this.units[1].spriteLink.alpha = 0;
+    // }
 
     // this.collisionArray.forEach((elem, index) => {
     //   for (let i = 0; i < elem.length; i++) {

@@ -22,6 +22,7 @@ export interface ITanks {
   id: number;
   positionX: number;
   positionY: number;
+  unitDirection: string;
   color: string;
   alive: boolean;
 }

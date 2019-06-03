@@ -31,7 +31,7 @@ export class TweenSubject {
     this.spriteLink.anchor.setTo(0.5, 0.5);
     console.log('center in Tween ' + this.game.world.centerX);
     console.log('center in Tween ' + this.game.world.centerY);
-    this.game.physics.enable(this.spriteLink, Phaser.Physics.ARCADE);
+    // this.game.physics.enable(this.spriteLink, Phaser.Physics.ARCADE);
   }
 
   private generateSprite(): Sprite {
@@ -58,12 +58,12 @@ export class TweenSubject {
   //   }
   // }
 
-  public moveTo(newPositionX: number, newPositionY: number): Tween {
+  public moveTo(newPositionX: number, newPositionY: number, unitDirection: string): Tween {
     console.log('wall');
     console.log(this.walls);
     newPositionX = this.convertCellToPixels(newPositionX);
     newPositionY = this.convertCellToPixels(newPositionY);
-    this.countTweenSubjectAngle(newPositionX, newPositionY);
+    this.countTweenSubjectAngle(unitDirection);
     // don't make movement, if new position the same, that was
     if ((newPositionX === this.positionX) && (newPositionY === this.positionY)) {
       return;
@@ -71,11 +71,11 @@ export class TweenSubject {
       this.tweenAction = this.game.add.tween(this.spriteLink)
         .to({x: newPositionX, y: newPositionY}, 500, Phaser.Easing.Linear.None)
         .start();
-      this.tweenAction.onUpdateCallback(() => {
-        if (this.game.physics.arcade.collide(this.spriteLink, this.walls)) {
-          console.log('boom');
-        }
-      })
+      // this.tweenAction.onUpdateCallback(() => {
+      //   if (this.game.physics.arcade.collide(this.spriteLink, this.walls)) {
+      //     console.log('boom');
+      //   }
+      // });
       // this.tweenAction.onUpdateCallback(() => {
       //     this.walls.forEach(wall => {
       //       if (this.spriteLink.overlap(wall)) {
@@ -86,38 +86,33 @@ export class TweenSubject {
       // }
       // );
 
-        this.positionX = newPositionX;
-        this.positionY = newPositionY;
-        return this.tweenAction;
+      this.positionX = newPositionX;
+      this.positionY = newPositionY;
+      return this.tweenAction;
     }
   }
 
   // count angle of unit
-  private countTweenSubjectAngle(newPositionX: number, newPositionY: number) {
-    let currentPositionX: number;
-    let currentPositionY: number;
-    currentPositionX = this.positionX;
-    currentPositionY = this.positionY;
-    console.log('New Current X ' + newPositionX + ' ' + currentPositionX);
-    console.log('New Current Y ' + newPositionY + ' ' + currentPositionY);
-    if (newPositionY > currentPositionY) {
-      this.spriteLink.angle = 0;
-    } else {
-      if (newPositionY < currentPositionY) {
+  private countTweenSubjectAngle(unitDirection: string) {
+    switch (unitDirection) {
+      case 'UP':
         this.spriteLink.angle = 180;
-      }
-    }
-
-    if (newPositionX > currentPositionX) {
-      this.spriteLink.angle = 270;
-    } else {
-      if (newPositionX < currentPositionX) {
+        break;
+      case 'DOWN':
+        this.spriteLink.angle = 0;
+        break;
+      case 'LEFT':
         this.spriteLink.angle = 90;
-      }
+        break;
+      case 'RIGHT':
+        this.spriteLink.angle = 270;
+        break;
+
     }
   }
 
-   convertCellToPixels(cellPosition: number): number {
+
+  convertCellToPixels(cellPosition: number): number {
     return cellPosition * 64 + 32;
   }
 
